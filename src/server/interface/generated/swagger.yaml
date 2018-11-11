@@ -1,0 +1,63 @@
+basePath: /v0
+consumes:
+    - application/json
+definitions:
+    IdentifiablePerson:
+        properties:
+            id:
+                type: string
+            avatarUrlStr:
+                type: object
+                x-nullable: true
+            prename:
+                type: string
+            surname:
+                type: string
+        required:
+            - id
+            - prename
+            - surname
+        type: object
+info:
+    title: TSOA
+    version: 1.0.0
+    description: 'Build swagger-compliant REST APIs using TypeScript and Node'
+    license:
+        name: MIT
+paths:
+    '/persons/{id}':
+        get:
+            operationId: GetPersonSync
+            produces:
+                - application/json
+            responses:
+                '200':
+                    description: Ok
+                    schema:
+                        $ref: '#/definitions/IdentifiablePerson'
+            security: []
+            parameters:
+                -
+                    in: path
+                    name: id
+                    required: true
+                    type: string
+    /persons:
+        get:
+            operationId: GetPersonsSync
+            produces:
+                - application/json
+            responses:
+                '200':
+                    description: Ok
+                    schema:
+                        type: array
+                        items:
+                            $ref: '#/definitions/IdentifiablePerson'
+            security: []
+            parameters: []
+produces:
+    - application/json
+swagger: '2.0'
+securityDefinitions: {}
+host: 'localhost:8080'

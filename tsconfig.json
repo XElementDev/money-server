@@ -1,0 +1,13 @@
+{
+	"compilerOptions": {
+		"alwaysStrict": true,
+		"experimentalDecorators": true,
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"noImplicitAny": true,
+		"outDir": "dist",
+		"removeComments": true,
+		"strictNullChecks": true,
+		"target": "es2015"//where "es2015"="es6"
+	}
+}

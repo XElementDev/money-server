@@ -1,0 +1,30 @@
+# + project-specific
+dist/
+
+
+# + Node.js
+node_modules/
+package-lock.json
+
+
+# + TypeScript
+typings/
+*.js
+*.js.map
+
+
+# + Visual Studio Code
+#taken from https://github.com/github/gitignore/blob/master/Global/VisualStudioCode.gitignore
+.vscode/*
+
+
+# - gulp
+!gulpfile.js
+
+
+# - Visual Studio Code
+#taken from https://github.com/github/gitignore/blob/master/Global/VisualStudioCode.gitignore
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
