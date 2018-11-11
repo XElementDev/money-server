@@ -1,14 +1,10 @@
 import * as express from "express";
-import * as http from "http";//Node.js
+import * as http from "http";
 import * as urljoin from "url-join";
-
-import * as CompanyInfo from "../../Common/Publishing/CompanyInfo";
-import * as ProductInfo from "../../Common/Publishing/ProductInfo";
+import * as CompanyInfo from "../../common/publishing/CompanyInfo";
+import * as ProductInfo from "../../common/publishing/ProductInfo";
+import { PersonController } from "./controllers/PersonController"; // import-only
 import { RegisterRoutes as registerRoutesSync } from "./generated/routes";
-
-//#region import-only
-import { PersonController } from "./controllers/PersonController";
-//#endregion
 
 
 //#region not unit-tested

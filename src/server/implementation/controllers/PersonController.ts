@@ -1,6 +1,9 @@
-import { Controller, Get, Route } from "tsoa";
-
-import { IdentifiablePerson } from "../../Interface/IIdentifiablePerson";
+import {
+	Controller,
+	Get,
+	Route
+	} from "tsoa";
+import { IdentifiablePerson } from "../../interface";
 
 
 //#region not unit-tested
