@@ -9,7 +9,7 @@
 		"basePath": "v0", 
 		"entryFile": "./Service.ts", 
 		"host": "localhost:8080", 
-		"outputDirectory": "../Interface/generated/", 
+		"outputDirectory": "../interface/generated/", 
 		"yaml": true
 	}
 }
