@@ -1,7 +1,8 @@
 {
-	"engines": { "node": "10.13.0" },
+	"engines": {
+		"node": "10.13.0"
+	},
 	"name": "xelement-money-server",
-	"version": "0.0.0",
 	"dependencies": {
 		"express": "^4.16.2",
 		"node": "^9.3.0",
@@ -10,21 +11,26 @@
 	},
 	"devDependencies": {
 		"@types/express": "^4.11.0",
+		"@types/gulp": "4.0.5",
+		"@types/gulp-sourcemaps": "0.0.32",
 		"@types/jquery": "^3.2.17",
 		"@types/node": "^8.5.2",
 		"@types/url-join": "^0.8.2",
 		"del": "^3.0.0",
-		"gulp": "^3.9.1",
+		"gulp": "4.0.0",
 		"gulp-sequence": "^1.0.0",
-		"gulp-sourcemaps": "^2.6.3",
-		"gulp-typescript": "^3.2.3",
+		"gulp-sourcemaps": "2.6.4",
+		"gulp-typescript": "4.0.2",
 		"through2": "^2.0.3",
 		"tsoa": "^2.0.1",
 		"typescript": "^2.6.2"
 	},
 	"scripts": {
+		"compile-gulpfile": "tsc gulpfile.ts -m CommonJS -t es2015",
 		"install": "npm run install-ts && npm run install-tsoa",
 		"install-ts": "npm install -g typescript",
-		"install-tsoa": "npm install -g tsoa"
-	}
+		"install-tsoa": "npm install -g tsoa",
+		"postinstall": "npm run compile-gulpfile"
+	},
+	"version": "0.0.0"
 }
