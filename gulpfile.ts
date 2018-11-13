@@ -84,3 +84,14 @@ const cleanTaskFunction: () => Promise<void> = async () => {
 };
 
 gulp.task(cleanTaskName, cleanTaskFunction);
+
+
+const rebuildTaskName: string = "rebuild";
+
+gulp.task(
+	rebuildTaskName,
+	gulp.series(
+		cleanTaskName,
+		buildTaskName
+	)
+);
