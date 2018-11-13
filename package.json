@@ -15,15 +15,18 @@
 		"@types/gulp-sourcemaps": "0.0.32",
 		"@types/jquery": "^3.2.17",
 		"@types/node": "^8.5.2",
+		"@types/through2": "2.0.34",
 		"@types/url-join": "^0.8.2",
-		"del": "^3.0.0",
+		"@types/vinyl": "2.0.2",
+		"child-process-promise": "2.2.1",
 		"gulp": "4.0.0",
 		"gulp-sequence": "^1.0.0",
 		"gulp-sourcemaps": "2.6.4",
 		"gulp-typescript": "4.0.2",
-		"through2": "^2.0.3",
+		"through2": "3.0.0",
 		"tsoa": "^2.0.1",
-		"typescript": "^2.6.2"
+		"typescript": "^2.6.2",
+		"vinyl": "2.2.0"
 	},
 	"scripts": {
 		"compile-gulpfile": "tsc gulpfile.ts -m CommonJS -t es2015",
