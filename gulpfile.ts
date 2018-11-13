@@ -14,11 +14,10 @@ const allFolders = "**";
 
 const tsoaTaskName: string = "_tsoa";
 
-const tsoaFileGlobs: Array<string> = [
-	path.join(srcFolderName, allFolders, "tsoa.json")
-];
-
 const tsoaTaskFunction: () => Promise<void> = async () => {
+	const tsoaFileGlobs: Array<string> = [
+		path.join(srcFolderName, allFolders, "tsoa.json")
+	];
 	const folderPathPromise = new Promise<string>((resolve, __) => {
 		gulp.src(tsoaFileGlobs)
 			.pipe(through2.obj(async (file: File, __, cb: through2.TransformCallback) => {
@@ -41,11 +40,10 @@ const typescriptTaskName: string = "_ts";
 const tsProject = ts.createProject(path.join(".", "tsconfig.json"));
 const tsAbsoluteOutDir = tsProject.options.outDir as string;
 
-const typescriptFileGlobs: Array<string> = [ 
-	path.join(srcFolderName, allFolders, "*.ts")
-];
-
 const typescriptTaskFunction: () => NodeJS.ReadWriteStream = () => {
+	const typescriptFileGlobs: Array<string> = [ 
+		path.join(srcFolderName, allFolders, "*.ts")
+	];
 	const writeOptions = {
 		sourceRoot: "."	// see https://github.com/Microsoft/vscode/issues/14988
 	};
@@ -74,11 +72,10 @@ gulp.task(
 
 const cleanTaskName: string = "clean";
 
-const cleanFileGlobs: Array<string> = [
-	tsAbsoluteOutDir
-];
-
 const cleanTaskFunction: () => Promise<void> = async () => {
+	const cleanFileGlobs: Array<string> = [
+		tsAbsoluteOutDir
+	];
 	await del(cleanFileGlobs);
 	return;
 };
