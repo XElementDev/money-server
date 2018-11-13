@@ -6,6 +6,7 @@ import * as ts from "gulp-typescript";
 import * as path from "path";
 import * as through2 from "through2";
 import * as File from "vinyl";
+import { SrcOptions } from "vinyl-fs";
 
 
 const srcFolderName = "src";
@@ -18,8 +19,11 @@ const tsoaTaskFunction: () => Promise<void> = async () => {
 	const tsoaFileGlobs: Array<string> = [
 		path.join(srcFolderName, allFolders, "tsoa.json")
 	];
+	const srcOptions: SrcOptions = {
+		read: false
+	};
 	const folderPathPromise = new Promise<string>((resolve, __) => {
-		gulp.src(tsoaFileGlobs)
+		gulp.src(tsoaFileGlobs, srcOptions)
 			.pipe(through2.obj(async (file: File, __, cb: through2.TransformCallback) => {
 				resolve(path.dirname(file.path));
 				cb(null, file);
@@ -44,8 +48,8 @@ const typescriptTaskFunction: () => NodeJS.ReadWriteStream = () => {
 	const typescriptFileGlobs: Array<string> = [ 
 		path.join(srcFolderName, allFolders, "*.ts")
 	];
-	const writeOptions = {
-		sourceRoot: "."	// see https://github.com/Microsoft/vscode/issues/14988
+	const writeOptions: sourcemaps.WriteOptions = {
+		sourceRoot: "." // see https://github.com/Microsoft/vscode/issues/14988
 	};
 	const src$ = gulp.src(typescriptFileGlobs)
 		.pipe(sourcemaps.init())

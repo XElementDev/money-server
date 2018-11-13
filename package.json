@@ -19,6 +19,7 @@
 		"@types/through2": "2.0.34",
 		"@types/url-join": "^0.8.2",
 		"@types/vinyl": "2.0.2",
+		"@types/vinyl-fs": "2.4.9",
 		"child-process-promise": "2.2.1",
 		"del": "3.0.0",
 		"gulp": "4.0.0",
@@ -28,7 +29,8 @@
 		"through2": "3.0.0",
 		"tsoa": "^2.0.1",
 		"typescript": "^2.6.2",
-		"vinyl": "2.2.0"
+		"vinyl": "2.2.0",
+		"vinyl-fs": "3.0.3"
 	},
 	"scripts": {
 		"compile-gulpfile": "tsc gulpfile.ts -m CommonJS -t es2015",
