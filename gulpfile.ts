@@ -1,4 +1,5 @@
 import * as cpp from "child-process-promise";
+import * as del from "del";
 import * as gulp from "gulp";
 import * as sourcemaps from "gulp-sourcemaps";
 import * as ts from "gulp-typescript";
@@ -69,3 +70,17 @@ gulp.task(
 		typescriptTaskName
 	)
 );
+
+
+const cleanTaskName: string = "clean";
+
+const cleanFileGlobs: Array<string> = [
+	tsAbsoluteOutDir
+];
+
+const cleanTaskFunction: () => Promise<void> = async () => {
+	await del(cleanFileGlobs);
+	return;
+};
+
+gulp.task(cleanTaskName, cleanTaskFunction);
