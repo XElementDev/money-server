@@ -1,30 +1,44 @@
 {
-	"engines": { "node": "10.13.0" },
+	"engines": {
+		"node": "10.13.0"
+	},
 	"name": "xelement-money-server",
-	"version": "0.0.0",
 	"dependencies": {
-		"express": "^4.16.2",
-		"node": "^9.3.0",
-		"tsoa": "^2.0.1",
-		"url-join": "^2.0.2"
+		"express": "4.16.2",
+		"node": "9.3.0",
+		"tsoa": "2.0.1",
+		"url-join": "2.0.2"
 	},
 	"devDependencies": {
-		"@types/express": "^4.11.0",
-		"@types/jquery": "^3.2.17",
-		"@types/node": "^8.5.2",
+		"@types/del": "3.0.1",
+		"@types/express": "4.11.0",
+		"@types/gulp": "4.0.5",
+		"@types/gulp-changed": "0.0.32",
+		"@types/gulp-sourcemaps": "0.0.32",
+		"@types/jquery": "3.2.17",
+		"@types/node": "8.5.2",
+		"@types/through2": "2.0.34",
 		"@types/url-join": "^0.8.2",
-		"del": "^3.0.0",
-		"gulp": "^3.9.1",
-		"gulp-sequence": "^1.0.0",
-		"gulp-sourcemaps": "^2.6.3",
-		"gulp-typescript": "^3.2.3",
-		"through2": "^2.0.3",
-		"tsoa": "^2.0.1",
-		"typescript": "^2.6.2"
+		"@types/vinyl": "2.0.2",
+		"@types/vinyl-fs": "2.4.9",
+		"child-process-promise": "2.2.1",
+		"del": "3.0.0",
+		"gulp": "4.0.0",
+		"gulp-changed": "3.2.0",
+		"gulp-count": "1.0.0",
+		"gulp-sequence": "1.0.0",
+		"gulp-sourcemaps": "2.6.4",
+		"gulp-typescript": "4.0.2",
+		"through2": "3.0.0",
+		"tsoa": "2.0.1",
+		"typescript": "2.6.2",
+		"vinyl": "2.2.0",
+		"vinyl-fs": "3.0.3"
 	},
 	"scripts": {
-		"install": "npm run install-ts && npm run install-tsoa",
-		"install-ts": "npm install -g typescript",
-		"install-tsoa": "npm install -g tsoa"
-	}
+		"compile-gulpfile": "tsc gulpfile.ts -m CommonJS -t es2015",
+		"gulp": "npm install -g gulp-cli@2.0.1 && npm run compile-gulpfile",
+		"postinstall": "npm run gulp"
+	},
+	"version": "0.0.0"
 }
