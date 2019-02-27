@@ -2,9 +2,10 @@ import * as cpp from "child-process-promise";
 import * as del from "del";
 import * as gulp from "gulp";
 import * as sourcemaps from "gulp-sourcemaps";
-import * as ts from "gulp-typescript";
+import * as gulpTs from "gulp-typescript";
 import * as path from "path";
 import * as through2 from "through2";
+import * as ts from "typescript";
 import * as File from "vinyl";
 import { SrcOptions } from "vinyl-fs";
 
@@ -30,9 +31,10 @@ const tsoaTaskFunction: () => Promise<void> = async () => {
 			}))
 		;
 	});
+	const tsoaCmdPath = path.join(__dirname, "node_modules", ".bin", "tsoa");
 	const folderPath = await folderPathPromise;
-	await cpp.exec("tsoa swagger", { cwd: folderPath });
-	await cpp.exec("tsoa routes", { cwd: folderPath });
+	await cpp.exec(`${tsoaCmdPath} swagger`, { cwd: folderPath });
+	await cpp.exec(`${tsoaCmdPath} routes`, { cwd: folderPath });
 	return;
 };
 
@@ -41,7 +43,13 @@ gulp.task(tsoaTaskName, tsoaTaskFunction);
 
 const typescriptTaskName: string = "_ts";
 
-const tsProject = ts.createProject(path.join(".", "tsconfig.json"));
+const tsSettings: gulpTs.Settings = {
+	typescript: ts
+};
+const tsProject = gulpTs.createProject(
+	path.join(".", "tsconfig.json"),
+	tsSettings
+);
 const tsAbsoluteOutDir = tsProject.options.outDir as string;
 
 const typescriptTaskFunction: () => NodeJS.ReadWriteStream = () => {
