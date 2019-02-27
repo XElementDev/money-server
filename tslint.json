@@ -2,8 +2,8 @@
 	"extends": "tslint:recommended",
 	"rules": {
 		"array-type": [ true, "generic" ],
-		"indent": false,
-		"interface-name": false,
+		"indent": [ true, "tabs" ],
+		"interface-name": [ true, "never-prefix" ],
 		"member-ordering": [
 			true,
 			{
@@ -30,7 +30,21 @@
 				"alphabetize": true
 			}
 		],
-		"no-consecutive-blank-lines": false,
-		"trailing-comma": false
+		"no-consecutive-blank-lines": [ true, 2 ],
+		"trailing-comma": [
+			true,
+			{
+				"multiline": {
+					"arrays": "always",
+					"exports": "never",
+					"functions": "always",
+					"imports": "never",
+					"objects": "always",
+					"typeLiterals": "always"
+				},
+				"singleline": "never",
+				"esSpecCompliant": true
+			}
+		]
 	}
 }
