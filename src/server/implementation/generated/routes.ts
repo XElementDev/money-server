@@ -6,7 +6,7 @@ const models: TsoaRoute.Models = {
 	"IdentifiablePerson": {
 		"properties": {
 			"id": { "dataType": "string", "required": true },
-			"avatarUrlStr": { "dataType": "string" },
+			"avatarUrlStr": { "dataType": "object" },
 			"prename": { "dataType": "string", "required": true },
 			"surname": { "dataType": "string", "required": true },
 		},

@@ -7,7 +7,7 @@ definitions:
             id:
                 type: string
             avatarUrlStr:
-                type: string
+                type: object
             prename:
                 type: string
             surname:
