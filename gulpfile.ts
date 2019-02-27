@@ -55,7 +55,7 @@ const tsProject = gulpTs.createProject(
 const tsAbsoluteOutDir = tsProject.options.outDir as string;
 
 const typescriptTaskFunction: () => NodeJS.ReadWriteStream = () => {
-	const typescriptFileGlobs: Array<string> = [ 
+	const typescriptFileGlobs: Array<string> = [
 		path.join(srcFolderName, allFolders, "*.ts")
 	];
 	const writeOptions: sourcemaps.WriteOptions = {
@@ -78,7 +78,7 @@ gulp.task(typescriptTaskName, typescriptTaskFunction);
 const buildTaskName: string = "build";
 
 gulp.task(
-	buildTaskName, 
+	buildTaskName,
 	gulp.series(
 		tsoaTaskName,
 		typescriptTaskName

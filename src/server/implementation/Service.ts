@@ -23,7 +23,7 @@ export class MoneyRestService {
 	private configureRoutesSync(): void {
 		registerRoutesSync(this.router);
 
-		const path = "/" + urljoin(CompanyInfo.internalNameSync(), ProductInfo.internalNameSync(), 
+		const path = "/" + urljoin(CompanyInfo.internalNameSync(), ProductInfo.internalNameSync(),
 		                           "API", "REST");//TODO: Don't hard code this.
 		this.app.use(path, this.router);
 

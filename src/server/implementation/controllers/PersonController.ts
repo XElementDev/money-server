@@ -37,14 +37,14 @@ export class PersonController extends Controller {
 
 	private static initializeDummyValuesSync(): void {
 		const personA: IdentifiablePerson = {
-			id: "1", 
-			prename: "Max", 
+			id: "1",
+			prename: "Max",
 			surname: "Mustermann"
 		};
 		const personB: IdentifiablePerson = {
-			avatarUrlStr: "https://taeglichneu.files.wordpress.com/2011/01/mustermann.jpg", 
-			id: "2", 
-			prename: "Erika", 
+			avatarUrlStr: "https://taeglichneu.files.wordpress.com/2011/01/mustermann.jpg",
+			id: "2",
+			prename: "Erika",
 			surname: "Mustermann"
 		};
 		const dummyPersons = [ personA, personB ];
