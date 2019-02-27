@@ -1,6 +1,8 @@
 import * as cpp from "child-process-promise";
 import * as del from "del";
 import * as gulp from "gulp";
+import * as changed from "gulp-changed";
+import * as count from "gulp-count";
 import * as sourcemaps from "gulp-sourcemaps";
 import * as gulpTs from "gulp-typescript";
 import * as path from "path";
@@ -60,6 +62,8 @@ const typescriptTaskFunction: () => NodeJS.ReadWriteStream = () => {
 		sourceRoot: "." // see https://github.com/Microsoft/vscode/issues/14988
 	};
 	const src$ = gulp.src(typescriptFileGlobs)
+		.pipe(changed(tsAbsoluteOutDir, { extension: ".js" }))
+		.pipe(count("Going to compile <%= counter %> TypeScript file(s)."))
 		.pipe(sourcemaps.init())
 		.pipe(tsProject())
 		.pipe(sourcemaps.write(".", writeOptions))
