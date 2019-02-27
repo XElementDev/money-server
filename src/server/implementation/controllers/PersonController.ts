@@ -16,22 +16,16 @@ export class PersonController extends Controller {
 	}
 
 
-	@Get("{id}")
-	public getPersonSync(id: string): IdentifiablePerson {
-		const matchingPersons = this.persons.filter(person => person.id === id);
-		return matchingPersons[0];
-	}
-
-
 	@Get()
 	public getPersonsSync(): Array<IdentifiablePerson> {
 		return this.persons;
 	}
 
 
-	public static initializeSync(): void {
-		PersonController.initializeDummyValuesSync();
-		return;
+	@Get("{id}")
+	public getPersonSync(id: string): IdentifiablePerson {
+		const matchingPersons = this.persons.filter((person) => person.id === id);
+		return matchingPersons[0];
 	}
 
 
@@ -53,10 +47,16 @@ export class PersonController extends Controller {
 	}
 
 
+	public static initializeSync(): void {
+		PersonController.initializeDummyValuesSync();
+		return;
+	}
+
+
 	private get persons(): Array<IdentifiablePerson> { return PersonController._persons; }
 
 
-	private static _persons: Array<IdentifiablePerson>;
+	private static _persons: Array<IdentifiablePerson>; // tslint:disable-line
 
 }
 
