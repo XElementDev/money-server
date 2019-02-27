@@ -1,15 +1,15 @@
 {
 	"routes": {
-		"basePath": "v0", 
-		"entryFile": "./Service.ts", 
-		"middleware": "express", 
+		"basePath": "v0",
+		"entryFile": "./Service.ts",
+		"middleware": "express",
 		"routesDir": "./generated"
-	}, 
+	},
 	"swagger": {
-		"basePath": "v0", 
-		"entryFile": "./Service.ts", 
-		"host": "localhost:8080", 
-		"outputDirectory": "../interface/generated/", 
+		"basePath": "v0",
+		"entryFile": "./Service.ts",
+		"host": "localhost:8080",
+		"outputDirectory": "../interface/generated/",
 		"yaml": true
 	}
 }

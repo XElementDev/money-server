@@ -4,9 +4,15 @@ import * as gulp from "gulp";
 import * as changed from "gulp-changed";
 import * as count from "gulp-count";
 import * as sourcemaps from "gulp-sourcemaps";
+import {
+	default as gulpTslint,
+	PluginOptions,
+	ReportOptions
+	} from "gulp-tslint";
 import * as gulpTs from "gulp-typescript";
 import * as path from "path";
 import * as through2 from "through2";
+import * as tslint from "tslint";
 import * as ts from "typescript";
 import * as File from "vinyl";
 import { SrcOptions } from "vinyl-fs";
@@ -33,7 +39,7 @@ const tsoaTaskFunction: () => Promise<void> = async () => {
 			}))
 		;
 	});
-	const tsoaCmdPath = path.join(__dirname, "node_modules", ".bin", "tsoa");
+	const tsoaCmdPath = path.join(__dirname, ".", "node_modules", ".bin", "tsoa");
 	const folderPath = await folderPathPromise;
 	await cpp.exec(`${tsoaCmdPath} swagger`, { cwd: folderPath });
 	await cpp.exec(`${tsoaCmdPath} routes`, { cwd: folderPath });
@@ -41,6 +47,33 @@ const tsoaTaskFunction: () => Promise<void> = async () => {
 };
 
 gulp.task(tsoaTaskName, tsoaTaskFunction);
+
+
+const tslintTaskName: string = "_tslint";
+
+const tslintTaskFunction: () => NodeJS.ReadWriteStream = () => {
+	const typescriptFileGlobs: Array<string> = [
+		path.join(srcFolderName, allFolders, "*.ts")
+	];
+	const program = tslint.Linter.createProgram(path.join(__dirname, ".", "tsconfig.json"));
+	const pluginOptions: PluginOptions = {
+		configuration: path.join(__dirname, ".", "tslint.json"),
+		formatter: "verbose",
+		program: program,
+		tslint: tslint
+	};
+	const reportOptions: ReportOptions = {
+		summarizeFailureOutput: true
+	};
+	const src$ = gulp.src(typescriptFileGlobs)
+		.pipe(count("Going to run `tslint` on <%= counter %> file(s)."))
+		.pipe(gulpTslint(pluginOptions))
+		.pipe(gulpTslint.report(reportOptions))
+	;
+	return src$;
+};
+
+gulp.task(tslintTaskName, tslintTaskFunction);
 
 
 const typescriptTaskName: string = "_ts";
@@ -55,7 +88,7 @@ const tsProject = gulpTs.createProject(
 const tsAbsoluteOutDir = tsProject.options.outDir as string;
 
 const typescriptTaskFunction: () => NodeJS.ReadWriteStream = () => {
-	const typescriptFileGlobs: Array<string> = [ 
+	const typescriptFileGlobs: Array<string> = [
 		path.join(srcFolderName, allFolders, "*.ts")
 	];
 	const writeOptions: sourcemaps.WriteOptions = {
@@ -78,9 +111,10 @@ gulp.task(typescriptTaskName, typescriptTaskFunction);
 const buildTaskName: string = "build";
 
 gulp.task(
-	buildTaskName, 
+	buildTaskName,
 	gulp.series(
 		tsoaTaskName,
+		tslintTaskName,
 		typescriptTaskName
 	)
 );

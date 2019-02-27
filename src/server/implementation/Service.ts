@@ -20,11 +20,18 @@ export class MoneyRestService {
 	}
 
 
+	private app: express.Express;
+
+
 	private configureRoutesSync(): void {
 		registerRoutesSync(this.router);
 
-		const path = "/" + urljoin(CompanyInfo.internalNameSync(), ProductInfo.internalNameSync(), 
-		                           "API", "REST");//TODO: Don't hard code this.
+		const path = "/" + urljoin(
+			CompanyInfo.internalNameSync(),
+			ProductInfo.internalNameSync(),
+			"API",
+			"REST",
+		); // TODO: Don't hard code this.
 		this.app.use(path, this.router);
 
 		return;
@@ -39,16 +46,14 @@ export class MoneyRestService {
 	}
 
 
+	private router: express.Router;
+
+
 	public async start(): Promise<void> {
-		const port = 8080;//TODO: Don't hard code this.
+		const port = 8080; // TODO: Don't hard code this.
 		await MoneyRestService.createServer(this.app, port);
 		return;
 	}
-
-
-	private app: express.Express;
-
-	private router: express.Router;
 
 }
 //#endregion

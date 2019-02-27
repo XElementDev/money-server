@@ -8,7 +8,6 @@ definitions:
                 type: string
             avatarUrlStr:
                 type: object
-                x-nullable: true
             prename:
                 type: string
             surname:
@@ -25,6 +24,20 @@ info:
     license:
         name: MIT
 paths:
+    /persons:
+        get:
+            operationId: GetPersonsSync
+            produces:
+                - application/json
+            responses:
+                '200':
+                    description: Ok
+                    schema:
+                        type: array
+                        items:
+                            $ref: '#/definitions/IdentifiablePerson'
+            security: []
+            parameters: []
     '/persons/{id}':
         get:
             operationId: GetPersonSync
@@ -42,20 +55,6 @@ paths:
                     name: id
                     required: true
                     type: string
-    /persons:
-        get:
-            operationId: GetPersonsSync
-            produces:
-                - application/json
-            responses:
-                '200':
-                    description: Ok
-                    schema:
-                        type: array
-                        items:
-                            $ref: '#/definitions/IdentifiablePerson'
-            security: []
-            parameters: []
 produces:
     - application/json
 swagger: '2.0'
