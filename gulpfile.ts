@@ -88,13 +88,10 @@ const tsProject = gulpTs.createProject(
 const tsAbsoluteOutDir = tsProject.options.outDir as string;
 
 const typescriptTaskFunction: () => NodeJS.ReadWriteStream = () => {
-	const typescriptFileGlobs: Array<string> = [
-		path.join(srcFolderName, allFolders, "*.ts")
-	];
 	const writeOptions: sourcemaps.WriteOptions = {
 		sourceRoot: "." // see https://github.com/Microsoft/vscode/issues/14988
 	};
-	const src$ = gulp.src(typescriptFileGlobs)
+	const src$ = tsProject.src()
 		.pipe(changed(tsAbsoluteOutDir, { extension: ".js" }))
 		.pipe(count("Going to compile <%= counter %> TypeScript file(s)."))
 		.pipe(sourcemaps.init())
