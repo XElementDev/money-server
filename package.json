@@ -20,7 +20,7 @@
 		"@types/gulp": "4.0.5",
 		"@types/gulp-changed": "0.0.32",
 		"@types/gulp-sourcemaps": "0.0.32",
-		"@types/jquery": "3.2.17",
+		"@types/jquery": "3.3.29",
 		"@types/node": "8.5.2",
 		"@types/through2": "2.0.34",
 		"@types/url-join": "^0.8.2",
@@ -43,7 +43,7 @@
 		"vinyl-fs": "3.0.3"
 	},
 	"scripts": {
-		"compile-gulpfile": "tsc gulpfile.ts -m CommonJS -t es2015",
+		"compile-gulpfile": "tsc -p ./tsconfig-4-gulp.json",
 		"gulp": "npm install -g gulp-cli@2.0.1 && npm run compile-gulpfile",
 		"postinstall": "npm run gulp"
 	},

@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"alwaysStrict": true,
+		"module": "commonjs",
+		"moduleResolution": "node",
+		"noEmitOnError": true,
+		"removeComments": true,
+		"strictNullChecks": true,
+		"target": "es2015" // where "es2015"="es6"
+	}
+}
