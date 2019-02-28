@@ -1,6 +1,6 @@
 export interface Person {
 
-	readonly avatarUrlStr?: string | undefined;
+	readonly avatarUrlStr?: string;
 
 
 	readonly prename: string;
