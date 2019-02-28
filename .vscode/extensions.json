@@ -1,0 +1,7 @@
+{
+	"recommendations": [
+		"editorconfig.editorconfig",
+		"miclo.sort-typescript-imports",
+		"wayou.vscode-todo-highlight"
+	]
+}
