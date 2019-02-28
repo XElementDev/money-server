@@ -10,7 +10,7 @@
 	},
 	"dependencies": {
 		"express": "4.16.2",
-		"node": "9.3.0",
+		"node": "10.13.0",
 		"tsoa": "2.0.1",
 		"url-join": "2.0.2"
 	},
@@ -21,9 +21,9 @@
 		"@types/gulp-changed": "0.0.32",
 		"@types/gulp-sourcemaps": "0.0.32",
 		"@types/jquery": "3.3.29",
-		"@types/node": "8.5.2",
+		"@types/node": "10.12.27",
 		"@types/through2": "2.0.34",
-		"@types/url-join": "^0.8.2",
+		"@types/url-join": "0.8.2",
 		"@types/vinyl": "2.0.2",
 		"@types/vinyl-fs": "2.4.9",
 		"child-process-promise": "2.2.1",
