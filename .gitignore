@@ -4,7 +4,6 @@ dist/
 
 # + Node.js
 node_modules/
-package-lock.json
 
 
 # + TypeScript
@@ -20,7 +19,7 @@ typings/
 
 # - Visual Studio Code
 #taken from https://github.com/github/gitignore/blob/master/Global/VisualStudioCode.gitignore
+!.vscode/extensions.json
+!.vscode/launch.json
 !.vscode/settings.json
 !.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json

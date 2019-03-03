@@ -4,6 +4,13 @@
 		"array-type": [ true, "generic" ],
 		"indent": [ true, "tabs" ],
 		"interface-name": [ true, "never-prefix" ],
+		"max-line-length": [
+			true,
+			{
+				"ignore-pattern": "^export |^import | // ",
+				"limit": 120
+			}
+		],
 		"member-ordering": [
 			true,
 			{

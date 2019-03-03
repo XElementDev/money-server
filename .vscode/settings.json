@@ -1,11 +1,13 @@
 {
-	"files.exclude": {
-		"**/dist": true, 
-		"**/node_modules": true
-	}, 
+	// ↓ vscode settings
+
+	"editor.rulers": [
+		100,
+		120
+	],
 
 
-	// ↓ Extensions
+	// ↓ Extension settings
 
 	"cSpell.words": [
 		"endregion",
