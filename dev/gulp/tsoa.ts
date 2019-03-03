@@ -20,7 +20,7 @@ async function exec(command: string, cppOptions: unknown): Promise<void> {
 
 const tsoaTaskFunction: () => Promise<void> = async () => {
 	const tsoaFileGlobs: Array<string> = [
-		GulpModel.createGlobSync("tsoa.json")
+		GulpModel.createSrcGlobSync("tsoa.json")
 	];
 	const srcOptions: SrcOptions = {
 		read: false

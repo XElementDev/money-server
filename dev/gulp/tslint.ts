@@ -39,8 +39,8 @@ const tslintLogicFilesTaskName: string = "_tslint:logic-files";
 
 const tslintLogicFilesTaskFunction: () => NodeJS.ReadWriteStream = () => {
 	const logicFileGlobs: Array<string> = [
-		GulpModel.createGlobSync("*.ts"),
-		`!${GulpModel.createGlobSync("*.spec.ts")}`
+		GulpModel.createSrcGlobSync("*.ts"),
+		`!${GulpModel.createSrcGlobSync("*.spec.ts")}`
 	];
 	return createTslintTaskSync(logicFileGlobs, "logic-files");
 }
@@ -52,7 +52,7 @@ const tslintTestFilesTaskName: string = "_tslint:test-files";
 
 const tslintTestFilesTaskFunction: () => NodeJS.ReadWriteStream = () => {
 	const testFileGlobs: Array<string> = [
-		GulpModel.createGlobSync("*.spec.ts")
+		GulpModel.createSrcGlobSync("*.spec.ts")
 	];
 	return createTslintTaskSync(testFileGlobs, "test-files");
 }

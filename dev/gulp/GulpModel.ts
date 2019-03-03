@@ -8,7 +8,7 @@ export class GulpModel {
 	}
 
 
-	private static readonly ALL_FOLDERS: string = "**";
+	public static readonly ALL_FOLDERS: string = "**";
 
 
 	public static get absoluteCommandFolderPath(): string {
@@ -40,7 +40,7 @@ export class GulpModel {
 	private static _absoluteRootDir: string | undefined;
 
 
-	public static createGlobSync(...subPaths: Array<string>): string {
+	public static createSrcGlobSync(...subPaths: Array<string>): string {
 		return path.join(this.absoluteRootDir, GulpModel.ALL_FOLDERS, ...subPaths);
 	}
 

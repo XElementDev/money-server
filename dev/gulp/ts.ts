@@ -24,7 +24,7 @@ GulpModel.absoluteRootDir = tsProject.options.rootDir || "_default-src_";
 
 const typescriptTaskFunction: () => NodeJS.ReadWriteStream = () => {
 	const typescriptFileGlobs: Array<string> = [
-		GulpModel.createGlobSync("*.ts")
+		GulpModel.createSrcGlobSync("*.ts")
 	];
 	const writeOptions: sourcemaps.WriteOptions = {
 		sourceRoot: GulpModel.absoluteRootDir
