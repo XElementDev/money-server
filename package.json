@@ -34,7 +34,7 @@
 		"gulp-sequence": "1.0.0",
 		"gulp-sourcemaps": "2.6.4",
 		"gulp-tslint": "8.1.4",
-		"gulp-typescript": "4.0.2",
+		"gulp-typescript": "5.0.0",
 		"through2": "3.0.0",
 		"tslint": "5.13.0",
 		"tsoa": "2.0.1",
