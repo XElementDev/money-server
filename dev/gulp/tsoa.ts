@@ -1,8 +1,7 @@
 import * as cpp from "child-process-promise";
 import * as gulp from "gulp";
-import * as count from "gulp-count";
+import * as ListStream from "list-stream";
 import * as path from "path";
-import * as through2 from "through2";
 import * as File from "vinyl";
 import { SrcOptions } from "vinyl-fs";
 import { allFolders } from "./common";
@@ -11,6 +10,15 @@ import { srcFolderName } from "./ts";
 
 export const tsoaTaskName: string = "_tsoa";
 
+async function exec(command: string, cppOptions: unknown): Promise<void> {
+	const execResult = await cpp.exec(command, cppOptions);
+	process.stdout.write(execResult.stdout);
+	if (execResult.stderr !== "") {
+		throw new Error(execResult.stderr);
+	}
+	return;
+}
+
 const tsoaTaskFunction: () => Promise<void> = async () => {
 	const tsoaFileGlobs: Array<string> = [
 		path.join(srcFolderName, allFolders, "tsoa.json")
@@ -18,18 +26,21 @@ const tsoaTaskFunction: () => Promise<void> = async () => {
 	const srcOptions: SrcOptions = {
 		read: false
 	};
-	const folderPathPromise = new Promise<string>((resolve, __) => {
+	const folderPathsPromise = new Promise<Array<string>>((resolve, reject) => {
 		gulp.src(tsoaFileGlobs, srcOptions)
-			.pipe(through2.obj(async (file: File, __, cb: through2.TransformCallback) => {
-				resolve(path.dirname(file.path));
-				cb(null, file);
+			.pipe(ListStream.obj((err: any, fileInfos: Array<File>) => {
+				if (err) { reject(err); }
+				else { resolve(fileInfos.map((fi) => path.dirname(fi.path))); }
 			}))
 		;
 	});
-	const tsoaCmdPath = path.join(__dirname, ".", "node_modules", ".bin", "tsoa");
-	const folderPath = await folderPathPromise;
-	await cpp.exec(`${tsoaCmdPath} swagger`, { cwd: folderPath });
-	await cpp.exec(`${tsoaCmdPath} routes`, { cwd: folderPath });
+	const folderPaths = await folderPathsPromise;
+	console.log(`Going to run \`tsoa\` on ${folderPaths.length} folder(s).`);
+	const tsoaCmdPath = path.join(__dirname, "..", "..", "node_modules", ".bin", "tsoa");
+	for (const folderPath of folderPaths) {
+		await exec(`${tsoaCmdPath} swagger`, { cwd: folderPath });
+		await exec(`${tsoaCmdPath} routes`, { cwd: folderPath });
+	}
 	return;
 };
 

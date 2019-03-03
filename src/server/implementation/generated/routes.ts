@@ -1,6 +1,7 @@
 /* tslint:disable */
-import { Controller, ValidateParam, FieldErrors, ValidateError, TsoaRoute } from 'tsoa';
+import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute } from 'tsoa';
 import { PersonController } from './../controllers/PersonController';
+import * as express from 'express';
 
 const models: TsoaRoute.Models = {
 	"IdentifiablePerson": {
@@ -12,8 +13,9 @@ const models: TsoaRoute.Models = {
 		},
 	},
 };
+const validationService = new ValidationService(models);
 
-export function RegisterRoutes(app: any) {
+export function RegisterRoutes(app: express.Express) {
 	app.get('/v0/persons',
 		function(request: any, response: any, next: any) {
 			const args = {
@@ -29,7 +31,7 @@ export function RegisterRoutes(app: any) {
 			const controller = new PersonController();
 
 
-			const promise = controller.getPersonsSync.apply(controller, validatedArgs);
+			const promise = controller.getPersonsSync.apply(controller, validatedArgs as any);
 			promiseHandler(controller, promise, response, next);
 		});
 	app.get('/v0/persons/:id',
@@ -48,26 +50,29 @@ export function RegisterRoutes(app: any) {
 			const controller = new PersonController();
 
 
-			const promise = controller.getPersonSync.apply(controller, validatedArgs);
+			const promise = controller.getPersonSync.apply(controller, validatedArgs as any);
 			promiseHandler(controller, promise, response, next);
 		});
 
+
+	function isController(object: any): object is Controller {
+		return 'getHeaders' in object && 'getStatus' in object && 'setStatus' in object;
+	}
 
 	function promiseHandler(controllerObj: any, promise: any, response: any, next: any) {
 		return Promise.resolve(promise)
 			.then((data: any) => {
 				let statusCode;
-				if (controllerObj instanceof Controller) {
-					const controller = controllerObj as Controller
-					const headers = controller.getHeaders();
+				if (isController(controllerObj)) {
+					const headers = controllerObj.getHeaders();
 					Object.keys(headers).forEach((name: string) => {
 						response.set(name, headers[name]);
 					});
 
-					statusCode = controller.getStatus();
+					statusCode = controllerObj.getStatus();
 				}
 
-				if (data) {
+				if (data || data === false) { // === false allows boolean result
 					response.status(statusCode || 200).json(data);
 				} else {
 					response.status(statusCode || 204).end();
@@ -84,15 +89,15 @@ export function RegisterRoutes(app: any) {
 				case 'request':
 					return request;
 				case 'query':
-					return ValidateParam(args[key], request.query[name], models, name, fieldErrors);
+					return validationService.ValidateParam(args[key], request.query[name], name, fieldErrors);
 				case 'path':
-					return ValidateParam(args[key], request.params[name], models, name, fieldErrors);
+					return validationService.ValidateParam(args[key], request.params[name], name, fieldErrors);
 				case 'header':
-					return ValidateParam(args[key], request.header(name), models, name, fieldErrors);
+					return validationService.ValidateParam(args[key], request.header(name), name, fieldErrors);
 				case 'body':
-					return ValidateParam(args[key], request.body, models, name, fieldErrors, name + '.');
+					return validationService.ValidateParam(args[key], request.body, name, fieldErrors, name + '.');
 				case 'body-prop':
-					return ValidateParam(args[key], request.body[name], models, name, fieldErrors, 'body.');
+					return validationService.ValidateParam(args[key], request.body[name], name, fieldErrors, 'body.');
 			}
 		});
 		if (Object.keys(fieldErrors).length > 0) {

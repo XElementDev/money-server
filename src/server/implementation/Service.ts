@@ -12,7 +12,6 @@ export class MoneyRestService {
 
 	public constructor() {
 		this.app = express();
-		this.router = express.Router();
 
 		this.configureRoutesSync();
 
@@ -24,7 +23,7 @@ export class MoneyRestService {
 
 
 	private configureRoutesSync(): void {
-		registerRoutesSync(this.router);
+		registerRoutesSync(this.app);
 
 		const path = "/" + urljoin(
 			CompanyInfo.internalNameSync(),
@@ -32,7 +31,6 @@ export class MoneyRestService {
 			"API",
 			"REST",
 		); // TODO: Don't hard code this.
-		this.app.use(path, this.router);
 
 		return;
 	}
@@ -44,9 +42,6 @@ export class MoneyRestService {
 		});
 		return promise;
 	}
-
-
-	private router: express.Router;
 
 
 	public async start(): Promise<void> {

@@ -8,6 +8,7 @@ definitions:
                 type: string
             avatarUrlStr:
                 type: string
+                x-nullable: true
             prename:
                 type: string
             surname:
