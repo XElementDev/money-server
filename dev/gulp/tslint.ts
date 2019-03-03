@@ -7,19 +7,18 @@ import {
 	} from "gulp-tslint";
 import * as path from "path";
 import * as tslint from "tslint";
+import * as Undertaker from "undertaker";
 import { GulpModel } from "./GulpModel";
 
 
-export const tslintTaskName: string = "_tslint";
-
-const tslintTaskFunction: () => NodeJS.ReadWriteStream = () => {
-	const typescriptFileGlobs: Array<string> = [
-		GulpModel.createGlobSync("*.ts")
-	];
+function createTslintTaskSync(
+	globs: string | Array<string>,
+	tslintJsonFileType: "logic-files" | "test-files"
+): NodeJS.ReadWriteStream {
 	const tsconfigFilePath = path.join(__dirname, "..", "ts", "tslint-files", "tsconfig.json");
 	const program = tslint.Linter.createProgram(tsconfigFilePath);
 	const pluginOptions: PluginOptions = {
-		configuration: path.join(__dirname, "..", "..", "tslint.json"),
+		configuration: path.join(__dirname, "..", "tslint", tslintJsonFileType, "tslint.json"),
 		formatter: "verbose",
 		program: program,
 		tslint: tslint
@@ -27,12 +26,45 @@ const tslintTaskFunction: () => NodeJS.ReadWriteStream = () => {
 	const reportOptions: ReportOptions = {
 		summarizeFailureOutput: true
 	};
-	const src$ = gulp.src(typescriptFileGlobs)
+	const src$ = gulp.src(globs)
 		.pipe(count("Going to run `tslint` on <%= counter %> file(s)."))
 		.pipe(gulpTslint(pluginOptions))
 		.pipe(gulpTslint.report(reportOptions))
 	;
 	return src$;
-};
+}
+
+
+const tslintLogicFilesTaskName: string = "_tslint:logic-files";
+
+const tslintLogicFilesTaskFunction: () => NodeJS.ReadWriteStream = () => {
+	const logicFileGlobs: Array<string> = [
+		GulpModel.createGlobSync("*.ts"),
+		`!${GulpModel.createGlobSync("*.spec.ts")}`
+	];
+	return createTslintTaskSync(logicFileGlobs, "logic-files");
+}
+
+gulp.task(tslintLogicFilesTaskName, tslintLogicFilesTaskFunction);
+
+
+const tslintTestFilesTaskName: string = "_tslint:test-files";
+
+const tslintTestFilesTaskFunction: () => NodeJS.ReadWriteStream = () => {
+	const testFileGlobs: Array<string> = [
+		GulpModel.createGlobSync("*.spec.ts")
+	];
+	return createTslintTaskSync(testFileGlobs, "test-files");
+}
+
+gulp.task(tslintTestFilesTaskName, tslintTestFilesTaskFunction);
+
+
+export const tslintTaskName: string = "_tslint";
+
+const tslintTaskFunction: Undertaker.TaskFunction = gulp.series(
+	tslintLogicFilesTaskName,
+	tslintTestFilesTaskName
+);
 
 gulp.task(tslintTaskName, tslintTaskFunction);

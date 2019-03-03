@@ -1,0 +1,12 @@
+{
+	"extends": "../base/tslint.json",
+	"rules": {
+		"ban": [
+			true,
+			{ "name": [ "describe", "only" ] },
+			{ "name": [ "it", "only" ] }
+		],
+		"no-unused-expression": false,
+		"only-arrow-functions": false
+	}
+}
