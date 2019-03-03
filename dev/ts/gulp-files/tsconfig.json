@@ -1,0 +1,6 @@
+{
+	"extends": "../base/tsconfig.json",
+	"files": [
+		"../../../gulpfile.ts"
+	]
+}

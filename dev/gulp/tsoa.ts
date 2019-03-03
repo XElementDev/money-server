@@ -4,8 +4,7 @@ import * as ListStream from "list-stream";
 import * as path from "path";
 import * as File from "vinyl";
 import { SrcOptions } from "vinyl-fs";
-import { allFolders } from "./common";
-import { srcFolderName } from "./ts";
+import { GulpModel } from "./GulpModel";
 
 
 export const tsoaTaskName: string = "_tsoa";
@@ -21,7 +20,7 @@ async function exec(command: string, cppOptions: unknown): Promise<void> {
 
 const tsoaTaskFunction: () => Promise<void> = async () => {
 	const tsoaFileGlobs: Array<string> = [
-		path.join(srcFolderName, allFolders, "tsoa.json")
+		GulpModel.createGlobSync("tsoa.json")
 	];
 	const srcOptions: SrcOptions = {
 		read: false
@@ -36,7 +35,7 @@ const tsoaTaskFunction: () => Promise<void> = async () => {
 	});
 	const folderPaths = await folderPathsPromise;
 	console.log(`Going to run \`tsoa\` on ${folderPaths.length} folder(s).`);
-	const tsoaCmdPath = path.join(__dirname, "..", "..", "node_modules", ".bin", "tsoa");
+	const tsoaCmdPath = path.join(GulpModel.absoluteCommandFolderPath, "tsoa");
 	for (const folderPath of folderPaths) {
 		await exec(`${tsoaCmdPath} swagger`, { cwd: folderPath });
 		await exec(`${tsoaCmdPath} routes`, { cwd: folderPath });

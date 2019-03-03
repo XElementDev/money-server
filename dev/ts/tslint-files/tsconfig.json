@@ -1,0 +1,11 @@
+{
+	"extends": "../base/tsconfig.json",
+	"compilerOptions": {
+		"noEmit": true
+	},
+	"include": [
+		"../../../dev/**/*.ts",
+		"../../../src/**/*.ts",
+		"../../../gulpfile.ts"
+	]
+}

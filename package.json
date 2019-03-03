@@ -42,7 +42,7 @@
 		"vinyl-fs": "3.0.3"
 	},
 	"scripts": {
-		"compile-gulpfile": "tsc -p ./tsconfig-4-gulp.json",
+		"compile-gulpfile": "tsc -p ./dev/ts/gulp-files/tsconfig.json",
 		"gulp": "npm install -g gulp-cli@2.0.1 && npm run compile-gulpfile",
 		"postinstall": "npm run gulp"
 	},

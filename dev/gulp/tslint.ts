@@ -7,17 +7,17 @@ import {
 	} from "gulp-tslint";
 import * as path from "path";
 import * as tslint from "tslint";
-import { allFolders } from "./common";
-import { srcFolderName } from "./ts";
+import { GulpModel } from "./GulpModel";
 
 
 export const tslintTaskName: string = "_tslint";
 
 const tslintTaskFunction: () => NodeJS.ReadWriteStream = () => {
 	const typescriptFileGlobs: Array<string> = [
-		path.join(srcFolderName, allFolders, "*.ts")
+		GulpModel.createGlobSync("*.ts")
 	];
-	const program = tslint.Linter.createProgram(path.join(__dirname, "..", "..", "tsconfig.json"));
+	const tsconfigFilePath = path.join(__dirname, "..", "ts", "tslint-files", "tsconfig.json");
+	const program = tslint.Linter.createProgram(tsconfigFilePath);
 	const pluginOptions: PluginOptions = {
 		configuration: path.join(__dirname, "..", "..", "tslint.json"),
 		formatter: "verbose",
