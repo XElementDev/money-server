@@ -1,8 +1,10 @@
 import * as express from "express";
 import * as http from "http";
 import * as urljoin from "url-join";
-import * as CompanyInfo from "../../common/publishing/CompanyInfo";
-import * as ProductInfo from "../../common/publishing/ProductInfo";
+import {
+	CompanyInfo,
+	ProductInfo
+	} from "../../common/publishing";
 import { PersonController } from "./controllers/PersonController"; // import-only
 import { RegisterRoutes as registerRoutesSync } from "./generated/routes";
 
@@ -26,8 +28,8 @@ export class MoneyRestService {
 		registerRoutesSync(this.app);
 
 		const path = "/" + urljoin(
-			CompanyInfo.internalNameSync(),
-			ProductInfo.internalNameSync(),
+			CompanyInfo.internalName,
+			ProductInfo.internalName,
 			"API",
 			"REST"
 		); // TODO: Don't hard code this.
