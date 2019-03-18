@@ -29,7 +29,7 @@ export class MoneyRestService {
 			CompanyInfo.internalNameSync(),
 			ProductInfo.internalNameSync(),
 			"API",
-			"REST",
+			"REST"
 		); // TODO: Don't hard code this.
 
 		return;

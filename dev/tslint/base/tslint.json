@@ -41,16 +41,8 @@
 		"trailing-comma": [
 			true,
 			{
-				"multiline": {
-					"arrays": "always",
-					"exports": "never",
-					"functions": "always",
-					"imports": "never",
-					"objects": "always",
-					"typeLiterals": "always"
-				},
-				"singleline": "never",
-				"esSpecCompliant": true
+				"multiline": "never",
+				"singleline": "never"
 			}
 		]
 	}
