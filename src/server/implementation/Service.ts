@@ -6,14 +6,20 @@ import {
 	ProductInfo
 	} from "../../common/publishing";
 import { PersonController } from "./controllers/PersonController"; // import-only
+import { ServiceConfig } from "../interface";
 import { RegisterRoutes as registerRoutesSync } from "./generated/routes";
 
 
 //#region not unit-tested
 export class MoneyRestService {
 
-	public constructor() {
+	public constructor(
+		config: Partial<ServiceConfig>
+	) {
 		this.app = express();
+		this.config = {
+			port: config.port || 8080
+		};
 
 		this.configureRoutesSync();
 
@@ -22,6 +28,9 @@ export class MoneyRestService {
 
 
 	private app: express.Express;
+
+
+	private config: ServiceConfig;
 
 
 	private configureRoutesSync(): void {
@@ -38,17 +47,21 @@ export class MoneyRestService {
 	}
 
 
-	private static async createServer(app: express.Express, port: number): Promise<http.Server> {
-		const promise = new Promise<http.Server>((resolve, reject) => {
-			const server = app.listen(port, () => { resolve(server); });
-		});
-		return promise;
-	}
+	private server: http.Server;
 
 
 	public async start(): Promise<void> {
-		const port = 8080; // TODO: Don't hard code this.
-		await MoneyRestService.createServer(this.app, port);
+		await new Promise<http.Server>((resolve, __) => {
+			const server = this.app.listen(this.config.port, () => { resolve(server); });
+		});
+		return;
+	}
+
+
+	public async stop(): Promise<void> {
+		await new Promise<void>((resolve, __) => {
+			this.server.close(() => { resolve(); });
+		});
 		return;
 	}
 
