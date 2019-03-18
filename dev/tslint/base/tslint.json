@@ -38,6 +38,7 @@
 			}
 		],
 		"no-consecutive-blank-lines": [ true, 2 ],
+		"no-unused-variable": true,
 		"trailing-comma": [
 			true,
 			{

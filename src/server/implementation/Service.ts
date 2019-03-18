@@ -17,6 +17,7 @@ export class MoneyRestService {
 		config: Partial<ServiceConfig>
 	) {
 		this.app = express();
+		this.subApp = express();
 		this.config = {
 			port: config.port || 8080
 		};
@@ -34,7 +35,7 @@ export class MoneyRestService {
 
 
 	private configureRoutesSync(): void {
-		registerRoutesSync(this.app);
+		registerRoutesSync(this.subApp);
 
 		const path = "/" + urljoin(
 			CompanyInfo.internalName,
@@ -42,6 +43,7 @@ export class MoneyRestService {
 			"API",
 			"REST"
 		); // TODO: Don't hard code this.
+		this.app.use(path, this.subApp);
 
 		return;
 	}
@@ -51,7 +53,7 @@ export class MoneyRestService {
 
 
 	public async start(): Promise<void> {
-		await new Promise<http.Server>((resolve, __) => {
+		this.server = await new Promise<http.Server>((resolve, __) => {
 			const server = this.app.listen(this.config.port, () => { resolve(server); });
 		});
 		return;
@@ -64,6 +66,9 @@ export class MoneyRestService {
 		});
 		return;
 	}
+
+
+	private subApp: express.Express;
 
 }
 //#endregion
