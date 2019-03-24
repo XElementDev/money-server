@@ -18,6 +18,16 @@ definitions:
             - prename
             - surname
         type: object
+    Retailer:
+        properties:
+            logoUrlStr:
+                type: string
+                x-nullable: true
+            name:
+                type: string
+        required:
+            - name
+        type: object
 info:
     title: TSOA
     version: 1.0.0
@@ -56,6 +66,24 @@ paths:
                     name: id
                     required: true
                     type: string
+    /retailers:
+        post:
+            operationId: Create
+            produces:
+                - application/json
+            responses:
+                '201':
+                    description: Created
+                '400':
+                    description: 'Bad Request'
+            security: []
+            parameters:
+                -
+                    in: body
+                    name: requestBody
+                    required: true
+                    schema:
+                        $ref: '#/definitions/Retailer'
 produces:
     - application/json
 swagger: '2.0'

@@ -1,3 +1,4 @@
+import * as bodyParser from "body-parser";
 import * as express from "express";
 import * as http from "http";
 import * as urljoin from "url-join";
@@ -5,8 +6,9 @@ import {
 	CompanyInfo,
 	ProductInfo
 	} from "../../common/publishing";
-import { PersonController } from "./controllers/PersonController"; // import-only
 import { ServiceConfig } from "../interface";
+import { PersonController } from "./controllers/PersonController"; // tslint:disable-line:no-unused-variable
+import { RetailerController } from "./controllers/RetailerController"; // tslint:disable-line:no-unused-variable
 import { RegisterRoutes as registerRoutesSync } from "./generated/routes";
 
 
@@ -36,6 +38,8 @@ export class MoneyRestService {
 
 	private configureRoutesSync(): void {
 		registerRoutesSync(this.subApp);
+
+		this.app.use(bodyParser.json());
 
 		const path = "/" + urljoin(
 			CompanyInfo.internalName,

@@ -9,6 +9,7 @@
 		"url": "https://github.com/XElementDev/money-server.git"
 	},
 	"dependencies": {
+		"body-parser": "1.18.3",
 		"express": "4.16.2",
 		"node": "10.13.0",
 		"tsoa": "2.3.8",
@@ -26,6 +27,7 @@
 		"@types/list-stream": "1.0.0",
 		"@types/mocha": "5.2.6",
 		"@types/node": "10.12.27",
+		"@types/request-promise-native": "1.0.15",
 		"@types/url-join": "0.8.2",
 		"@types/vinyl": "2.0.2",
 		"@types/vinyl-fs": "2.4.9",
@@ -42,6 +44,7 @@
 		"gulp-typescript": "5.0.0",
 		"list-stream": "1.0.1",
 		"mocha": "6.0.2",
+		"request-promise-native": "1.0.7", "request": "2.88.0",
 		"tslint": "5.13.0",
 		"typescript": "3.3.3333",
 		"vinyl": "2.2.0",

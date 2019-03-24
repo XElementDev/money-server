@@ -1,6 +1,7 @@
 /* tslint:disable */
 import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute } from 'tsoa';
 import { PersonController } from './../controllers/PersonController';
+import { RetailerController } from './../controllers/RetailerController';
 import * as express from 'express';
 
 const models: TsoaRoute.Models = {
@@ -10,6 +11,12 @@ const models: TsoaRoute.Models = {
 			"avatarUrlStr": { "dataType": "string" },
 			"prename": { "dataType": "string", "required": true },
 			"surname": { "dataType": "string", "required": true },
+		},
+	},
+	"Retailer": {
+		"properties": {
+			"logoUrlStr": { "dataType": "string" },
+			"name": { "dataType": "string", "required": true },
 		},
 	},
 };
@@ -51,6 +58,25 @@ export function RegisterRoutes(app: express.Express) {
 
 
 			const promise = controller.getPersonSync.apply(controller, validatedArgs as any);
+			promiseHandler(controller, promise, response, next);
+		});
+	app.post('/v0/retailers',
+		function(request: any, response: any, next: any) {
+			const args = {
+				requestBody: { "in": "body", "name": "requestBody", "required": true, "ref": "Retailer" },
+			};
+
+			let validatedArgs: any[] = [];
+			try {
+				validatedArgs = getValidatedArgs(args, request);
+			} catch (err) {
+				return next(err);
+			}
+
+			const controller = new RetailerController();
+
+
+			const promise = controller.create.apply(controller, validatedArgs as any);
 			promiseHandler(controller, promise, response, next);
 		});
 
