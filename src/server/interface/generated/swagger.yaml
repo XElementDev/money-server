@@ -8,6 +8,7 @@ definitions:
                 type: string
             avatarUrlStr:
                 type: string
+                x-nullable: true
             prename:
                 type: string
             surname:
@@ -16,6 +17,23 @@ definitions:
             - id
             - prename
             - surname
+        type: object
+    Identifiable:
+        properties:
+            id:
+                type: string
+        required:
+            - id
+        type: object
+    Retailer:
+        properties:
+            logoUrlStr:
+                type: string
+                x-nullable: true
+            name:
+                type: string
+        required:
+            - name
         type: object
 info:
     title: TSOA
@@ -48,6 +66,58 @@ paths:
                     description: Ok
                     schema:
                         $ref: '#/definitions/IdentifiablePerson'
+            security: []
+            parameters:
+                -
+                    in: path
+                    name: id
+                    required: true
+                    type: string
+    /retailers:
+        post:
+            operationId: CreateRetailer
+            produces:
+                - application/json
+            responses:
+                '201':
+                    description: Created
+                    schema:
+                        $ref: '#/definitions/Identifiable'
+                '400':
+                    description: 'Bad Request'
+            security: []
+            parameters:
+                -
+                    in: body
+                    name: requestBody
+                    required: true
+                    schema:
+                        $ref: '#/definitions/Retailer'
+        get:
+            operationId: ReadRetailers
+            produces:
+                - application/json
+            responses:
+                '200':
+                    description: OK
+                    schema:
+                        type: array
+                        items:
+                            $ref: '#/definitions/Identifiable'
+            security: []
+            parameters: []
+    '/retailers/{id}':
+        get:
+            operationId: ReadRetailer
+            produces:
+                - application/json
+            responses:
+                '200':
+                    description: OK
+                    schema:
+                        type: object
+                '404':
+                    description: 'Not Found'
             security: []
             parameters:
                 -

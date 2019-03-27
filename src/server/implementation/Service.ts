@@ -1,18 +1,28 @@
+import * as bodyParser from "body-parser";
 import * as express from "express";
 import * as http from "http";
 import * as urljoin from "url-join";
-import * as CompanyInfo from "../../common/publishing/CompanyInfo";
-import * as ProductInfo from "../../common/publishing/ProductInfo";
-import { PersonController } from "./controllers/PersonController"; // import-only
+import {
+	CompanyInfo,
+	ProductInfo
+	} from "../../common/publishing";
+import { ServiceConfig } from "../interface";
+import { PersonController } from "./controllers/PersonController"; // tslint:disable-line:no-unused-variable
+import { RetailerController } from "./controllers/RetailerController";
 import { RegisterRoutes as registerRoutesSync } from "./generated/routes";
 
 
 //#region not unit-tested
 export class MoneyRestService {
 
-	public constructor() {
+	public constructor(
+		config: Partial<ServiceConfig>
+	) {
 		this.app = express();
-		this.router = express.Router();
+		this.subApp = express();
+		this.config = {
+			port: config.port || 8080
+		};
 
 		this.configureRoutesSync();
 
@@ -23,37 +33,47 @@ export class MoneyRestService {
 	private app: express.Express;
 
 
+	private config: ServiceConfig;
+
+
 	private configureRoutesSync(): void {
-		registerRoutesSync(this.router);
+		registerRoutesSync(this.subApp);
+		RetailerController.retailers = [];
+
+		this.app.use(bodyParser.json());
 
 		const path = "/" + urljoin(
-			CompanyInfo.internalNameSync(),
-			ProductInfo.internalNameSync(),
+			CompanyInfo.internalName,
+			ProductInfo.internalName,
 			"API",
-			"REST",
+			"REST"
 		); // TODO: Don't hard code this.
-		this.app.use(path, this.router);
+		this.app.use(path, this.subApp);
 
 		return;
 	}
 
 
-	private static async createServer(app: express.Express, port: number): Promise<http.Server> {
-		const promise = new Promise<http.Server>((resolve, reject) => {
-			const server = app.listen(port, () => { resolve(server); });
-		});
-		return promise;
-	}
-
-
-	private router: express.Router;
+	private server: http.Server;
 
 
 	public async start(): Promise<void> {
-		const port = 8080; // TODO: Don't hard code this.
-		await MoneyRestService.createServer(this.app, port);
+		this.server = await new Promise<http.Server>((resolve, __) => {
+			const server = this.app.listen(this.config.port, () => { resolve(server); });
+		});
 		return;
 	}
+
+
+	public async stop(): Promise<void> {
+		await new Promise<void>((resolve, __) => {
+			this.server.close(() => { resolve(); });
+		});
+		return;
+	}
+
+
+	private subApp: express.Express;
 
 }
 //#endregion
