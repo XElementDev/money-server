@@ -18,6 +18,13 @@ definitions:
             - prename
             - surname
         type: object
+    Identifiable:
+        properties:
+            id:
+                type: string
+        required:
+            - id
+        type: object
     Retailer:
         properties:
             logoUrlStr:
@@ -68,12 +75,14 @@ paths:
                     type: string
     /retailers:
         post:
-            operationId: Create
+            operationId: CreateRetailer
             produces:
                 - application/json
             responses:
                 '201':
                     description: Created
+                    schema:
+                        $ref: '#/definitions/Identifiable'
                 '400':
                     description: 'Bad Request'
             security: []
@@ -84,6 +93,38 @@ paths:
                     required: true
                     schema:
                         $ref: '#/definitions/Retailer'
+        get:
+            operationId: ReadRetailers
+            produces:
+                - application/json
+            responses:
+                '200':
+                    description: OK
+                    schema:
+                        type: array
+                        items:
+                            $ref: '#/definitions/Identifiable'
+            security: []
+            parameters: []
+    '/retailers/{id}':
+        get:
+            operationId: ReadRetailer
+            produces:
+                - application/json
+            responses:
+                '200':
+                    description: OK
+                    schema:
+                        type: object
+                '404':
+                    description: 'Not Found'
+            security: []
+            parameters:
+                -
+                    in: path
+                    name: id
+                    required: true
+                    type: string
 produces:
     - application/json
 swagger: '2.0'

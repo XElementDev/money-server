@@ -8,7 +8,7 @@ import {
 	} from "../../common/publishing";
 import { ServiceConfig } from "../interface";
 import { PersonController } from "./controllers/PersonController"; // tslint:disable-line:no-unused-variable
-import { RetailerController } from "./controllers/RetailerController"; // tslint:disable-line:no-unused-variable
+import { RetailerController } from "./controllers/RetailerController";
 import { RegisterRoutes as registerRoutesSync } from "./generated/routes";
 
 
@@ -38,6 +38,7 @@ export class MoneyRestService {
 
 	private configureRoutesSync(): void {
 		registerRoutesSync(this.subApp);
+		RetailerController.retailers = [];
 
 		this.app.use(bodyParser.json());
 

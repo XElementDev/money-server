@@ -13,6 +13,11 @@ const models: TsoaRoute.Models = {
 			"surname": { "dataType": "string", "required": true },
 		},
 	},
+	"Identifiable": {
+		"properties": {
+			"id": { "dataType": "string", "required": true },
+		},
+	},
 	"Retailer": {
 		"properties": {
 			"logoUrlStr": { "dataType": "string" },
@@ -76,7 +81,44 @@ export function RegisterRoutes(app: express.Express) {
 			const controller = new RetailerController();
 
 
-			const promise = controller.create.apply(controller, validatedArgs as any);
+			const promise = controller.createRetailer.apply(controller, validatedArgs as any);
+			promiseHandler(controller, promise, response, next);
+		});
+	app.get('/v0/retailers/:id',
+		function(request: any, response: any, next: any) {
+			const args = {
+				id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+			};
+
+			let validatedArgs: any[] = [];
+			try {
+				validatedArgs = getValidatedArgs(args, request);
+			} catch (err) {
+				return next(err);
+			}
+
+			const controller = new RetailerController();
+
+
+			const promise = controller.readRetailer.apply(controller, validatedArgs as any);
+			promiseHandler(controller, promise, response, next);
+		});
+	app.get('/v0/retailers',
+		function(request: any, response: any, next: any) {
+			const args = {
+			};
+
+			let validatedArgs: any[] = [];
+			try {
+				validatedArgs = getValidatedArgs(args, request);
+			} catch (err) {
+				return next(err);
+			}
+
+			const controller = new RetailerController();
+
+
+			const promise = controller.readRetailers.apply(controller, validatedArgs as any);
 			promiseHandler(controller, promise, response, next);
 		});
 
