@@ -4,7 +4,6 @@ services:
   - docker
 
 before_install:
-  - ls -a # FIXME: Remove this once "debugging" is done
   - docker build -t xelement/money-server .
 
 before_script:

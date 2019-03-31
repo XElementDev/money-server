@@ -7,9 +7,6 @@ ENV NODE_ENV development
 WORKDIR /opt/xelement/money-server
 COPY / ./
 
-# FIXME: Remove the following line once "debugging" is done
-RUN ls -a
-
 RUN NODE_VERSION=`cat ./.nvmrc` \
 	&& apk add nodejs=$NODE_VERSION-r0 \
 	&& apk add npm=$NODE_VERSION-r0
