@@ -11,6 +11,6 @@ COPY / ./
 RUN ls -a
 
 RUN NODE_VERSION=`cat ./.nvmrc` \
-	&& apk add nodejs=$NODE_VERSION
+	&& apk add nodejs=$NODE_VERSION-r0
 RUN npm install
 RUN gulp build
