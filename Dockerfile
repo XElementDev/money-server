@@ -14,4 +14,6 @@ RUN NODE_VERSION=`cat ./.nvmrc` \
 	&& apk add nodejs=$NODE_VERSION-r0 \
 	&& apk add npm=$NODE_VERSION-r0
 RUN npm install
-RUN gulp build
+RUN cd ./node_modules/.bin/ \
+	&& gulp build \
+	&& cd ../../
