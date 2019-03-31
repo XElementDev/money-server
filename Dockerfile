@@ -1,4 +1,4 @@
-FROM gliderlabs/alpine:3.9
+FROM ubuntu:18.04
 
 MAINTAINER Christian Sporer "https://github.com/IanStorm"
 
@@ -7,10 +7,12 @@ ENV NODE_ENV development
 WORKDIR /opt/xelement/money-server
 COPY / ./
 
-RUN NODE_VERSION=`cat ./.nvmrc` \
-	&& apk add nodejs=$NODE_VERSION-r0 \
-	&& apk add npm=$NODE_VERSION-r0
+#	↓	Install NVM
+RUN NVM_VERSION=v0.34.0 \
+	&& curl https://raw.githubusercontent.com/creationix/nvm/$NVM_VERSION/install.sh | bash
+	&& nvm --version
+#	↓	Install Node.js
+RUN nvm install
+
 RUN npm install
-RUN cd ./node_modules/.bin/ \
-	&& gulp build \
-	&& cd ../../
+RUN gulp build
