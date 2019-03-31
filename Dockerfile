@@ -15,7 +15,7 @@ RUN apt-get update && apt-get install -y curl \
 #	↓	Install Node.js
 RUN export NVM_DIR="$HOME/.nvm" \
 	&& [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
-	&& nvm install
+	&& nvm install $(< .nvmrc)
 
 RUN npm install
 RUN gulp build
