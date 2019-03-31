@@ -8,6 +8,7 @@ WORKDIR /opt/xelement/money-server
 COPY / ./
 
 #	↓	Install NVM
+RUN apt-get install -y curl
 RUN NVM_VERSION=v0.34.0 \
 	&& curl https://raw.githubusercontent.com/creationix/nvm/$NVM_VERSION/install.sh | bash \
 	&& nvm --version
