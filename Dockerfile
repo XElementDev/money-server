@@ -4,6 +4,9 @@ MAINTAINER Christian Sporer "https://github.com/IanStorm"
 
 ENV NODE_ENV development
 
+WORKDIR /opt/xelement/money-server
+COPY * .
+
 # FIXME: Remove the following line once "debugging" is done
 RUN ls -a
 
