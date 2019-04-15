@@ -14,4 +14,5 @@ RUN apk add jq=1.6-r0 && \
 
 #	↓	Compile money-server
 RUN npm install
-RUN gulp build
+RUN cd ./node_modules/.bin/ && \
+	gulp build

@@ -6,8 +6,8 @@
 The software is currently in a state that does not yet allow an end-user installation.
 
 
-## Development
-1. Install *Node.js*. (The required version can be found inside the `.nvmrc` file.)
+## Development (`vscode`)
+1. Install *Node.js*. (The required version can be found inside the `package.json` file.)
 2. Clone this repository.
 3. `cd` inside the cloned directory and run `npm install`.
 4. Install the recommended Visual Studio Code extensions.
