@@ -6,9 +6,13 @@ services:
 before_install:
   - docker build -t xelement/money-server .
 
-before_script:
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-
 script:
   - gulp test
-  - docker push xelement/money-server
+
+deploy:
+  provider: script
+  script:
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker push xelement/money-server
+  on:
+    branch: master

@@ -1,21 +1,17 @@
-FROM ubuntu:18.04
+FROM gliderlabs/alpine:3.9
 
 MAINTAINER Christian Sporer "https://github.com/IanStorm"
 
 ENV NODE_ENV development
 
-ENV CUSTOM_NVM_VERSION=v0.34.0
-
 WORKDIR /opt/xelement/money-server
 COPY / ./
 
-#	↓	Install NVM
-RUN apt-get update && apt-get install -y curl \
-	&& curl https://raw.githubusercontent.com/creationix/nvm/$CUSTOM_NVM_VERSION/install.sh | bash
 #	↓	Install Node.js
-RUN export NVM_DIR="$HOME/.nvm" \
-	&& [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" \
-	&& nvm use && nvm install
+RUN apk add jq=1.6-r0 && \
+	XE_NODE_VERSION="$(cat ./package.json | jq -r '.engines.node')-r0" && \
+	apk add nodejs=$XE_NODE_VERSION npm=$XE_NODE_VERSION
 
+#	↓	Compile money-server
 RUN npm install
 RUN gulp build
