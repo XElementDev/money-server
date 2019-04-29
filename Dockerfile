@@ -13,7 +13,5 @@ RUN apk add jq=1.6-r0 && \
 	apk add nodejs=$XE_NODE_VERSION npm=$XE_NODE_VERSION
 
 #	↓	Compile money-server
-RUN npm install
-RUN cd ./node_modules/.bin/ && ls
-RUN cd ./node_modules/.bin/ && \
-	gulp build
+RUN npm install --unsafe-perm
+RUN gulp build
