@@ -8,6 +8,8 @@ before_install:
   - docker run -d xelement/money-server /bin/sh
 
 script:
+  - npm list -g --depth=0
+  - ls
   - gulp test
 
 deploy:
