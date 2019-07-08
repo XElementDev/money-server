@@ -5,12 +5,9 @@ services:
 
 before_install:
   - docker build -t xelement/money-server .
-  - docker run -d xelement/money-server /bin/sh
 
 script:
-  - npm list -g --depth=0
-  - ls
-  - gulp test
+  - docker run xelement/money-server /bin/sh -c "gulp test"
 
 deploy:
   provider: script
