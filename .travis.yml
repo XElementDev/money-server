@@ -1,8 +1,18 @@
-language: node_js
+language: minimal
 
-before_script:
-  - npm install -g gulp-cli@2.0.1
+services:
+  - docker
+
+before_install:
+  - docker build -t xelement/money-server .
 
 script:
-  - gulp build
-  - gulp test
+  - docker run -t xelement/money-server /bin/sh -c "gulp test"
+
+deploy:
+  provider: script
+  script:
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker push xelement/money-server
+  on:
+    branch: master

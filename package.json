@@ -1,6 +1,6 @@
 {
 	"engines": {
-		"node": "10.13.0"
+		"node": "10.14.2"
 	},
 	"license": "Apache-2.0",
 	"name": "xelement-money-server",
@@ -11,7 +11,7 @@
 	"dependencies": {
 		"body-parser": "1.18.3",
 		"express": "4.16.2",
-		"node": "10.13.0",
+		"node": "10.14.2",
 		"tsoa": "2.3.8",
 		"url-join": "2.0.2"
 	},
