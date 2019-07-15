@@ -11,6 +11,6 @@ script:
 
 deploy:
   provider: script
-  script: ./etc/travis/docker_push
+  script: ./etc/travis/docker_push.sh
   on:
     branch: master
