@@ -10,6 +10,7 @@ script:
   - docker run -t xelement/money-server /bin/sh -c "gulp test"
 
 deploy:
+  skip_cleanup: true
   provider: script
   script: ./etc/travis/docker_push.sh
   on:
