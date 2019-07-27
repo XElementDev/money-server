@@ -13,5 +13,3 @@ deploy:
   skip_cleanup: true
   provider: script
   script: ./etc/travis/docker_push.sh
-  on:
-    branch: master
