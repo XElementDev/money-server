@@ -1,4 +1,4 @@
-import "./dev/gulp/build";
-import "./dev/gulp/clean";
-import "./dev/gulp/test";
-import "./dev/gulp/watch";
+import "./etc/gulp/build";
+import "./etc/gulp/clean";
+import "./etc/gulp/test";
+import "./etc/gulp/watch";

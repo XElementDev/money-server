@@ -48,7 +48,7 @@
 	"scripts": {
 		"build": "gulp build",
 		"clean": "gulp clean",
-		"compile-gulpfile": "tsc -p ./dev/ts/gulp-files/tsconfig.json",
+		"compile-gulpfile": "tsc -p ./etc/ts/gulp-files/tsconfig.json",
 		"gulp": "npm install -g gulp-cli@2.2.0 && npm run compile-gulpfile",
 		"postinstall": "npm run gulp",
 		"test": "gulp test",
