@@ -9,7 +9,10 @@ import { GulpModel } from "./GulpModel";
 export const runAllTestsTaskName: string = "_runAllTests";
 
 const runAllTestsTaskFunction: () => NodeJS.ReadWriteStream = () => {
-	const srcOptions: SrcOptions = { read: false };
+	const srcOptions: SrcOptions = {
+		read: false,
+		since: undefined // always re-run tests from all files
+	};
 	const mochaSetupOptions: MochaSetupOptions = {
 		reporter: "spec"
 	};

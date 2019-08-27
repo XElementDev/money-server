@@ -1,12 +1,18 @@
 {
-    // See https://go.microsoft.com/fwlink/?LinkId=733558
-    // for the documentation about the tasks.json format
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"identifier": "gulp: build",
-			"type": "gulp",
-			"task": "build",
+			"label": "build",
+			"type": "shell",
+			"command": "npm run build",
+			"problemMatcher": [ "$tsc" ]
+		},
+		{
+			"label": "build (Docker)",
+			"type": "shell",
+			"dependsOn": "Docker pull",
+			"command": "docker run --rm -t -v $(pwd):/opt/xelement/money-server/ xelement/money-server sh -c 'npm run build'",
+			"windows": { "command": "docker run --rm -t -v ${PWD}:/opt/xelement/money-server/ xelement/money-server sh -c 'npm run build'" },
 			"problemMatcher": [ "$tsc" ],
 			"group": {
 				"kind": "build",
@@ -14,14 +20,64 @@
 			}
 		},
 		{
-			"type": "gulp",
-			"task": "clean",
+			"label": "clean",
+			"type": "shell",
+			"command": "npm run clean",
 			"problemMatcher": []
 		},
 		{
-			"type": "gulp",
-			"task": "rebuild",
-			"problemMatcher": [ "$tsc" ]
+			"label": "clean (Docker)",
+			"type": "shell",
+			"dependsOn": "Docker pull",
+			"command": "docker run --rm -t -v $(pwd):/opt/xelement/money-server/ xelement/money-server sh -c 'npm run clean'",
+			"windows": { "command": "docker run --rm -t -v ${PWD}:/opt/xelement/money-server/ xelement/money-server sh -c 'npm run clean'" },
+			"problemMatcher": []
+		},
+		{
+			"label": "Docker pull",
+			"type":"shell",
+			"command": "docker pull money-server",
+			"problemMatcher": []
+		},
+		{
+			"label": "install (Docker)",
+			"type": "shell",
+			"dependsOn": "Docker pull",
+			"command": "docker run --rm -t -v $(pwd):/opt/xelement/money-server/ xelement/money-server sh -c 'npm install --unsafe-perm'",
+			"windows": { "command": "docker run --rm -t -v ${PWD}:/opt/xelement/money-server/ xelement/money-server sh -c 'npm install --unsafe-perm'" },
+			"problemMatcher": []
+		},
+		{
+			"label": "test",
+			"type": "shell",
+			"command": "npm test",
+			"problemMatcher": []
+		},
+		{
+			"label": "test (Docker)",
+			"type": "shell",
+			"dependsOn": "Docker pull",
+			"command": "docker run --rm -t -v $(pwd):/opt/xelement/money-server/ xelement/money-server sh -c 'npm test'",
+			"windows": { "command": "docker run --rm -t -v ${PWD}:/opt/xelement/money-server/ xelement/money-server sh -c 'npm test'" },
+			"problemMatcher": [],
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			}
+		},
+		{
+			"label": "watch",
+			"type": "shell",
+			"command": "npm run watch",
+			"problemMatcher": []
+		},
+		{
+			"label": "watch (Docker)",
+			"type": "shell",
+			"dependsOn": "Docker pull",
+			"command": "docker run --rm -i -t -v $(pwd):/opt/xelement/money-server/ xelement/money-server sh -c 'npm run watch'",
+			"windows": { "command": "docker run --rm -i -t -v ${PWD}:/opt/xelement/money-server/ xelement/money-server sh -c 'npm run watch'" },
+			"problemMatcher": []
 		}
 	]
 }

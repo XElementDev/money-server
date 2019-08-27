@@ -8,6 +8,7 @@ import {
 import * as path from "path";
 import * as tslint from "tslint";
 import * as Undertaker from "undertaker";
+import { SrcOptions } from "vinyl-fs";
 import { GulpModel } from "./GulpModel";
 
 
@@ -15,6 +16,9 @@ function createTslintTaskSync(
 	globs: string | Array<string>,
 	tslintJsonFileType: "logic-files" | "test-files"
 ): NodeJS.ReadWriteStream {
+	const srcOptions: SrcOptions = {
+		since: undefined // always re-run linting on all files
+	};
 	const tsconfigFilePath = path.join(__dirname, "..", "ts", "tslint-files", "tsconfig.json");
 	const program = tslint.Linter.createProgram(tsconfigFilePath);
 	const pluginOptions: PluginOptions = {
@@ -26,7 +30,7 @@ function createTslintTaskSync(
 	const reportOptions: ReportOptions = {
 		summarizeFailureOutput: true
 	};
-	const src$ = gulp.src(globs)
+	const src$ = gulp.src(globs, srcOptions)
 		.pipe(count("Going to run `tslint` on <%= counter %> file(s)."))
 		.pipe(gulpTslint(pluginOptions))
 		.pipe(gulpTslint.report(reportOptions))

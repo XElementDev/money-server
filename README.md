@@ -6,11 +6,18 @@
 The software is currently in a state that does not yet allow an end-user installation.
 
 
-## Development (using Visual Studio Code)
+## Development
 1. Install *Node.js*. (The required version can be found inside the `package.json` file.)
 2. Clone this repository.
-3. `cd` inside the cloned directory and run `npm install`.
-4. Install the recommended Visual Studio Code extensions.
-5. Run the Visual Studio Code build task, i.e. the `gulp: build` task.
-6. Run the `gulp: test` task.
-7. Once steps #5 and #6 ran successfully, you are ready to develop.
+2. `cd` inside the cloned directory and run `npm install`.
+2. Install the recommended Visual Studio Code extensions (or its correspondences for any other Editor/IDE).
+2. Run `npm test`.
+2. Run `npm watch` and start developping.
+
+
+### ...via Docker and Visual Studio Code
+1. Clone this repository.
+2. Open the repository in vscode.
+2. Run the vscode task `install (Docker)`.
+2. Run the vscode task `test (Docker)`.
+2. Run the vscode task `watch (Docker)` and start developping.
