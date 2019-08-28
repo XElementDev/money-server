@@ -1,6 +1,6 @@
 {
 	"engines": {
-		"node": "10.16.0"
+		"node": "10.16.3"
 	},
 	"license": "Apache-2.0",
 	"name": "xelement-money-server",
@@ -18,9 +18,7 @@
 		"@types/chai": "4.1.7",
 		"@types/express": "4.17.0",
 		"@types/gulp": "4.0.6",
-		"@types/gulp-changed": "0.0.32",
 		"@types/gulp-mocha": "0.0.32",
-		"@types/gulp-sourcemaps": "0.0.32",
 		"@types/jquery": "3.3.30",
 		"@types/list-stream": "1.0.0",
 		"@types/mocha": "5.2.6",
@@ -33,11 +31,9 @@
 		"chai": "4.2.0",
 		"del": "4.1.1",
 		"gulp": "4.0.2",
-		"gulp-changed": "4.0.0",
 		"gulp-count": "1.0.0",
 		"gulp-mocha": "6.0.0",
 		"gulp-sequence": "1.0.0",
-		"gulp-sourcemaps": "2.6.5",
 		"gulp-tslint": "8.1.4",
 		"gulp-typescript": "5.0.1",
 		"list-stream": "1.0.1",
@@ -50,9 +46,13 @@
 		"vinyl-fs": "3.0.3"
 	},
 	"scripts": {
-		"compile-gulpfile": "tsc -p ./dev/ts/gulp-files/tsconfig.json",
+		"build": "gulp build",
+		"clean": "gulp clean",
+		"compile-gulpfile": "tsc -p ./etc/ts/gulp-files/tsconfig.json",
 		"gulp": "npm install -g gulp-cli@2.2.0 && npm run compile-gulpfile",
-		"postinstall": "npm run gulp"
+		"postinstall": "npm run gulp",
+		"test": "gulp test",
+		"watch": "gulp watch"
 	},
 	"version": "0.0.0"
 }

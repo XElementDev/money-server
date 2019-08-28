@@ -23,7 +23,8 @@ const tsoaTaskFunction: () => Promise<void> = async () => {
 		GulpModel.createSrcGlobSync("tsoa.json")
 	];
 	const srcOptions: SrcOptions = {
-		read: false
+		read: false,
+		since: gulp.lastRun(tsoaTaskName)
 	};
 	const folderPathsPromise = new Promise<Array<string>>((resolve, reject) => {
 		gulp.src(tsoaFileGlobs, srcOptions)

@@ -4,7 +4,7 @@
 		"noEmit": true
 	},
 	"include": [
-		"../../../dev/**/*.ts",
+		"../../../etc/**/*.ts",
 		"../../../src/**/*.ts",
 		"../../../gulpfile.ts"
 	]

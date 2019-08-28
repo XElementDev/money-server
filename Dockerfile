@@ -14,4 +14,4 @@ RUN apk add jq=1.6-r0 && \
 
 #	↓	Compile money-server
 RUN npm install --unsafe-perm
-RUN gulp build
+RUN npm run build

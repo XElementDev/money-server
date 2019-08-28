@@ -6,7 +6,7 @@ import { runAllTestsTaskName } from "./run-all-tests";
 
 const testTaskName: string = "test";
 
-const testTaskFunction: Undertaker.TaskFunction = gulp.series(
+export const testTaskFunction: Undertaker.TaskFunction = gulp.series(
 	buildTaskName,
 	runAllTestsTaskName
 );
