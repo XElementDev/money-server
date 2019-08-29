@@ -1,6 +1,6 @@
 FROM alpine:3.10
 
-MAINTAINER Christian Sporer "https://github.com/IanStorm"
+LABEL maintainer="https://github.com/IanStorm"
 
 ENV NODE_ENV development
 

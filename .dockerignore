@@ -1,0 +1,10 @@
+# + Visual Studio Code
+.vscode/*
+
+
+# + project-specific
+dist/
+
+
+# + Node.js
+node_modules/
