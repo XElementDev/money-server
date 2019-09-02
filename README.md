@@ -1,5 +1,5 @@
 # Money Server
-[![Build Status](https://travis-ci.com/XElementDev/money-server.svg?branch=master)](https://travis-ci.com/XElementDev/money-server)
+[![Build Status](https://xelement.visualstudio.com/money-server/_apis/build/status/XElementDev.money-server?branchName=master)](https://xelement.visualstudio.com/money-server/_build/latest?definitionId=5&branchName=master)
 
 
 ## End-user installation
