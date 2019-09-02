@@ -5,8 +5,10 @@ services:
 
 jobs:
   include:
-    - script: docker build -t money-server .
-    - script: docker run -t money-server /bin/sh -c "gulp test"
+    - stage: build
+      script: docker build -t money-server .
+    - stage: test
+      script: docker run -t money-server /bin/sh -c "gulp test"
     - stage: deploy
       name: "Deploy to Docker Hub"
       script:
