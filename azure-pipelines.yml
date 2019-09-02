@@ -10,7 +10,7 @@ variables:
   tag: $(Build.BuildId)
 
 stages:
-- stage: Build
+- stage: build
   displayName: Build image
   jobs:
   - job: Build
@@ -25,15 +25,21 @@ stages:
         dockerfile: '**/Dockerfile'
         tags: |
           $(tag)
-
-
-- task: Docker@2
-  inputs:
-    containerRegistry: 'Docker Hub (via xelementbot)'
-    command: 'login'
-
-- task: Docker@2
-  inputs:
-    containerRegistry: 'Docker Hub (via xelementbot)'
-    repository: 'money-server'
-    command: 'push'
+- stage: deploy
+  displayName: Deploy to Docker Hub
+  dependsOn: build
+  jobs:
+  - job: deploy
+    displayName: Deploy to Docker Hub
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Docker Hub (via xelementbot)'
+        command: 'login'
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'Docker Hub (via xelementbot)'
+        repository: 'money-server'
+        command: 'push'
