@@ -7,7 +7,7 @@ resources:
 - repo: self
 
 variables:
-  tag: latest
+  tag: $(Build.BuildId)
 
 stages:
 - stage: Build
@@ -25,3 +25,15 @@ stages:
         dockerfile: '**/Dockerfile'
         tags: |
           $(tag)
+
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'Docker Hub (via xelementbot)'
+    command: 'login'
+
+- task: Docker@2
+  inputs:
+    containerRegistry: 'Docker Hub (via xelementbot)'
+    repository: 'money-server'
+    command: 'push'
