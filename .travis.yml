@@ -3,15 +3,12 @@ language: minimal
 services:
   - docker
 
-jobs:
-  include:
-    - stage: build
-      script: docker build -t money-server .
-    - stage: test
-      script: docker run -t money-server /bin/sh -c "gulp test"
-    - stage: deploy
-      name: "Deploy to Docker Hub"
-      script:
-        - docker tag money-server xelement/money-server
-        - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-        - docker push xelement/money-server
+install:
+  - docker build -t money-server .
+
+script:
+  - docker run -t money-server /bin/sh -c "gulp test"
+
+deploy:
+  provider: script
+  script: /bin/sh etc/travis/docker_deploy.sh
