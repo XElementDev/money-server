@@ -12,18 +12,30 @@ variables:
   docker_connection: 'Docker Hub (via xelementbot)' # see https://xelement.visualstudio.com/money-server/_settings/adminservices
 
 
-steps:
+jobs:
 
-  - task: DockerInstaller@0
-    displayName: Install Docker
+- job: install
+  displayName: Install
+  steps:
+    - task: DockerInstaller@0
+      displayName: Install Docker
 
-  - bash: docker build -t money-server .
+- job: build
+  displayName: Build
+  steps:
+    - bash: docker build -t money-server .
 
-  - bash: docker run -t money-server /bin/sh -c "gulp test"
+- job: test
+  displayName: Test
+  steps:
+    - bash: docker run -t money-server /bin/sh -c "gulp test"
 
-  - bash: docker tag money-server xelement/money-server:latest
-  - task: Docker@2
-    inputs:
-      command: 'login'
-      containerRegistry: $(docker_connection)
-  - bash: docker push xelement/money-server:latest
+- job: deploy
+  displayName: Deploy to Docker Hub
+  steps:
+    - bash: docker tag money-server xelement/money-server:latest
+    - task: Docker@2
+      inputs:
+        command: 'login'
+        containerRegistry: $(docker_connection)
+    - bash: docker push xelement/money-server:latest
