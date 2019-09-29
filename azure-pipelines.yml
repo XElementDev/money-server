@@ -10,35 +10,22 @@ resources:
 
 variables:
   docker_connection: 'Docker Hub (via xelementbot)' # see https://xelement.visualstudio.com/money-server/_settings/adminservices
+  local_docker_image: 'money-server:latest'
+  remote_docker_image: 'xelement/money-server:latest'
 
 
-jobs:
+steps:
 
-- job: install
-  displayName: Install
-  steps:
-    - task: DockerInstaller@0
-      displayName: Install Docker
+  - task: DockerInstaller@0
+    displayName: Install Docker
 
-- job: build
-  displayName: Build
-  dependsOn: install
-  steps:
-    - bash: docker build -t money-server .
+  - bash: docker build -t $(local_docker_image) .
 
-- job: test
-  displayName: Test
-  dependsOn: build
-  steps:
-    - bash: docker run -t money-server /bin/sh -c "gulp test"
+  - bash: docker run -t $(local_docker_image) /bin/sh -c "gulp test"
 
-- job: deploy
-  displayName: Deploy to Docker Hub
-  dependsOn: test
-  steps:
-    - bash: docker tag money-server xelement/money-server:latest
-    - task: Docker@2
-      inputs:
-        command: 'login'
-        containerRegistry: $(docker_connection)
-    - bash: docker push xelement/money-server:latest
+  - bash: docker tag $(local_docker_image) $(remote_docker_image)
+  - task: Docker@2
+    inputs:
+      command: 'login'
+      containerRegistry: $(docker_connection)
+  - bash: docker push $(remote_docker_image)
