@@ -11,30 +11,37 @@ resources:
 variables:
   docker_connection: 'Docker Hub (via xelementbot)' # see https://xelement.visualstudio.com/money-server/_settings/adminservices
   is_master: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-  local_docker_image: 'money-server:latest'
-  remote_docker_image: 'xelement/money-server:latest'
+  local_docker_image: money-server
+  remote_docker_image_name: xelement/money-server
+  remote_docker_image_latest: '$(remote_docker_image_name):latest'
+  remote_docker_image_temp: '$(remote_docker_image_name):$(Build.BuildId)'
 
 
-steps:
+jobs:
 
-  - task: DockerInstaller@0
-    displayName: Install Docker
+- job: build
+  displayName: Build
+  steps:
+    - bash: docker build -t $(local_docker_image) .
+    - bash: docker tag $(local_docker_image) $(remote_docker_image_temp)
+    - task: Docker@2
+      inputs:
+        command: 'login'
+        containerRegistry: $(docker_connection)
+    - bash: docker push $(remote_docker_image_temp)
 
-  - bash: docker build -t $(local_docker_image) .
-    displayName: Build
+- job: test
+  displayName: Test
+  steps:
+    - bash: docker run -t $(remote_docker_image_temp) /bin/sh -c "gulp test"
 
-  - bash: docker run -t $(local_docker_image) /bin/sh -c "gulp test"
-    displayName: Test
-
-  - bash: docker tag $(local_docker_image) $(remote_docker_image)
-    condition: $(is_master)
-    displayName: 'Deploy (1/3)'
-  - task: Docker@2
-    displayName: 'Deploy (2/3)'
-    condition: $(is_master)
-    inputs:
-      command: 'login'
-      containerRegistry: $(docker_connection)
-  - bash: docker push $(remote_docker_image)
-    displayName: 'Deploy (3/3)'
-    condition: $(is_master)
+- job: deploy
+  displayName: Deploy to Docker Hub
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  steps:
+    - bash: docker tag $(remote_docker_image_temp) $(remote_docker_image_latest)
+    - task: Docker@2
+      inputs:
+        command: 'login'
+        containerRegistry: $(docker_connection)
+    - bash: docker push $(remote_docker_image_latest)
