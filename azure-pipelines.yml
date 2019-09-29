@@ -22,16 +22,19 @@ jobs:
 
 - job: build
   displayName: Build
+  dependsOn: install
   steps:
     - bash: docker build -t money-server .
 
 - job: test
   displayName: Test
+  dependsOn: build
   steps:
     - bash: docker run -t money-server /bin/sh -c "gulp test"
 
 - job: deploy
   displayName: Deploy to Docker Hub
+  dependsOn: test
   steps:
     - bash: docker tag money-server xelement/money-server:latest
     - task: Docker@2
