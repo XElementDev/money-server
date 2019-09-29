@@ -3,23 +3,62 @@ trigger:
    include:
      - '*'
 
+
 resources:
 - repo: self
+
 
 variables:
   docker_connection: 'Docker Hub (via xelementbot)' # see https://xelement.visualstudio.com/money-server/_settings/adminservices
 
-steps:
-  - task: Docker@2
-    inputs:
-      command: 'login'
-      containerRegistry: $(docker_connection)
-  - task: Docker@2
-    displayName: Build and push Docker Image
-    inputs:
-      command: buildAndPush
-      containerRegistry: $(docker_connection)
-      dockerfile: './Dockerfile'
-      repository: 'xelement/money-server'
-      tags: |
-        latest
+
+stages:
+
+- stage: install
+  displayName: Install
+  jobs:
+  - job: install-docker
+    displayName: Install Docker
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - task: DockerInstaller@0
+      displayName: Install Docker
+
+- stage: build
+  displayName: Build
+  dependsOn: install
+  jobs:
+  - job: build-docker
+    displayName: Build Docker Image(s)
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - bash: docker build -t money-server .
+
+- stage: test
+  displayName: Test
+  dependsOn: build
+  jobs:
+  - job: test
+    displayName: Test
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - bash: docker run -t money-server /bin/sh -c "gulp test"
+
+- stage: deploy
+  displayName: Deploy to Docker Hub
+  dependsOn: test
+  jobs:
+  - job: deploy-latest
+    displayName: Deploy to Docker Hub as latest
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+    - bash: docker tag money-server xelement/money-server
+    - task: Docker@2
+      inputs:
+        command: 'login'
+        containerRegistry: $(docker_connection)
+    - bash: docker push xelement/money-server
