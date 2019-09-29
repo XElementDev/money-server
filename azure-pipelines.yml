@@ -32,13 +32,16 @@ jobs:
 
 - job: test
   displayName: Test
+  dependsOn: build
   steps:
+    - bash: docker pull $(remote_docker_image_temp)
     - bash: docker run -t $(remote_docker_image_temp) /bin/sh -c "gulp test"
 
 - job: deploy
   displayName: Deploy to Docker Hub
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  dependsOn: test
   steps:
+    - bash: docker pull $(remote_docker_image_temp)
     - bash: docker tag $(remote_docker_image_temp) $(remote_docker_image_latest)
     - task: Docker@2
       inputs:
