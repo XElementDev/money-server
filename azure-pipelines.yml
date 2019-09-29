@@ -20,12 +20,19 @@ steps:
     displayName: Install Docker
 
   - bash: docker build -t $(local_docker_image) .
+    displayName: Build
 
   - bash: docker run -t $(local_docker_image) /bin/sh -c "gulp test"
+    displayName: Test
 
   - bash: docker tag $(local_docker_image) $(remote_docker_image)
+    displayName: 'Deploy (1/3)'
   - task: Docker@2
+    displayName: 'Deploy (2/3)'
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
     inputs:
       command: 'login'
       containerRegistry: $(docker_connection)
   - bash: docker push $(remote_docker_image)
+    displayName: 'Deploy (3/3)'
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
