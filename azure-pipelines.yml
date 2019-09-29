@@ -10,52 +10,60 @@ resources:
 
 variables:
   docker_connection: 'Docker Hub (via xelementbot)' # see https://xelement.visualstudio.com/money-server/_settings/adminservices
-  is_master: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   local_docker_image: money-server
   remote_docker_image_name: xelement/money-server
   remote_docker_image_latest: '$(remote_docker_image_name):latest'
   remote_docker_image_temp: '$(remote_docker_image_name):$(Build.BuildId)'
 
 
-jobs:
+stages:
 
-- job: build
+- stage: build
   displayName: Build
-  steps:
-    - bash: docker build -t $(local_docker_image) .
-      displayName: Docker build
-    - bash: docker tag $(local_docker_image) $(remote_docker_image_temp)
-      displayName: Docker tag
-    - task: Docker@2
-      displayName: Docker login
-      inputs:
-        command: 'login'
-        containerRegistry: $(docker_connection)
-    - bash: docker push $(remote_docker_image_temp)
-      displayName: Docker push
+  jobs:
+    - job: build_docker
+      displayName: Build Docker image
+      steps:
+        - bash: docker build -t $(local_docker_image) .
+          displayName: Docker build
+        - bash: docker tag $(local_docker_image) $(remote_docker_image_temp)
+          displayName: Docker tag
+        - task: Docker@2
+          displayName: Docker login
+          inputs:
+            command: 'login'
+            containerRegistry: $(docker_connection)
+        - bash: docker push $(remote_docker_image_temp)
+          displayName: Docker push
 
-- job: test
+- stage: test
   displayName: Test
   dependsOn: build
-  steps:
-    - bash: docker pull $(remote_docker_image_temp)
-      displayName: Docker pull
-    - bash: docker run -t $(remote_docker_image_temp) /bin/sh -c "gulp test"
-      displayName: Docker run
+  jobs:
+  - job: test_docker
+    displayName: Gulp test (inside Docker)
+    steps:
+      - bash: docker pull $(remote_docker_image_temp)
+        displayName: Docker pull
+      - bash: docker run -t $(remote_docker_image_temp) /bin/sh -c "gulp test"
+        displayName: Docker run
 
-- job: deploy
-  displayName: Deploy to Docker Hub
+- stage: deploy
+  displayName: Deploy
   dependsOn: test
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-  steps:
-    - bash: docker pull $(remote_docker_image_temp)
-      displayName: Docker pull
-    - bash: docker tag $(remote_docker_image_temp) $(remote_docker_image_latest)
-      displayName: Docker tag
-    - task: Docker@2
-      displayName: Docker login
-      inputs:
-        command: 'login'
-        containerRegistry: $(docker_connection)
-    - bash: docker push $(remote_docker_image_latest)
-      displayName: Docker push
+  jobs:
+  - job: deploy_dockerhub
+    displayName: 'Deploy to Docker Hub as ":latest"'
+    steps:
+      - bash: docker pull $(remote_docker_image_temp)
+        displayName: Docker pull
+      - bash: docker tag $(remote_docker_image_temp) $(remote_docker_image_latest)
+        displayName: Docker tag
+      - task: Docker@2
+        displayName: Docker login
+        inputs:
+          command: 'login'
+          containerRegistry: $(docker_connection)
+      - bash: docker push $(remote_docker_image_latest)
+        displayName: Docker push
