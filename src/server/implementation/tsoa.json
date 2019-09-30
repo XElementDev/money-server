@@ -10,6 +10,7 @@
 		"entryFile": "./Service.ts",
 		"host": "localhost:8080",
 		"outputDirectory": "../interface/generated/",
+		"specVersion": 3,
 		"yaml": true
 	}
 }

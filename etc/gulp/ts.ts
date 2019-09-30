@@ -1,5 +1,4 @@
 import * as gulp from "gulp";
-import * as count from "gulp-count";
 import * as gulpTs from "gulp-typescript";
 import * as path from "path";
 import * as ts from "typescript";
@@ -22,7 +21,7 @@ const typescriptTaskFunction: () => NodeJS.ReadWriteStream = () => {
 	const typescriptFileGlobs: Array<string> = [ GulpModel.createSrcGlobSync("*.ts") ];
 	const srcOptions: SrcOptions = { since: gulp.lastRun(typescriptTaskName) };
 	const src$ = gulp.src(typescriptFileGlobs, srcOptions)
-		.pipe(count("Going to compile <%= counter %> TypeScript file(s)."))
+		.pipe(GulpModel.count((c) => `Going to compile ${c} TypeScript file(s).`))
 		.pipe(tsProject())
 		.pipe(gulp.dest(GulpModel.absoluteOutDir))
 	;

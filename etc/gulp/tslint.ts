@@ -1,5 +1,4 @@
 import * as gulp from "gulp";
-import * as count from "gulp-count";
 import {
 	default as gulpTslint,
 	PluginOptions,
@@ -31,7 +30,7 @@ function createTslintTaskSync(
 		summarizeFailureOutput: true
 	};
 	const src$ = gulp.src(globs, srcOptions)
-		.pipe(count("Going to run `tslint` on <%= counter %> file(s)."))
+		.pipe(GulpModel.count((c) => `Going to run \`tslint\` on ${c} file(s).`))
 		.pipe(gulpTslint(pluginOptions))
 		.pipe(gulpTslint.report(reportOptions))
 	;
