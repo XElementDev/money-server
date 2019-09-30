@@ -1,5 +1,4 @@
 import * as gulp from "gulp";
-import * as count from "gulp-count";
 import * as gulpMocha from "gulp-mocha";
 import * as path from "path";
 import { SrcOptions } from "vinyl-fs";
@@ -20,7 +19,7 @@ const runAllTestsTaskFunction: () => NodeJS.ReadWriteStream = () => {
 		path.join(GulpModel.absoluteOutDir, GulpModel.ALL_FOLDERS, "*.spec.js")
 	];
 	const src$ = gulp.src(globs, srcOptions)
-		.pipe(count("Going to run tests from <%= counter %> file(s)."))
+		.pipe(GulpModel.count((c) => `Going to run tests from ${c} file(s).`))
 		.pipe(gulpMocha(mochaSetupOptions))
 	;
 	return src$;

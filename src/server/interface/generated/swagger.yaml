@@ -1,122 +1,150 @@
-basePath: /v0
-consumes:
-    - application/json
-definitions:
-    IdentifiablePerson:
-        properties:
-            id:
-                type: string
-            avatarUrlStr:
-                type: string
-                x-nullable: true
-            prename:
-                type: string
-            surname:
-                type: string
-        required:
-            - id
-            - prename
-            - surname
-        type: object
-    Identifiable:
-        properties:
-            id:
-                type: string
-        required:
-            - id
-        type: object
-    Retailer:
-        properties:
-            logoUrlStr:
-                type: string
-                x-nullable: true
-            name:
-                type: string
-        required:
-            - name
-        type: object
+components:
+    examples: {}
+    headers: {}
+    parameters: {}
+    requestBodies: {}
+    responses: {}
+    schemas:
+        IdentifiablePerson:
+            properties:
+                id:
+                    type: string
+                avatarUrlStr:
+                    type: string
+                    nullable: true
+                prename:
+                    type: string
+                surname:
+                    type: string
+            required:
+                - id
+                - prename
+                - surname
+            type: object
+            additionalProperties: true
+        Identifiable:
+            properties:
+                id:
+                    type: string
+            required:
+                - id
+            type: object
+            additionalProperties: true
+        Retailer:
+            properties:
+                logoUrlStr:
+                    type: string
+                    nullable: true
+                name:
+                    type: string
+            required:
+                - name
+            type: object
+            additionalProperties: true
+        IdentifiableRetailer:
+            properties:
+                id:
+                    type: string
+                logoUrlStr:
+                    type: string
+                    nullable: true
+                name:
+                    type: string
+            required:
+                - id
+                - name
+            type: object
+            additionalProperties: true
+    securitySchemes: {}
 info:
     title: TSOA
     version: 1.0.0
     description: 'Build swagger-compliant REST APIs using TypeScript and Node'
     license:
         name: MIT
+openapi: 3.0.0
 paths:
     /persons:
         get:
             operationId: GetPersonsSync
-            produces:
-                - application/json
             responses:
                 '200':
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: '#/components/schemas/IdentifiablePerson'
+                                type: array
                     description: Ok
-                    schema:
-                        type: array
-                        items:
-                            $ref: '#/definitions/IdentifiablePerson'
             security: []
             parameters: []
     '/persons/{id}':
         get:
             operationId: GetPersonSync
-            produces:
-                - application/json
             responses:
                 '200':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/IdentifiablePerson'
                     description: Ok
-                    schema:
-                        $ref: '#/definitions/IdentifiablePerson'
             security: []
             parameters:
                 -
                     in: path
                     name: id
                     required: true
-                    type: string
+                    schema:
+                        type: string
     /retailers:
         post:
             operationId: CreateRetailer
-            produces:
-                - application/json
             responses:
                 '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Identifiable'
                     description: Created
-                    schema:
-                        $ref: '#/definitions/Identifiable'
                 '400':
+                    content:
+                        application/json: {}
                     description: 'Bad Request'
             security: []
-            parameters:
-                -
-                    in: body
-                    name: requestBody
-                    required: true
-                    schema:
-                        $ref: '#/definitions/Retailer'
+            parameters: []
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Retailer'
         get:
             operationId: ReadRetailers
-            produces:
-                - application/json
             responses:
                 '200':
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: '#/components/schemas/Identifiable'
+                                type: array
                     description: OK
-                    schema:
-                        type: array
-                        items:
-                            $ref: '#/definitions/Identifiable'
             security: []
             parameters: []
     '/retailers/{id}':
         get:
             operationId: ReadRetailer
-            produces:
-                - application/json
             responses:
                 '200':
+                    content:
+                        application/json:
+                            schema:
+                                oneOf:
+                                    - {$ref: '#/components/schemas/IdentifiableRetailer'}
+                                    - {}
                     description: OK
-                    schema:
-                        type: object
                 '404':
+                    content:
+                        application/json: {}
                     description: 'Not Found'
             security: []
             parameters:
@@ -124,9 +152,8 @@ paths:
                     in: path
                     name: id
                     required: true
-                    type: string
-produces:
-    - application/json
-swagger: '2.0'
-securityDefinitions: {}
-host: 'localhost:8080'
+                    schema:
+                        type: string
+servers:
+    -
+        url: 'https://localhost:8080/v0'

@@ -1,4 +1,6 @@
+import * as colors from "ansi-colors";
 import * as path from "path";
+import * as through from "through2";
 
 
 export class GulpModel {
@@ -42,6 +44,25 @@ export class GulpModel {
 
 	public static createSrcGlobSync(...subPaths: Array<string>): string {
 		return path.join(this.absoluteRootDir, GulpModel.ALL_FOLDERS, ...subPaths);
+	}
+
+
+	public static count(
+		messageTemplate: (count: string) => string
+	): NodeJS.ReadWriteStream {
+		let counter: number = 0;
+		return through.obj(
+			(chunk: any, __, callback) => {
+				++counter;
+				callback(null, chunk);
+			},
+			(callback) => {
+				const counterStr = colors.magenta(counter.toString());
+				const message = messageTemplate(counterStr);
+				console.log(message);
+				callback();
+			}
+		);
 	}
 
 }
