@@ -3,6 +3,8 @@
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { Controller, ValidationService, FieldErrors, ValidateError, TsoaRoute } from 'tsoa';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+import { CategoryController } from './../controllers/CategoryController';
+// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { PersonController } from './../controllers/PersonController';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 import { RetailerController } from './../controllers/RetailerController';
@@ -11,19 +13,38 @@ import * as express from 'express';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
+	"Identifiable": {
+		"properties": {
+			"id": { "dataType": "string", "required": true },
+		},
+		"additionalProperties": true,
+	},
+	// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+	"Category": {
+		"properties": {
+			"description": { "dataType": "string" },
+			"logoUrlStr": { "dataType": "string" },
+			"name": { "dataType": "string", "required": true },
+		},
+		"additionalProperties": true,
+	},
+	// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+	"IdentifiableCategory": {
+		"properties": {
+			"description": { "dataType": "string" },
+			"logoUrlStr": { "dataType": "string" },
+			"name": { "dataType": "string", "required": true },
+			"id": { "dataType": "string", "required": true },
+		},
+		"additionalProperties": true,
+	},
+	// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 	"IdentifiablePerson": {
 		"properties": {
 			"id": { "dataType": "string", "required": true },
 			"avatarUrlStr": { "dataType": "string" },
 			"prename": { "dataType": "string", "required": true },
 			"surname": { "dataType": "string", "required": true },
-		},
-		"additionalProperties": true,
-	},
-	// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-	"Identifiable": {
-		"properties": {
-			"id": { "dataType": "string", "required": true },
 		},
 		"additionalProperties": true,
 	},
@@ -55,6 +76,71 @@ export function RegisterRoutes(app: express.Express) {
 	//  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
 	//      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa
 	// ###########################################################################################################
+	app.post('/v0/categories',
+		function(request: any, response: any, next: any) {
+			const args = {
+				requestBody: { "in": "body", "name": "requestBody", "required": true, "ref": "Category" },
+			};
+
+			// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+			let validatedArgs: any[] = [];
+			try {
+				validatedArgs = getValidatedArgs(args, request);
+			} catch (err) {
+				return next(err);
+			}
+
+			const controller = new CategoryController();
+
+
+			const promise = controller.createCategory.apply(controller, validatedArgs as any);
+			promiseHandler(controller, promise, response, next);
+		});
+	// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+	app.get('/v0/categories',
+		function(request: any, response: any, next: any) {
+			const args = {
+			};
+
+			// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+			let validatedArgs: any[] = [];
+			try {
+				validatedArgs = getValidatedArgs(args, request);
+			} catch (err) {
+				return next(err);
+			}
+
+			const controller = new CategoryController();
+
+
+			const promise = controller.readCategories.apply(controller, validatedArgs as any);
+			promiseHandler(controller, promise, response, next);
+		});
+	// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+	app.get('/v0/categories/:id',
+		function(request: any, response: any, next: any) {
+			const args = {
+				id: { "in": "path", "name": "id", "required": true, "dataType": "string" },
+			};
+
+			// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+			let validatedArgs: any[] = [];
+			try {
+				validatedArgs = getValidatedArgs(args, request);
+			} catch (err) {
+				return next(err);
+			}
+
+			const controller = new CategoryController();
+
+
+			const promise = controller.readCategory.apply(controller, validatedArgs as any);
+			promiseHandler(controller, promise, response, next);
+		});
+	// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 	app.get('/v0/persons',
 		function(request: any, response: any, next: any) {
 			const args = {

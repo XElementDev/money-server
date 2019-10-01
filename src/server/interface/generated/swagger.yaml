@@ -5,6 +5,45 @@ components:
     requestBodies: {}
     responses: {}
     schemas:
+        Identifiable:
+            properties:
+                id:
+                    type: string
+            required:
+                - id
+            type: object
+            additionalProperties: true
+        Category:
+            properties:
+                description:
+                    type: string
+                    nullable: true
+                logoUrlStr:
+                    type: string
+                    nullable: true
+                name:
+                    type: string
+            required:
+                - name
+            type: object
+            additionalProperties: true
+        IdentifiableCategory:
+            properties:
+                description:
+                    type: string
+                    nullable: true
+                logoUrlStr:
+                    type: string
+                    nullable: true
+                name:
+                    type: string
+                id:
+                    type: string
+            required:
+                - name
+                - id
+            type: object
+            additionalProperties: true
         IdentifiablePerson:
             properties:
                 id:
@@ -20,14 +59,6 @@ components:
                 - id
                 - prename
                 - surname
-            type: object
-            additionalProperties: true
-        Identifiable:
-            properties:
-                id:
-                    type: string
-            required:
-                - id
             type: object
             additionalProperties: true
         Retailer:
@@ -64,6 +95,64 @@ info:
         name: MIT
 openapi: 3.0.0
 paths:
+    /categories:
+        post:
+            operationId: CreateCategory
+            responses:
+                '201':
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Identifiable'
+                    description: Created
+                '400':
+                    content:
+                        application/json: {}
+                    description: 'Bad Request'
+            security: []
+            parameters: []
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Category'
+        get:
+            operationId: ReadCategories
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                items:
+                                    $ref: '#/components/schemas/Identifiable'
+                                type: array
+                    description: OK
+            security: []
+            parameters: []
+    '/categories/{id}':
+        get:
+            operationId: ReadCategory
+            responses:
+                '200':
+                    content:
+                        application/json:
+                            schema:
+                                oneOf:
+                                    - {$ref: '#/components/schemas/IdentifiableCategory'}
+                                    - {}
+                    description: OK
+                '404':
+                    content:
+                        application/json: {}
+                    description: 'Not Found'
+            security: []
+            parameters:
+                -
+                    in: path
+                    name: id
+                    required: true
+                    schema:
+                        type: string
     /persons:
         get:
             operationId: GetPersonsSync
