@@ -53,13 +53,13 @@ export class CategoryController extends Controller {
 	@Get("{id}")
 	@SuccessResponse(200, "OK")
 	@Response(404, "Not Found")
-	public readCategory(id: string): Promise<IdentifiableCategory | void> {
+	public readCategory(id: string): Promise<IdentifiableCategory> {
 		const matchingCategories = CategoryController.categories.filter((c) => c.id === id);
 		if (matchingCategories.length > 0) {
 			return Promise.resolve(matchingCategories[0]);
 		} else {
 			this.setStatus(404);
-			return Promise.resolve(); // TODO: Maybe rather throw an `Error` instead of returning void?!
+			return Promise.reject();
 		}
 	}
 
