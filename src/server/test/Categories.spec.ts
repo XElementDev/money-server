@@ -38,7 +38,7 @@ describe("/categories", function() {
 			);
 
 			expect(response.statusCode).not.to.equal(415);
-		});
+		}); // TODO: Why there is "[object Object]" in the log? See lukeautry/tsoa issue #95.
 
 		it("does not accept anything else than JSON.", async function() {
 			await serviceEnv.create();
@@ -52,7 +52,7 @@ describe("/categories", function() {
 			);
 
 			expect(response.statusCode).to.equal(400);
-		});
+		}); // TODO: Why there is "[object Object]" in the log? See lukeautry/tsoa issue #95.
 
 		it("does not accept semantically wrong JSON.", async function() {
 			await serviceEnv.create();
@@ -67,7 +67,7 @@ describe("/categories", function() {
 			);
 
 			expect(response.statusCode).to.equal(400);
-		});
+		}); // TODO: Why there is "[object Object]" in the log? See lukeautry/tsoa issue #95.
 
 		it("accepts semantically correct minimal JSON input.", async function() {
 			await serviceEnv.create();
