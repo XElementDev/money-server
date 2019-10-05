@@ -98,6 +98,27 @@ describe("/categories", function() {
 			expect(response.statusCode).to.equal(201);
 		});
 
+		it("accepts semantically correct full JSON input with extra properties.", async function() {
+			await serviceEnv.create();
+			const fullJson: Category = {
+				logoUrlStr: "category-logo",
+				name: "category-name"
+			};
+			const fullJsonWithExtras = {
+				...fullJson,
+				extraKeyA: "extra-value-A",
+				extraKeyB: "extra-value-B"
+			};
+			serviceEnv.detailedRpnOptions.json = fullJsonWithExtras;
+
+			const response: rpn.FullResponse = await rpn.post(
+				getCategoriesUrlStr(),
+				serviceEnv.detailedRpnOptions
+			);
+
+			expect(response.statusCode).to.equal(201);
+		});
+
 		it("returns an ID.", async function() {
 			await serviceEnv.create();
 			const category: Category = {

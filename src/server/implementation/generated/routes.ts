@@ -17,7 +17,7 @@ const models: TsoaRoute.Models = {
 		"properties": {
 			"id": { "dataType": "string", "required": true },
 		},
-		"additionalProperties": true,
+		"additionalProperties": false,
 	},
 	// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 	"Category": {
@@ -26,7 +26,7 @@ const models: TsoaRoute.Models = {
 			"logoUrlStr": { "dataType": "string" },
 			"name": { "dataType": "string", "required": true },
 		},
-		"additionalProperties": true,
+		"additionalProperties": false,
 	},
 	// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 	"IdentifiableCategory": {
@@ -36,7 +36,7 @@ const models: TsoaRoute.Models = {
 			"name": { "dataType": "string", "required": true },
 			"id": { "dataType": "string", "required": true },
 		},
-		"additionalProperties": true,
+		"additionalProperties": false,
 	},
 	// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 	"IdentifiablePerson": {
@@ -46,7 +46,7 @@ const models: TsoaRoute.Models = {
 			"prename": { "dataType": "string", "required": true },
 			"surname": { "dataType": "string", "required": true },
 		},
-		"additionalProperties": true,
+		"additionalProperties": false,
 	},
 	// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 	"Retailer": {
@@ -54,7 +54,7 @@ const models: TsoaRoute.Models = {
 			"logoUrlStr": { "dataType": "string" },
 			"name": { "dataType": "string", "required": true },
 		},
-		"additionalProperties": true,
+		"additionalProperties": false,
 	},
 	// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 	"IdentifiableRetailer": {
@@ -63,7 +63,7 @@ const models: TsoaRoute.Models = {
 			"logoUrlStr": { "dataType": "string" },
 			"name": { "dataType": "string", "required": true },
 		},
-		"additionalProperties": true,
+		"additionalProperties": false,
 	},
 	// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
@@ -293,15 +293,15 @@ export function RegisterRoutes(app: express.Express) {
 				case 'request':
 					return request;
 				case 'query':
-					return validationService.ValidateParam(args[key], request.query[name], name, fieldErrors, undefined, { "specVersion": 3 });
+					return validationService.ValidateParam(args[key], request.query[name], name, fieldErrors, undefined, { "noImplicitAdditionalProperties": "silently-remove-extras", "specVersion": 3 });
 				case 'path':
-					return validationService.ValidateParam(args[key], request.params[name], name, fieldErrors, undefined, { "specVersion": 3 });
+					return validationService.ValidateParam(args[key], request.params[name], name, fieldErrors, undefined, { "noImplicitAdditionalProperties": "silently-remove-extras", "specVersion": 3 });
 				case 'header':
-					return validationService.ValidateParam(args[key], request.header(name), name, fieldErrors, undefined, { "specVersion": 3 });
+					return validationService.ValidateParam(args[key], request.header(name), name, fieldErrors, undefined, { "noImplicitAdditionalProperties": "silently-remove-extras", "specVersion": 3 });
 				case 'body':
-					return validationService.ValidateParam(args[key], request.body, name, fieldErrors, name + '.', { "specVersion": 3 });
+					return validationService.ValidateParam(args[key], request.body, name, fieldErrors, name + '.', { "noImplicitAdditionalProperties": "silently-remove-extras", "specVersion": 3 });
 				case 'body-prop':
-					return validationService.ValidateParam(args[key], request.body[name], name, fieldErrors, 'body.', { "specVersion": 3 });
+					return validationService.ValidateParam(args[key], request.body[name], name, fieldErrors, 'body.', { "noImplicitAdditionalProperties": "silently-remove-extras", "specVersion": 3 });
 			}
 		});
 

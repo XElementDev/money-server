@@ -12,7 +12,7 @@ components:
             required:
                 - id
             type: object
-            additionalProperties: true
+            additionalProperties: false
         Category:
             properties:
                 description:
@@ -26,7 +26,7 @@ components:
             required:
                 - name
             type: object
-            additionalProperties: true
+            additionalProperties: false
         IdentifiableCategory:
             properties:
                 description:
@@ -43,7 +43,7 @@ components:
                 - name
                 - id
             type: object
-            additionalProperties: true
+            additionalProperties: false
         IdentifiablePerson:
             properties:
                 id:
@@ -60,7 +60,7 @@ components:
                 - prename
                 - surname
             type: object
-            additionalProperties: true
+            additionalProperties: false
         Retailer:
             properties:
                 logoUrlStr:
@@ -71,7 +71,7 @@ components:
             required:
                 - name
             type: object
-            additionalProperties: true
+            additionalProperties: false
         IdentifiableRetailer:
             properties:
                 id:
@@ -85,7 +85,7 @@ components:
                 - id
                 - name
             type: object
-            additionalProperties: true
+            additionalProperties: false
     securitySchemes: {}
 info:
     title: TSOA
@@ -137,9 +137,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                oneOf:
-                                    - {$ref: '#/components/schemas/IdentifiableCategory'}
-                                    - {}
+                                $ref: '#/components/schemas/IdentifiableCategory'
                     description: OK
                 '404':
                     content:
@@ -227,9 +225,7 @@ paths:
                     content:
                         application/json:
                             schema:
-                                oneOf:
-                                    - {$ref: '#/components/schemas/IdentifiableRetailer'}
-                                    - {}
+                                $ref: '#/components/schemas/IdentifiableRetailer'
                     description: OK
                 '404':
                     content:
