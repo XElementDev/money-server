@@ -3,19 +3,19 @@ import * as rpn from "request-promise-native";
 import * as urljoin from "url-join";
 import { MediaTypeName } from "../../framework/internet/interface";
 import {
+	Category,
 	Identifiable,
-	IdentifiableRetailer,
-	Retailer
+	IdentifiableCategory
 	} from "../interface";
 import { ServiceTestEnvironment } from "./ServiceTestEnvironment";
 
 
-describe("/retailers", function() {
+describe("/categories", function() {
 
 	let serviceEnv: ServiceTestEnvironment;
 
-	function getRetailersUrlStr(): string {
-		return urljoin(serviceEnv.serviceUrlStr, "retailers");
+	function getCategoriesUrlStr(): string {
+		return urljoin(serviceEnv.serviceUrlStr, "categories");
 	}
 
 	beforeEach(function() {
@@ -33,7 +33,7 @@ describe("/retailers", function() {
 			serviceEnv.detailedRpnOptions.json = {};
 
 			const response: rpn.FullResponse = await rpn.post(
-				getRetailersUrlStr(),
+				getCategoriesUrlStr(),
 				serviceEnv.detailedRpnOptions
 			);
 
@@ -47,7 +47,7 @@ describe("/retailers", function() {
 			serviceEnv.detailedRpnOptions.headers = { "Content-Type": contentType };
 
 			const response: rpn.FullResponse = await rpn.post(
-				getRetailersUrlStr(),
+				getCategoriesUrlStr(),
 				serviceEnv.detailedRpnOptions
 			);
 
@@ -62,7 +62,7 @@ describe("/retailers", function() {
 			serviceEnv.detailedRpnOptions.json = semanticallyWrongInput;
 
 			const response: rpn.FullResponse = await rpn.post(
-				getRetailersUrlStr(),
+				getCategoriesUrlStr(),
 				serviceEnv.detailedRpnOptions
 			);
 
@@ -71,11 +71,11 @@ describe("/retailers", function() {
 
 		it("accepts semantically correct minimal JSON input.", async function() {
 			await serviceEnv.create();
-			const minimalJson: Retailer = { name: "bakery John Doe" };
+			const minimalJson: Category = { name: "household" };
 			serviceEnv.detailedRpnOptions.json = minimalJson;
 
 			const response: rpn.FullResponse = await rpn.post(
-				getRetailersUrlStr(),
+				getCategoriesUrlStr(),
 				serviceEnv.detailedRpnOptions
 			);
 
@@ -84,14 +84,14 @@ describe("/retailers", function() {
 
 		it("accepts semantically correct full JSON input.", async function() {
 			await serviceEnv.create();
-			const fullJson: Retailer = {
+			const fullJson: Category = {
 				logoUrlStr: "https://bit.ly/2HOJsZm", // https://i.pinimg.com/originals/e8/d7/a8/e8d7a8e2533426f1b9f64e8d636c482f.jpg
-				name: "canteen Jane Doe"
+				name: "food"
 			};
 			serviceEnv.detailedRpnOptions.json = fullJson;
 
 			const response: rpn.FullResponse = await rpn.post(
-				getRetailersUrlStr(),
+				getCategoriesUrlStr(),
 				serviceEnv.detailedRpnOptions
 			);
 
@@ -100,9 +100,9 @@ describe("/retailers", function() {
 
 		it("accepts semantically correct full JSON input with extra properties.", async function() {
 			await serviceEnv.create();
-			const fullJson: Retailer = {
-				logoUrlStr: "retailer-logo",
-				name: "retailer-name"
+			const fullJson: Category = {
+				logoUrlStr: "category-logo",
+				name: "category-name"
 			};
 			const fullJsonWithExtras = {
 				...fullJson,
@@ -112,7 +112,7 @@ describe("/retailers", function() {
 			serviceEnv.detailedRpnOptions.json = fullJsonWithExtras;
 
 			const response: rpn.FullResponse = await rpn.post(
-				getRetailersUrlStr(),
+				getCategoriesUrlStr(),
 				serviceEnv.detailedRpnOptions
 			);
 
@@ -121,14 +121,14 @@ describe("/retailers", function() {
 
 		it("returns an ID.", async function() {
 			await serviceEnv.create();
-			const retailer: Retailer = {
-				logoUrlStr: "https://bit.ly/2Fzqbty", // https://images.vexels.com/media/users/3/129047/isolated/lists/d83b329197a96fdbea6ae842d8dd5e85-windmill-bakery-logo-svg.png
-				name: "bakery"
+			const category: Category = {
+				logoUrlStr: "https://bit.ly/2nhkoT9", // https://images.vexels.com/media/users/3/135898/isolated/preview/b427c272b21c80f9bddea2d6d9dbe733-executive-team-peoples-by-vexels.png
+				name: "work"
 			};
-			serviceEnv.simpleRpnOptions.json = retailer;
+			serviceEnv.simpleRpnOptions.json = category;
 
 			const identifiable: Identifiable = await rpn.post(
-				getRetailersUrlStr(),
+				getCategoriesUrlStr(),
 				serviceEnv.simpleRpnOptions
 			);
 
@@ -138,18 +138,18 @@ describe("/retailers", function() {
 
 		it("creates locally unique IDs.", async function() {
 			await serviceEnv.create();
-			const retailer: Retailer = {
-				logoUrlStr: "https://bit.ly/2HGi8gu", // https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/MM_S3_RGB_POS.pdf/page1-220px-MM_S3_RGB_POS.pdf.jpg
-				name: "meat market"
+			const category: Category = {
+				logoUrlStr: "https://bit.ly/2mzOgtm", // https://png.pngtree.com/element_pic/17/02/19/4e10739872e26990dfa2dc99a7f106d3.jpg
+				name: "sports"
 			};
-			serviceEnv.simpleRpnOptions.json = retailer;
+			serviceEnv.simpleRpnOptions.json = category;
 
 			const identifiable1: Identifiable = await rpn.post(
-				getRetailersUrlStr(),
+				getCategoriesUrlStr(),
 				serviceEnv.simpleRpnOptions
 			);
 			const identifiable2: Identifiable = await rpn.post(
-				getRetailersUrlStr(),
+				getCategoriesUrlStr(),
 				serviceEnv.simpleRpnOptions
 			);
 
@@ -167,7 +167,7 @@ describe("/retailers", function() {
 			const expectedContentType: MediaTypeName = "application/json";
 
 			const fullResponse: rpn.FullResponse = await rpn.get(
-				getRetailersUrlStr(),
+				getCategoriesUrlStr(),
 				serviceEnv.detailedRpnOptions
 			);
 
@@ -180,7 +180,7 @@ describe("/retailers", function() {
 			await serviceEnv.create();
 
 			const ids: Array<Identifiable> = await rpn.get(
-				getRetailersUrlStr(),
+				getCategoriesUrlStr(),
 				serviceEnv.simpleRpnOptions
 			);
 
@@ -190,11 +190,11 @@ describe("/retailers", function() {
 
 		it("returns a +1 list after 1 previous POST.", async function() {
 			await serviceEnv.create();
-			const retailer: Retailer = { name: "supermarket A" };
+			const category: Category = { name: "gift" };
 
-			await rpn.post(getRetailersUrlStr(), { json: retailer });
+			await rpn.post(getCategoriesUrlStr(), { json: category });
 			const ids: Array<Identifiable> = await rpn.get(
-				getRetailersUrlStr(),
+				getCategoriesUrlStr(),
 				{ json: true }
 			);
 
@@ -204,12 +204,12 @@ describe("/retailers", function() {
 
 		it("returns a +2 list after 2 previous POSTs.", async function() {
 			await serviceEnv.create();
-			const retailer: Retailer = { name: "supermarket B" };
+			const category: Category = { name: "education" };
 
-			await rpn.post(getRetailersUrlStr(), { json: retailer });
-			await rpn.post(getRetailersUrlStr(), { json: retailer });
+			await rpn.post(getCategoriesUrlStr(), { json: category });
+			await rpn.post(getCategoriesUrlStr(), { json: category });
 			const ids: Array<Identifiable> = await rpn.get(
-				getRetailersUrlStr(),
+				getCategoriesUrlStr(),
 				{ json: true }
 			);
 
@@ -220,16 +220,17 @@ describe("/retailers", function() {
 		it("returns nothing but a list of IDs.", async function() {
 			await serviceEnv.create();
 			const identifiable: Identifiable = { id: "some-id" };
-			const retailer: Retailer = {
+			const category: Category = {
+				description: "some-description",
 				logoUrlStr: "some-logo-url",
 				name: "some-name"
 			};
 			const expectedKeys = Object.keys(identifiable);
-			const notExpectedKeys = Object.keys(retailer);
+			const notExpectedKeys = Object.keys(category);
 
-			await rpn.post(getRetailersUrlStr(), { json: retailer });
+			await rpn.post(getCategoriesUrlStr(), { json: category });
 			const ids: Array<Identifiable> = await rpn.get(
-				getRetailersUrlStr(),
+				getCategoriesUrlStr(),
 				{ json: true }
 			);
 
@@ -243,12 +244,12 @@ describe("/retailers", function() {
 
 		it("returns JSON, for an existing entry.", async function() {
 			await serviceEnv.create();
-			const retailer: Retailer = { name: "canteen A" };
-			const identifiable: Identifiable = await rpn.post(getRetailersUrlStr(), { json: retailer });
+			const category: Category = { name: "furniture" };
+			const identifiable: Identifiable = await rpn.post(getCategoriesUrlStr(), { json: category });
 			const expectedContentType: MediaTypeName = "application/json";
 
 			const fullResponse: rpn.FullResponse = await rpn.get(
-				urljoin(getRetailersUrlStr(), identifiable.id),
+				urljoin(getCategoriesUrlStr(), identifiable.id),
 				serviceEnv.detailedRpnOptions
 			);
 
@@ -261,7 +262,7 @@ describe("/retailers", function() {
 			await serviceEnv.create();
 
 			const fullResponse: rpn.FullResponse = await rpn.get(
-				urljoin(getRetailersUrlStr(), "some-definitely-non-existing-id"),
+				urljoin(getCategoriesUrlStr(), "some-definitely-non-existing-category-id"),
 				serviceEnv.detailedRpnOptions
 			);
 
@@ -270,35 +271,36 @@ describe("/retailers", function() {
 
 		it("returns a previously POSTed Retailer.", async function() {
 			await serviceEnv.create();
-			const retailer: Retailer = { name: "bakery B" };
-			const identifiable: Identifiable = await rpn.post(getRetailersUrlStr(), { json: retailer });
-			const expectedRetailer: IdentifiableRetailer = { ...identifiable, ...retailer };
+			const category: Category = { name: "health" };
+			const identifiable: Identifiable = await rpn.post(getCategoriesUrlStr(), { json: category });
+			const expectedCategory: IdentifiableCategory = { ...identifiable, ...category };
 
-			const actualRetailer = await rpn.get(
-				urljoin(getRetailersUrlStr(), identifiable.id),
+			const actualCategory = await rpn.get(
+				urljoin(getCategoriesUrlStr(), identifiable.id),
 				serviceEnv.simpleRpnOptions
 			);
 
-			expect(actualRetailer).to.be.instanceOf(Object);
-			expect(actualRetailer).to.deep.equal(expectedRetailer);
+			expect(actualCategory).to.be.instanceOf(Object);
+			expect(actualCategory).to.deep.equal(expectedCategory);
 		});
 
 		it("returns a previously POSTed Retailer in full details.", async function() {
 			await serviceEnv.create();
-			const retailer: Retailer = {
-				logoUrlStr: "some-retailer-logo-url",
-				name: "some-retailer-name"
+			const category: Category = {
+				description: "some-category-description",
+				logoUrlStr: "some-category-logo-url",
+				name: "some-category-name"
 			};
-			const identifiable: Identifiable = await rpn.post(getRetailersUrlStr(), { json: retailer });
-			const expectedRetailer: IdentifiableRetailer = { ...identifiable, ...retailer };
+			const identifiable: Identifiable = await rpn.post(getCategoriesUrlStr(), { json: category });
+			const expectedCategory: IdentifiableCategory = { ...identifiable, ...category };
 
-			const actualRetailer = await rpn.get(
-				urljoin(getRetailersUrlStr(), identifiable.id),
+			const actualCategory = await rpn.get(
+				urljoin(getCategoriesUrlStr(), identifiable.id),
 				serviceEnv.simpleRpnOptions
 			);
 
-			expect(actualRetailer).to.be.instanceOf(Object);
-			expect(actualRetailer).to.deep.equal(expectedRetailer);
+			expect(actualCategory).to.be.instanceOf(Object);
+			expect(actualCategory).to.deep.equal(expectedCategory);
 		});
 
 	});

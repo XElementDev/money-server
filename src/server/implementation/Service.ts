@@ -7,7 +7,8 @@ import {
 	ProductInfo
 	} from "../../common/publishing";
 import { ServiceConfig } from "../interface";
-import { PersonController } from "./controllers/PersonController"; // tslint:disable-line:no-unused-variable
+import { CategoryController } from "./controllers/CategoryController";
+import "./controllers/PersonController";
 import { RetailerController } from "./controllers/RetailerController";
 import { RegisterRoutes as registerRoutesSync } from "./generated/routes";
 
@@ -38,6 +39,7 @@ export class MoneyRestService {
 
 	private configureRoutesSync(): void {
 		registerRoutesSync(this.subApp);
+		CategoryController.categories = [];
 		RetailerController.retailers = [];
 
 		this.app.use(bodyParser.json());
@@ -47,7 +49,7 @@ export class MoneyRestService {
 			ProductInfo.internalName,
 			"API",
 			"REST"
-		); // TODO: Don't hard code this.
+		);
 		this.app.use(path, this.subApp);
 
 		return;

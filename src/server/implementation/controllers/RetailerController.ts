@@ -41,13 +41,13 @@ export class RetailerController extends Controller {
 	@Get("{id}")
 	@SuccessResponse(200, "OK")
 	@Response(404, "Not Found")
-	public readRetailer(id: string): Promise<IdentifiableRetailer | void> {
+	public readRetailer(id: string): Promise<IdentifiableRetailer> {
 		const matchingRetailers = RetailerController.retailers.filter((r) => r.id === id);
 		if (matchingRetailers.length > 0) {
 			return Promise.resolve(matchingRetailers[0]);
 		} else {
 			this.setStatus(404);
-			return Promise.resolve(); // TODO: Maybe rather throw an `Error` instead of returning void?!
+			return Promise.reject();
 		}
 	}
 

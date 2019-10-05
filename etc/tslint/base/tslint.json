@@ -1,5 +1,7 @@
 {
 	"extends": "tslint:recommended",
+	"encoding": true,
+	"eofline": true,
 	"rules": {
 		"array-type": [ true, "generic" ],
 		"indent": [ true, "tabs" ],
@@ -38,6 +40,8 @@
 			}
 		],
 		"no-consecutive-blank-lines": [ true, 2 ],
+		"no-shadowed-variable": true,
+		"no-trailing-whitespace": true,
 		"no-unused-variable": true,
 		"trailing-comma": [
 			true,

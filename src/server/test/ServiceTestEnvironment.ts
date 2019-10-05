@@ -1,3 +1,4 @@
+import * as rpn from "request-promise-native";
 import * as urljoin from "url-join";
 import { MoneyRestService } from "../implementation/Service";
 import { ServiceConfig } from "../interface";
@@ -6,6 +7,11 @@ import { ServiceConfig } from "../interface";
 export class ServiceTestEnvironment {
 
 	public constructor() {
+		this.detailedRpnOptions = {
+			resolveWithFullResponse: true,
+			simple: false
+		};
+		this.simpleRpnOptions = { json: true };
 		this.servicePort = 1337;
 
 		return;
@@ -28,6 +34,9 @@ export class ServiceTestEnvironment {
 	}
 
 
+	public readonly detailedRpnOptions: rpn.RequestPromiseOptions;
+
+
 	public async dispose(): Promise<void> {
 		await this.service.stop();
 		return;
@@ -41,6 +50,9 @@ export class ServiceTestEnvironment {
 
 
 	public get serviceUrlStr(): string { return this._serviceUrlStr; }
+
+
+	public readonly simpleRpnOptions: rpn.RequestPromiseOptions;
 
 
 	private async startService(): Promise<void> {
