@@ -1,5 +1,6 @@
 # Money Server
 [![Build Status](https://xelement.visualstudio.com/money-server/_apis/build/status/XElementDev.money-server?branchName=master)](https://xelement.visualstudio.com/money-server/_build/latest?definitionId=5&branchName=master)
+[![dependencies Status](https://david-dm.org/XElementDev/money-server/status.svg)](https://david-dm.org/XElementDev/money-server)
 [![Docker Pulls](https://img.shields.io/docker/pulls/xelement/money-server)](https://hub.docker.com/r/xelement/money-server)
 [![Docker Stars](https://img.shields.io/docker/stars/xelement/money-server)](https://hub.docker.com/r/xelement/money-server)
 
