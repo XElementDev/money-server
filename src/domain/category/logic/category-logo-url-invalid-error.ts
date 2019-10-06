@@ -1,7 +1,7 @@
 export class CategoryLogoUrlInvalidError extends Error {
 
 	public constructor() {
-		super();
+		super("Category logo URL is invalid.");
 		return;
 	}
 

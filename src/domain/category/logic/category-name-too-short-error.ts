@@ -1,7 +1,7 @@
 export class CategoryNameTooShortError extends Error {
 
 	public constructor() {
-		super();
+		super("Category name is too short.");
 		return;
 	}
 

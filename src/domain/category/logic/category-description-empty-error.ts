@@ -1,7 +1,7 @@
 export class CategoryDescriptionEmptyError extends Error {
 
 	public constructor() {
-		super();
+		super("Category description mustn't be empty.");
 		return;
 	}
 
