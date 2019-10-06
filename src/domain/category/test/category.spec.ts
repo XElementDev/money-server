@@ -114,7 +114,7 @@ describe("Category", function() {
 
 		it("mustn't be FTP.", function() {
 			expect(() => {
-				new CategoryLogo("ftp://ftp.example.com/some-file");
+				new CategoryLogo("ftp://ftp.example.com/category-logo");
 			}).to.throw(CategoryLogoUrlInvalidError);
 		});
 
