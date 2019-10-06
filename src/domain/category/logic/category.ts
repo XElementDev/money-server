@@ -18,7 +18,7 @@ export class Category {
 		if (existingNames.map((cn) => cn.value).includes(name.value)) {
 			throw new CategoryNameNotUniqueError();
 		}
-		if (logo !== undefined) { this.logoUrlStr = logo.value; }
+		if (logo !== undefined) { this.logo = logo.value; }
 		if (description !== undefined) { this.description = description.value; }
 		return;
 	}
@@ -27,7 +27,7 @@ export class Category {
 	public readonly description?: string;
 
 
-	public readonly logoUrlStr?: string;
+	public readonly logo?: string;
 
 
 	public readonly name: string;

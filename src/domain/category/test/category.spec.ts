@@ -137,7 +137,7 @@ describe("Category", function() {
 			[],
 			new CategoryLogo(expectedLogoUrlStr)
 		);
-		const actualLogoUrlStr = category.logoUrlStr;
+		const actualLogoUrlStr = category.logo;
 
 		expect(actualLogoUrlStr).to.equal(expectedLogoUrlStr);
 	});
