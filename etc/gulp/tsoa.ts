@@ -1,3 +1,4 @@
+import * as cp from "child_process";
 import * as cpp from "child-process-promise";
 import * as gulp from "gulp";
 import * as ListStream from "list-stream";
@@ -9,7 +10,8 @@ import { GulpModel } from "./GulpModel";
 
 export const tsoaTaskName: string = "_tsoa";
 
-async function exec(command: string, cppOptions: unknown): Promise<void> {
+type CppExecOptions = Readonly<cpp.Options & cp.ExecOptions>;
+async function exec(command: string, cppOptions: CppExecOptions): Promise<void> {
 	const execResult = await cpp.exec(command, cppOptions);
 	process.stdout.write(execResult.stdout);
 	if (execResult.stderr !== "") {

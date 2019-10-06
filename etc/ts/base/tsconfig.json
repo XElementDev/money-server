@@ -5,10 +5,14 @@
 		"module": "commonjs",
 		"moduleResolution": "node",
 		"noEmitOnError": true,
+		"noImplicitAny": true,
+		"noImplicitReturns": true,
+		"noImplicitThis": true,
 		"removeComments": true,
 		"sourceMap": false,
 		"strictFunctionTypes": true,
 		"strictNullChecks": true,
+		"strictPropertyInitialization": true,
 		"target": "es2015" // where "es2015"="es6"
 	}
 }

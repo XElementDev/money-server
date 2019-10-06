@@ -56,11 +56,18 @@ export class MoneyRestService {
 	}
 
 
-	private server: http.Server;
+	private get server(): http.Server {
+		if (this._server === undefined) {
+			throw new Error("`MoneyRestService` misused");
+		}
+		return this._server;
+	}
+
+	private _server: http.Server | undefined; // tslint:disable-line
 
 
 	public async start(): Promise<void> {
-		this.server = await new Promise<http.Server>((resolve, __) => {
+		this._server = await new Promise<http.Server>((resolve, __) => {
 			const server = this.app.listen(this.config.port, () => { resolve(server); });
 		});
 		return;

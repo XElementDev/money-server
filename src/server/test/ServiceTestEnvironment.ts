@@ -43,13 +43,27 @@ export class ServiceTestEnvironment {
 	}
 
 
-	private service: MoneyRestService;
+	private get service(): MoneyRestService {
+		if (this._service === undefined) {
+			throw new Error("`ServiceTestEnvironment` misused");
+		}
+		return this._service;
+	}
+
+	private _service: MoneyRestService | undefined; // tslint:disable-line
 
 
 	private servicePort: number;
 
 
-	public get serviceUrlStr(): string { return this._serviceUrlStr; }
+	public get serviceUrlStr(): string {
+		if (this._serviceUrlStr === undefined) {
+			throw new Error("`ServiceTestEnvironment` misused");
+		}
+		return this._serviceUrlStr;
+	}
+
+	private _serviceUrlStr: string | undefined; // tslint:disable-line
 
 
 	public readonly simpleRpnOptions: rpn.RequestPromiseOptions;
@@ -57,12 +71,9 @@ export class ServiceTestEnvironment {
 
 	private async startService(): Promise<void> {
 		const serviceConfig: ServiceConfig = { port: this.servicePort };
-		this.service = new MoneyRestService(serviceConfig);
+		this._service = new MoneyRestService(serviceConfig);
 		await this.service.start();
 		return;
 	}
-
-
-	private _serviceUrlStr: string; // tslint:disable-line
 
 }
