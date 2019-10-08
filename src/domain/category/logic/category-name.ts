@@ -1,17 +1,12 @@
-import { CategoryNameTooShortError } from "../index";
+import { CategoryNameTooShortError } from "../../../domain/category/index";
+import { Name } from "../../../domain/common/index";
 
 
-export class CategoryName {
+export class CategoryName extends Name<CategoryNameTooShortError> {
 
-	public constructor(
-		value: string
-	) {
-		this.value = value.trim();
-		if (this.value.length < 2) { throw new CategoryNameTooShortError(); }
+	public constructor(value: string) {
+		super(value, CategoryNameTooShortError);
 		return;
 	}
-
-
-	public readonly value: string;
 
 }

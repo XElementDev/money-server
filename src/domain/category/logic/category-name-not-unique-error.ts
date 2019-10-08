@@ -1,7 +1,10 @@
-export class CategoryNameNotUniqueError extends Error {
+import { NameNotUniqueError } from "../../../domain/common/index";
+
+
+export class CategoryNameNotUniqueError extends NameNotUniqueError {
 
 	public constructor() {
-		super("Category name is not unique.");
+		super("Category");
 		return;
 	}
 

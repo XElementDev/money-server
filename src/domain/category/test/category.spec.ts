@@ -72,7 +72,7 @@ describe("Category", function() {
 	it("needs a name.", function() {
 		const expectedName = "work";
 
-		const category = new Category(new CategoryName(expectedName), []);
+		const category = new Category({ name: new CategoryName(expectedName) }, []);
 		const actualName = category.name;
 
 		expect(actualName).to.equal(expectedName);
@@ -81,7 +81,10 @@ describe("Category", function() {
 	it("doesn't allow a non-unique name.", function() {
 		const expectedName = "sports";
 		expect(() => {
-			new Category(new CategoryName(expectedName), [ new CategoryName(expectedName) ]);
+			new Category(
+				{ name: new CategoryName(expectedName) },
+				[ new CategoryName(expectedName) ]
+			);
 		}).to.throw(CategoryNameNotUniqueError);
 	});
 
@@ -89,7 +92,7 @@ describe("Category", function() {
 		const expectedName = "gift";
 		const categoryName = new CategoryName(expectedName);
 
-		const category = new Category(categoryName, []);
+		const category = new Category({ name: categoryName }, []);
 		const actualName = category.name;
 
 		expect(actualName).to.equal(expectedName);
@@ -133,9 +136,11 @@ describe("Category", function() {
 		const expectedLogoUrlStr = "https://bit.ly/2HOJsZm"; // https://i.pinimg.com/originals/e8/d7/a8/e8d7a8e2533426f1b9f64e8d636c482f.jpg
 
 		const category = new Category(
-			new CategoryName("food"),
-			[],
-			new CategoryLogo(expectedLogoUrlStr)
+			{
+				logo: new CategoryLogo(expectedLogoUrlStr),
+				name: new CategoryName("food")
+			},
+			[]
 		);
 		const actualLogoUrlStr = category.logo;
 
@@ -181,10 +186,11 @@ describe("Category", function() {
 		const expectedDescription = "CDs, DVDs, BRs, etc.";
 
 		const category = new Category(
-			new CategoryName("multimedia"),
-			[],
-			undefined,
-			new CategoryDescription(expectedDescription)
+			{
+				description: new CategoryDescription(expectedDescription),
+				name: new CategoryName("multimedia")
+			},
+			[]
 		);
 		const actualDescription = category.description;
 

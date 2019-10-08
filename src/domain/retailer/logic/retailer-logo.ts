@@ -1,15 +1,12 @@
-import * as validUrl from "valid-url";
-import { RetailerLogoUrlInvalidError } from "../index";
+import { Logo } from "../../../domain/common/index";
+import { RetailerLogoUrlInvalidError } from "../../../domain/retailer/index";
 
 
-export class RetailerLogo {
+export class RetailerLogo extends Logo<RetailerLogoUrlInvalidError> {
 
-	public constructor(
-		public readonly value: string
-	) {
-		if (!validUrl.isWebUri(this.value)) {
-			throw new RetailerLogoUrlInvalidError();
-		}
+	public constructor(value: string) {
+		super(value, RetailerLogoUrlInvalidError);
 		return;
 	}
+
 }

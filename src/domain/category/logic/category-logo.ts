@@ -1,15 +1,11 @@
-import * as validUrl from "valid-url";
-import { CategoryLogoUrlInvalidError } from "../index";
+import { CategoryLogoUrlInvalidError } from "../../../domain/category/index";
+import { Logo } from "../../../domain/common/index";
 
 
-export class CategoryLogo {
+export class CategoryLogo extends Logo<CategoryLogoUrlInvalidError> {
 
-	public constructor(
-		public readonly value: string
-	) {
-		if (!validUrl.isWebUri(this.value)) {
-			throw new CategoryLogoUrlInvalidError();
-		}
+	public constructor(value: string) {
+		super(value, CategoryLogoUrlInvalidError);
 		return;
 	}
 

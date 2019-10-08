@@ -1,35 +1,36 @@
 import {
 	CategoryDescription,
 	CategoryLogo,
+	CategoryLogoUrlInvalidError,
 	CategoryName,
-	CategoryNameNotUniqueError
-	} from "../index";
+	CategoryNameNotUniqueError,
+	CategoryNameTooShortError
+	} from "../../../domain/category/index";
+import { Item } from "../../../domain/common/index";
 
 
-export class Category {
+export class Category extends Item<
+	CategoryLogo,
+	CategoryName,
+	CategoryLogoUrlInvalidError,
+	CategoryNameNotUniqueError,
+	CategoryNameTooShortError
+> {
 
 	public constructor(
-		name: CategoryName,
-		existingNames: Array<CategoryName>,
-		logo?: CategoryLogo,
-		description?: CategoryDescription
+		input: {
+			description?: CategoryDescription
+			logo?: CategoryLogo,
+			name: CategoryName
+		},
+		existingNames: Array<CategoryName>
 	) {
-		this.name = name.value;
-		if (existingNames.map((cn) => cn.value).includes(name.value)) {
-			throw new CategoryNameNotUniqueError();
-		}
-		if (logo !== undefined) { this.logo = logo.value; }
-		if (description !== undefined) { this.description = description.value; }
+		super(input, existingNames, CategoryNameNotUniqueError);
+		if (input.description !== undefined) { this.description = input.description.value; }
 		return;
 	}
 
 
 	public readonly description?: string;
-
-
-	public readonly logo?: string;
-
-
-	public readonly name: string;
 
 }

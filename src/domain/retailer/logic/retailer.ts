@@ -1,11 +1,20 @@
+import { Item } from "../../../domain/common/index";
 import {
 	RetailerLogo,
+	RetailerLogoUrlInvalidError,
 	RetailerName,
-	RetailerNameNotUniqueError
-	} from "../index";
+	RetailerNameNotUniqueError,
+	RetailerNameTooShortError
+	} from "../../../domain/retailer/index";
 
 
-export class Retailer {
+export class Retailer extends Item<
+	RetailerLogo,
+	RetailerName,
+	RetailerLogoUrlInvalidError,
+	RetailerNameNotUniqueError,
+	RetailerNameTooShortError
+> {
 
 	public constructor(
 		input: {
@@ -14,18 +23,8 @@ export class Retailer {
 		},
 		existingNames: Array<RetailerName>
 	) {
-		this.name = input.name.value;
-		if (existingNames.map((rn) => rn.value).includes(input.name.value)) {
-			throw new RetailerNameNotUniqueError();
-		}
-		if (input.logo !== undefined) { this.logo = input.logo.value; }
+		super(input, existingNames, RetailerNameNotUniqueError);
 		return;
 	}
-
-
-	public readonly logo?: string;
-
-
-	public readonly name: string;
 
 }

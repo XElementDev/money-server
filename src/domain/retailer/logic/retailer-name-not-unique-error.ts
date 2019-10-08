@@ -1,7 +1,10 @@
-export class RetailerNameNotUniqueError extends Error {
+import { NameNotUniqueError } from "../../../domain/common/index";
+
+
+export class RetailerNameNotUniqueError extends NameNotUniqueError {
 
 	public constructor() {
-		super("Retailer name is not unique.");
+		super("Retailer");
 		return;
 	}
 

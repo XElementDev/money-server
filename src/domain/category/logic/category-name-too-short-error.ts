@@ -1,7 +1,10 @@
-export class CategoryNameTooShortError extends Error {
+import { NameTooShortError } from "../../../domain/common/index";
+
+
+export class CategoryNameTooShortError extends NameTooShortError {
 
 	public constructor() {
-		super("Category name is too short.");
+		super("Category");
 		return;
 	}
 

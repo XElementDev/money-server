@@ -1,7 +1,10 @@
-export class RetailerLogoUrlInvalidError extends Error {
+import { LogoUrlInvalidError } from "../../../domain/common/index";
+
+
+export class RetailerLogoUrlInvalidError extends LogoUrlInvalidError {
 
 	public constructor() {
-		super("Retailer logo URL is invalid.");
+		super("Retailer");
 		return;
 	}
 
