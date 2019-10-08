@@ -1,20 +1,12 @@
 import { Item } from "../../../domain/common/index";
 import {
 	RetailerLogo,
-	RetailerLogoUrlInvalidError,
 	RetailerName,
-	RetailerNameNotUniqueError,
-	RetailerNameTooShortError
+	RetailerNameNotUniqueError
 	} from "../../../domain/retailer/index";
 
 
-export class Retailer extends Item<
-	RetailerLogo,
-	RetailerName,
-	RetailerLogoUrlInvalidError,
-	RetailerNameNotUniqueError,
-	RetailerNameTooShortError
-> {
+export class Retailer extends Item {
 
 	public constructor(
 		input: {

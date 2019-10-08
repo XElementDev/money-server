@@ -1,21 +1,13 @@
 import {
 	CategoryDescription,
 	CategoryLogo,
-	CategoryLogoUrlInvalidError,
 	CategoryName,
-	CategoryNameNotUniqueError,
-	CategoryNameTooShortError
+	CategoryNameNotUniqueError
 	} from "../../../domain/category/index";
 import { Item } from "../../../domain/common/index";
 
 
-export class Category extends Item<
-	CategoryLogo,
-	CategoryName,
-	CategoryLogoUrlInvalidError,
-	CategoryNameNotUniqueError,
-	CategoryNameTooShortError
-> {
+export class Category extends Item {
 
 	public constructor(
 		input: {

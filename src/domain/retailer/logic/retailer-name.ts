@@ -2,7 +2,7 @@ import { Name } from "../../../domain/common/index";
 import { RetailerNameTooShortError } from "../../../domain/retailer/index";
 
 
-export class RetailerName extends Name<RetailerNameTooShortError> {
+export class RetailerName extends Name {
 
 	public constructor(value: string) {
 		super(value, RetailerNameTooShortError);

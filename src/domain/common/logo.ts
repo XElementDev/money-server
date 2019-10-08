@@ -3,14 +3,14 @@ import { LogoUrlInvalidError } from "../../domain/common/index";
 import { NoParamConstructor } from "./no-param-constructor";
 
 
-export abstract class Logo<TError extends LogoUrlInvalidError> {
+export abstract class Logo {
 
 	protected constructor(
 		public readonly value: string,
-		TErrorCtor: NoParamConstructor<TError>
+		TLogoUrlInvalidErrorCtor: NoParamConstructor<LogoUrlInvalidError>
 	) {
 		if (!validUrl.isWebUri(this.value)) {
-			throw new TErrorCtor();
+			throw new TLogoUrlInvalidErrorCtor();
 		}
 		return;
 	}

@@ -2,14 +2,14 @@ import { NameTooShortError } from "../../domain/common/index";
 import { NoParamConstructor } from "./no-param-constructor";
 
 
-export abstract class Name<TError extends NameTooShortError> {
+export abstract class Name {
 
 	protected constructor(
 		public readonly value: string,
-		TErrorCtor: NoParamConstructor<TError>
+		TNameTooShortErrorCtor: NoParamConstructor<NameTooShortError>
 	) {
 		this.value = value.trim();
-		if (this.value.length < 2) { throw new TErrorCtor(); }
+		if (this.value.length < 2) { throw new TNameTooShortErrorCtor(); }
 		return;
 	}
 
