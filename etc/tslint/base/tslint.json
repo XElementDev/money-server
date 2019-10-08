@@ -1,9 +1,9 @@
 {
 	"extends": "tslint:recommended",
-	"encoding": true,
-	"eofline": true,
 	"rules": {
 		"array-type": [ true, "generic" ],
+		"encoding": true,
+		"eofline": true,
 		"indent": [ true, "tabs" ],
 		"interface-name": [ true, "never-prefix" ],
 		"max-line-length": [
