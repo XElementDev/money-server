@@ -2,7 +2,7 @@ import {
 	Logo,
 	Name,
 	NameNotUniqueError
-	} from "../../domain/common/index";
+	} from "../../domain/common";
 import { NoParamConstructor } from "./no-param-constructor";
 
 

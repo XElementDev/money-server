@@ -1,4 +1,4 @@
-import { NameTooShortError } from "../../domain/common/index";
+import { NameTooShortError } from "../../domain/common";
 import { NoParamConstructor } from "./no-param-constructor";
 
 

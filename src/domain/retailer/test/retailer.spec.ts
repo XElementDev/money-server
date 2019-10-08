@@ -6,7 +6,7 @@ import {
 	RetailerName,
 	RetailerNameNotUniqueError,
 	RetailerNameTooShortError
-	} from "../index";
+	} from "../../../domain/retailer";
 
 
 describe("Retailer", function() {

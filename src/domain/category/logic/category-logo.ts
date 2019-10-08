@@ -1,5 +1,5 @@
-import { CategoryLogoUrlInvalidError } from "../../../domain/category/index";
-import { Logo } from "../../../domain/common/index";
+import { CategoryLogoUrlInvalidError } from "../../../domain/category";
+import { Logo } from "../../../domain/common";
 
 
 export class CategoryLogo extends Logo {

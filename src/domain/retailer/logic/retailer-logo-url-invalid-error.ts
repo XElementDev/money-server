@@ -1,4 +1,4 @@
-import { LogoUrlInvalidError } from "../../../domain/common/index";
+import { LogoUrlInvalidError } from "../../../domain/common";
 
 
 export class RetailerLogoUrlInvalidError extends LogoUrlInvalidError {

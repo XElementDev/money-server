@@ -1,4 +1,4 @@
-import { NameNotUniqueError } from "../../../domain/common/index";
+import { NameNotUniqueError } from "../../../domain/common";
 
 
 export class CategoryNameNotUniqueError extends NameNotUniqueError {

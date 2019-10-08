@@ -8,7 +8,7 @@ import {
 	CategoryName,
 	CategoryNameNotUniqueError,
 	CategoryNameTooShortError
-	} from "../index";
+	} from "../../../domain/category";
 
 
 describe("Category", function() {

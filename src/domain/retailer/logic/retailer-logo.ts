@@ -1,5 +1,5 @@
-import { Logo } from "../../../domain/common/index";
-import { RetailerLogoUrlInvalidError } from "../../../domain/retailer/index";
+import { Logo } from "../../../domain/common";
+import { RetailerLogoUrlInvalidError } from "../../../domain/retailer";
 
 
 export class RetailerLogo extends Logo {

@@ -1,5 +1,5 @@
-import { CategoryNameTooShortError } from "../../../domain/category/index";
-import { Name } from "../../../domain/common/index";
+import { CategoryNameTooShortError } from "../../../domain/category";
+import { Name } from "../../../domain/common";
 
 
 export class CategoryName extends Name {

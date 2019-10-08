@@ -1,5 +1,5 @@
 import * as validUrl from "valid-url";
-import { LogoUrlInvalidError } from "../../domain/common/index";
+import { LogoUrlInvalidError } from "../../domain/common";
 import { NoParamConstructor } from "./no-param-constructor";
 
 

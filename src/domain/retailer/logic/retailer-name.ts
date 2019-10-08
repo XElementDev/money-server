@@ -1,5 +1,5 @@
-import { Name } from "../../../domain/common/index";
-import { RetailerNameTooShortError } from "../../../domain/retailer/index";
+import { Name } from "../../../domain/common";
+import { RetailerNameTooShortError } from "../../../domain/retailer";
 
 
 export class RetailerName extends Name {

@@ -1,4 +1,4 @@
-import { NameTooShortError } from "../../../domain/common/index";
+import { NameTooShortError } from "../../../domain/common";
 
 
 export class CategoryNameTooShortError extends NameTooShortError {

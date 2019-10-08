@@ -1,9 +1,9 @@
-import { Item } from "../../../domain/common/index";
+import { Item } from "../../../domain/common";
 import {
 	RetailerLogo,
 	RetailerName,
 	RetailerNameNotUniqueError
-	} from "../../../domain/retailer/index";
+	} from "../../../domain/retailer";
 
 
 export class Retailer extends Item {

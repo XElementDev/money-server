@@ -1,4 +1,4 @@
-import { CategoryDescriptionEmptyError } from "../index";
+import { CategoryDescriptionEmptyError } from "../../../domain/category";
 
 
 export class CategoryDescription {

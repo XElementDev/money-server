@@ -3,8 +3,8 @@ import {
 	CategoryLogo,
 	CategoryName,
 	CategoryNameNotUniqueError
-	} from "../../../domain/category/index";
-import { Item } from "../../../domain/common/index";
+	} from "../../../domain/category";
+import { Item } from "../../../domain/common";
 
 
 export class Category extends Item {
