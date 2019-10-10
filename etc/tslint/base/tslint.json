@@ -41,9 +41,13 @@
 		],
 		"no-consecutive-blank-lines": [ true, 2 ],
 		"no-default-export": true,
+		"no-require-imports": true,
 		"no-shadowed-variable": true,
 		"no-trailing-whitespace": true,
 		"no-unused-variable": true,
+		"prefer-const": true,
+		"prefer-readonly": true,
+		"semicolon": [ true, "always" ],
 		"trailing-comma": [
 			true,
 			{

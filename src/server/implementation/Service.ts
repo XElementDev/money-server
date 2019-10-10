@@ -31,10 +31,10 @@ export class MoneyRestService {
 	}
 
 
-	private app: express.Express;
+	private readonly app: express.Express;
 
 
-	private config: ServiceConfig;
+	private readonly config: ServiceConfig;
 
 
 	private configureRoutesSync(): void {
@@ -82,7 +82,7 @@ export class MoneyRestService {
 	}
 
 
-	private subApp: express.Express;
+	private readonly subApp: express.Express;
 
 }
 //#endregion

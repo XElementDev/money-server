@@ -53,7 +53,7 @@ export class ServiceTestEnvironment {
 	private _service: MoneyRestService | undefined; // tslint:disable-line
 
 
-	private servicePort: number;
+	private readonly servicePort: number;
 
 
 	public get serviceUrlStr(): string {
