@@ -23,6 +23,6 @@ export class Category extends Item {
 	}
 
 
-	public readonly description?: string;
+	public readonly description: string | undefined;
 
 }

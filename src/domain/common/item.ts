@@ -25,7 +25,7 @@ export abstract class Item {
 	}
 
 
-	public readonly logo?: string;
+	public readonly logo: string | undefined;
 
 
 	public readonly name: string;
