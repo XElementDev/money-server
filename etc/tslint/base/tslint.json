@@ -40,6 +40,7 @@
 			}
 		],
 		"no-consecutive-blank-lines": [ true, 2 ],
+		"no-default-export": true,
 		"no-shadowed-variable": true,
 		"no-trailing-whitespace": true,
 		"no-unused-variable": true,
