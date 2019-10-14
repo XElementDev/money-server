@@ -145,4 +145,10 @@ describe("Person", function() {
 		expect(actualAvatarUrl).to.equal(expectedAvatarUrl);
 	});
 
+	it("doesn't need an avatar.", function() {
+		const person = new Person({ name: new PersonName("Jane Doe") }, []);
+		const actualAvatarUrl = person.avatar;
+		expect(actualAvatarUrl).to.be.undefined;
+	});
+
 });

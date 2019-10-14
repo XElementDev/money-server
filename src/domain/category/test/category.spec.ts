@@ -147,6 +147,12 @@ describe("Category", function() {
 		expect(actualLogoUrlStr).to.equal(expectedLogoUrlStr);
 	});
 
+	it("doesn't need a logo.", function() {
+		const category = new Category({ name: new CategoryName("groceries") }, []);
+		const actualLogoUrl = category.logo;
+		expect(actualLogoUrl).to.be.undefined;
+	});
+
 	describe("description", function() {
 
 		it("needs to be a string.", function() {
@@ -195,6 +201,12 @@ describe("Category", function() {
 		const actualDescription = category.description;
 
 		expect(actualDescription).to.equal(expectedDescription);
+	});
+
+	it("doesn't need a description.", function() {
+		const category = new Category({ name: new CategoryName("clothes") }, []);
+		const actualDescription = category.description;
+		expect(actualDescription).to.be.undefined;
 	});
 
 });

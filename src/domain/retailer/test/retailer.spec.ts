@@ -142,4 +142,10 @@ describe("Retailer", function() {
 		expect(actualLogoUrlStr).to.equal(expectedLogoUrlStr);
 	});
 
+	it("doesn't need a logo", function() {
+		const retailer = new Retailer({ name: new RetailerName("canteen") }, []);
+		const actualLogoUrl = retailer.logo;
+		expect(actualLogoUrl).to.be.undefined;
+	});
+
 });
