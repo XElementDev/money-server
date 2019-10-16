@@ -19,6 +19,7 @@ describe("Retailer", function() {
 			const retailerName = new RetailerName(expectedRetailerName);
 			const actualRetailerName = retailerName.value;
 
+			expect(actualRetailerName).to.be.a("string");
 			expect(actualRetailerName).to.equal(expectedRetailerName);
 		});
 
@@ -104,6 +105,7 @@ describe("Retailer", function() {
 			const retailerLogo = new RetailerLogo(expectedRetailerLogoUrlStr);
 			const actualRetailerLogoUrl = retailerLogo.value;
 
+			expect(actualRetailerLogoUrl).to.be.a("string");
 			expect(actualRetailerLogoUrl).to.equal(expectedRetailerLogoUrlStr);
 		});
 

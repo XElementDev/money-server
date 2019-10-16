@@ -19,6 +19,7 @@ describe("Person", function() {
 			const personName = new PersonName(expectedPersonName);
 			const actualPersonName = personName.value;
 
+			expect(actualPersonName).to.be.a("string");
 			expect(actualPersonName).to.equal(expectedPersonName);
 		});
 
@@ -104,6 +105,7 @@ describe("Person", function() {
 			const personAvatar = new PersonAvatar(expectedPersonAvatarUrl);
 			const actualPersonAvatarUrl = personAvatar.value;
 
+			expect(actualPersonAvatarUrl).to.be.a("string");
 			expect(actualPersonAvatarUrl).to.equal(expectedPersonAvatarUrl);
 		});
 

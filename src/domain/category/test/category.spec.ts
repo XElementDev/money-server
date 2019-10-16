@@ -21,6 +21,7 @@ describe("Category", function() {
 			const categoryName = new CategoryName(expectedCategoryName);
 			const actualCategoryName = categoryName.value;
 
+			expect(actualCategoryName).to.be.a("string");
 			expect(actualCategoryName).to.equal(expectedCategoryName);
 		});
 
@@ -106,6 +107,7 @@ describe("Category", function() {
 			const categoryLogo = new CategoryLogo(expectedCategoryLogoUrlStr);
 			const actualCategoryLogoUrl = categoryLogo.value;
 
+			expect(actualCategoryLogoUrl).to.be.a("string");
 			expect(actualCategoryLogoUrl).to.equal(expectedCategoryLogoUrlStr);
 		});
 
@@ -161,6 +163,7 @@ describe("Category", function() {
 			const categoryDecsription = new CategoryDescription(expectedCategoryDescription);
 			const actualCategoryDescription = categoryDecsription.value;
 
+			expect(actualCategoryDescription).to.be.a("string");
 			expect(actualCategoryDescription).to.equal(expectedCategoryDescription);
 		});
 
