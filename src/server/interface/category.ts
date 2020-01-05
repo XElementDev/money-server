@@ -1,4 +1,4 @@
-export interface Category {
+export interface JsonCategory {
 
 	readonly description?: string;
 

@@ -1,8 +1,8 @@
 import {
-	Category,
-	Identifiable
+	Identifiable,
+	JsonCategory
 	} from "./index";
 
 
-export interface IdentifiableCategory extends Category, Identifiable {
+export interface IdentifiableCategory extends JsonCategory, Identifiable {
 }

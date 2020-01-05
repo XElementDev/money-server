@@ -1,4 +1,4 @@
-export * from "./ICategory";
+export * from "./category";
 export * from "./IIdentifiable";
 export * from "./IIdentifiableCategory";
 export * from "./IIdentifiableRetailer";

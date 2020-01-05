@@ -11,6 +11,7 @@
   "dependencies": {
     "body-parser": "1.19.0",
     "express": "4.17.1",
+    "lodash": "4.17.15",
     "tsoa": "2.5.3",
     "url-join": "2.0.2",
     "valid-url": "1.0.9"
@@ -24,6 +25,7 @@
     "@types/gulp-mocha": "0.0.32",
     "@types/jquery": "3.3.30",
     "@types/list-stream": "1.0.0",
+    "@types/lodash": "4.14.144",
     "@types/mocha": "5.2.6",
     "@types/node": "10.14.12",
     "@types/request-promise-native": "1.0.16",

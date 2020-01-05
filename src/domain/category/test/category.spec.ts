@@ -26,15 +26,27 @@ describe("Category", function() {
 		});
 
 		it("mustn't be empty.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new CategoryName("");
-			}).to.throw(CategoryNameTooShortError);
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(CategoryNameTooShortError);
+			expect(error!.name).to.equal("CategoryNameTooShortError");
 		});
 
 		it("mustn't be 1 character.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new CategoryName("A");
-			}).to.throw(CategoryNameTooShortError);
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(CategoryNameTooShortError);
+			expect(error!.name).to.equal("CategoryNameTooShortError");
 		});
 
 		it("needs to have, at minimum, 2 characters.", function() {
@@ -47,15 +59,27 @@ describe("Category", function() {
 		});
 
 		it("mustn't be whitespace only.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new CategoryName("  ");
-			}).to.throw(CategoryNameTooShortError);
+			} catch (err) {
+				error = err;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(CategoryNameTooShortError);
+			expect(error!.name).to.equal("CategoryNameTooShortError");
 		});
 
 		it("mustn't be 1 character strechted by whitespace.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new CategoryName("   B  ");
-			}).to.throw(CategoryNameTooShortError);
+			} catch (err) {
+				error = err;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(CategoryNameTooShortError);
+			expect(error!.name).to.equal("CategoryNameTooShortError");
 		});
 
 		it("trims whitespace.", function() {
@@ -81,12 +105,20 @@ describe("Category", function() {
 
 	it("doesn't allow a non-unique name.", function() {
 		const expectedName = "sports";
-		expect(() => {
+		let error: Error | undefined;
+
+		try {
 			new Category(
 				{ name: new CategoryName(expectedName) },
 				[ new CategoryName(expectedName) ]
 			);
-		}).to.throw(CategoryNameNotUniqueError);
+		} catch (err) {
+			error = err;
+		}
+
+		expect(error).not.to.be.undefined;
+		expect(error).to.be.instanceOf(CategoryNameNotUniqueError);
+		expect(error!.name).to.equal("CategoryNameNotUniqueError");
 	});
 
 	it("needs a unique name.", function() {
@@ -112,15 +144,27 @@ describe("Category", function() {
 		});
 
 		it("mustn't be empty.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new CategoryLogo("");
-			}).to.throw(CategoryLogoUrlInvalidError);
+			} catch (err) {
+				error = err;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(CategoryLogoUrlInvalidError);
+			expect(error!.name).to.equal("CategoryLogoUrlInvalidError");
 		});
 
 		it("mustn't be FTP.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new CategoryLogo("ftp://ftp.example.com/category-logo");
-			}).to.throw(CategoryLogoUrlInvalidError);
+			} catch (err) {
+				error = err;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(CategoryLogoUrlInvalidError);
+			expect(error!.name).to.equal("CategoryLogoUrlInvalidError");
 		});
 
 		it("needs to be a valid URL.", function() {
@@ -168,15 +212,27 @@ describe("Category", function() {
 		});
 
 		it("mustn't be empty.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new CategoryDescription("");
-			}).to.throw(CategoryDescriptionEmptyError);
+			} catch (err) {
+				error = err;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(CategoryDescriptionEmptyError);
+			expect(error!.name).to.equal("CategoryDescriptionEmptyError");
 		});
 
 		it("mustn't be whitespace only.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new CategoryDescription(" ");
-			}).to.throw(CategoryDescriptionEmptyError);
+			} catch (err) {
+				error = err;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(CategoryDescriptionEmptyError);
+			expect(error!.name).to.equal("CategoryDescriptionEmptyError");
 		});
 
 		it("trims leading and trailing whitespace.", function() {

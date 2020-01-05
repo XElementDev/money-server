@@ -13,7 +13,7 @@ components:
                 - id
             type: object
             additionalProperties: false
-        Category:
+        JsonCategory:
             properties:
                 description:
                     type: string
@@ -115,7 +115,7 @@ paths:
                 content:
                     application/json:
                         schema:
-                            $ref: '#/components/schemas/Category'
+                            $ref: '#/components/schemas/JsonCategory'
         get:
             operationId: ReadCategories
             responses:

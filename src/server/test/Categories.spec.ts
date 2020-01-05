@@ -3,9 +3,9 @@ import * as rpn from "request-promise-native";
 import * as urljoin from "url-join";
 import { MediaTypeName } from "../../framework/internet/interface";
 import {
-	Category,
 	Identifiable,
-	IdentifiableCategory
+	IdentifiableCategory,
+	JsonCategory
 	} from "../interface";
 import { ServiceTestEnvironment } from "./ServiceTestEnvironment";
 
@@ -71,7 +71,7 @@ describe("/categories", function() {
 
 		it("accepts semantically correct minimal JSON input.", async function() {
 			await serviceEnv.create();
-			const minimalJson: Category = { name: "household" };
+			const minimalJson: JsonCategory = { name: "household" };
 			serviceEnv.detailedRpnOptions.json = minimalJson;
 
 			const response: rpn.FullResponse = await rpn.post(
@@ -84,7 +84,7 @@ describe("/categories", function() {
 
 		it("accepts semantically correct full JSON input.", async function() {
 			await serviceEnv.create();
-			const fullJson: Category = {
+			const fullJson: JsonCategory = {
 				logoUrlStr: "https://bit.ly/2HOJsZm", // https://i.pinimg.com/originals/e8/d7/a8/e8d7a8e2533426f1b9f64e8d636c482f.jpg
 				name: "food"
 			};
@@ -100,8 +100,8 @@ describe("/categories", function() {
 
 		it("accepts semantically correct full JSON input with extra properties.", async function() {
 			await serviceEnv.create();
-			const fullJson: Category = {
-				logoUrlStr: "category-logo",
+			const fullJson: JsonCategory = {
+				logoUrlStr: "http://example.com/category-logo",
 				name: "category-name"
 			};
 			const fullJsonWithExtras = {
@@ -119,9 +119,73 @@ describe("/categories", function() {
 			expect(response.statusCode).to.equal(201);
 		});
 
+		it("returns 400 on category name domain errors. (1)", async function() {
+			await serviceEnv.create();
+			const category: JsonCategory = { name: "" };
+			serviceEnv.detailedRpnOptions.json = category;
+
+			const response: rpn.FullResponse = await rpn.post(
+				getCategoriesUrlStr(),
+				serviceEnv.detailedRpnOptions
+			);
+
+			expect(response.statusCode).to.equal(400);
+			expect(response.body).to.contain("CategoryNameTooShortError");
+		});
+
+		it("returns 400 on category name domain errors. (2)", async function() {
+			await serviceEnv.create();
+			const category: JsonCategory = { name: "tax" };
+			serviceEnv.simpleRpnOptions.json = category;
+			serviceEnv.detailedRpnOptions.json = category;
+
+			await rpn.post(getCategoriesUrlStr(), serviceEnv.simpleRpnOptions);
+			const response2: rpn.FullResponse = await rpn.post(
+				getCategoriesUrlStr(),
+				serviceEnv.detailedRpnOptions
+			);
+
+			expect(response2.statusCode).to.equal(400);
+			expect(response2.body).to.contain("CategoryNameNotUniqueError");
+		});
+
+		it("returns 400 on category logo domain errors.", async function() {
+			await serviceEnv.create();
+			const category: JsonCategory = {
+				logoUrlStr: "invalid URL",
+				name: "electricity"
+			};
+			serviceEnv.detailedRpnOptions.json = category;
+
+			const response: rpn.FullResponse = await rpn.post(
+				getCategoriesUrlStr(),
+				serviceEnv.detailedRpnOptions
+			);
+
+			expect(response.statusCode).to.equal(400);
+			expect(response.body).to.contain("CategoryLogoUrlInvalidError");
+		});
+
+		it("returns 400 on category description domain errors.", async function() {
+			await serviceEnv.create();
+			const category: JsonCategory = {
+				description: "",
+				name: "heating"
+			};
+			serviceEnv.detailedRpnOptions.json = category;
+
+			const response: rpn.FullResponse = await rpn.post(
+				getCategoriesUrlStr(),
+				serviceEnv.detailedRpnOptions
+			);
+
+			expect(response.statusCode).to.equal(400);
+			expect(response.body).to.contain("CategoryDescriptionEmptyError");
+		});
+
 		it("returns an ID.", async function() {
 			await serviceEnv.create();
-			const category: Category = {
+			const category: JsonCategory = {
 				logoUrlStr: "https://bit.ly/2nhkoT9", // https://images.vexels.com/media/users/3/135898/isolated/preview/b427c272b21c80f9bddea2d6d9dbe733-executive-team-peoples-by-vexels.png
 				name: "work"
 			};
@@ -138,16 +202,15 @@ describe("/categories", function() {
 
 		it("creates locally unique IDs.", async function() {
 			await serviceEnv.create();
-			const category: Category = {
-				logoUrlStr: "https://bit.ly/2mzOgtm", // https://png.pngtree.com/element_pic/17/02/19/4e10739872e26990dfa2dc99a7f106d3.jpg
-				name: "sports"
-			};
-			serviceEnv.simpleRpnOptions.json = category;
+			const categoryA: JsonCategory = { name: "category A" };
+			const categoryB: JsonCategory = { name: "category B" };
 
+			serviceEnv.simpleRpnOptions.json = categoryA;
 			const identifiable1: Identifiable = await rpn.post(
 				getCategoriesUrlStr(),
 				serviceEnv.simpleRpnOptions
 			);
+			serviceEnv.simpleRpnOptions.json = categoryB;
 			const identifiable2: Identifiable = await rpn.post(
 				getCategoriesUrlStr(),
 				serviceEnv.simpleRpnOptions
@@ -190,7 +253,10 @@ describe("/categories", function() {
 
 		it("returns a +1 list after 1 previous POST.", async function() {
 			await serviceEnv.create();
-			const category: Category = { name: "gift" };
+			const category: JsonCategory = {
+				logoUrlStr: "https://bit.ly/2mzOgtm", // https://png.pngtree.com/element_pic/17/02/19/4e10739872e26990dfa2dc99a7f106d3.jpg
+				name: "sports"
+			};
 
 			await rpn.post(getCategoriesUrlStr(), { json: category });
 			const ids: Array<Identifiable> = await rpn.get(
@@ -204,10 +270,11 @@ describe("/categories", function() {
 
 		it("returns a +2 list after 2 previous POSTs.", async function() {
 			await serviceEnv.create();
-			const category: Category = { name: "education" };
+			const categoryA: JsonCategory = { name: "education A" };
+			const categoryB: JsonCategory = { name: "education B" };
 
-			await rpn.post(getCategoriesUrlStr(), { json: category });
-			await rpn.post(getCategoriesUrlStr(), { json: category });
+			await rpn.post(getCategoriesUrlStr(), { json: categoryA });
+			await rpn.post(getCategoriesUrlStr(), { json: categoryB });
 			const ids: Array<Identifiable> = await rpn.get(
 				getCategoriesUrlStr(),
 				{ json: true }
@@ -220,9 +287,9 @@ describe("/categories", function() {
 		it("returns nothing but a list of IDs.", async function() {
 			await serviceEnv.create();
 			const identifiable: Identifiable = { id: "some-id" };
-			const category: Category = {
+			const category: JsonCategory = {
 				description: "some-description",
-				logoUrlStr: "some-logo-url",
+				logoUrlStr: "http://example.com/some-logo-url",
 				name: "some-name"
 			};
 			const expectedKeys = Object.keys(identifiable);
@@ -244,7 +311,7 @@ describe("/categories", function() {
 
 		it("returns JSON, for an existing entry.", async function() {
 			await serviceEnv.create();
-			const category: Category = { name: "furniture" };
+			const category: JsonCategory = { name: "furniture" };
 			const identifiable: Identifiable = await rpn.post(getCategoriesUrlStr(), { json: category });
 			const expectedContentType: MediaTypeName = "application/json";
 
@@ -271,7 +338,7 @@ describe("/categories", function() {
 
 		it("returns a previously POSTed Retailer.", async function() {
 			await serviceEnv.create();
-			const category: Category = { name: "health" };
+			const category: JsonCategory = { name: "health" };
 			const identifiable: Identifiable = await rpn.post(getCategoriesUrlStr(), { json: category });
 			const expectedCategory: IdentifiableCategory = { ...identifiable, ...category };
 
@@ -286,9 +353,9 @@ describe("/categories", function() {
 
 		it("returns a previously POSTed Retailer in full details.", async function() {
 			await serviceEnv.create();
-			const category: Category = {
+			const category: JsonCategory = {
 				description: "some-category-description",
-				logoUrlStr: "some-category-logo-url",
+				logoUrlStr: "http://example.com/some-category-logo-url",
 				name: "some-category-name"
 			};
 			const identifiable: Identifiable = await rpn.post(getCategoriesUrlStr(), { json: category });

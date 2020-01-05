@@ -9,8 +9,14 @@ import {
 	} from "tsoa";
 import {
 	Category,
+	CategoryDescription,
+	CategoryLogo,
+	CategoryName
+	} from "../../../domain/category";
+import {
 	Identifiable,
-	IdentifiableCategory
+	IdentifiableCategory,
+	JsonCategory
 	} from "../../interface";
 
 
@@ -29,7 +35,12 @@ export class CategoryController extends Controller {
 	@Post()
 	@SuccessResponse(201, "Created")
 	@Response(400, "Bad Request")
-	public createCategory(@Body() requestBody: Category): Promise<Identifiable> {
+	public createCategory(@Body() requestBody: JsonCategory): Promise<Identifiable> {
+		try {
+			this.validateCategory(requestBody);
+		} catch (err) {
+			throw err;
+		}
 		this.setStatus(201);
 		const identifiable: Identifiable = { id: CategoryController.categories.length.toString() };
 		const identifiableCategory: IdentifiableCategory = {
@@ -61,6 +72,31 @@ export class CategoryController extends Controller {
 			this.setStatus(404);
 			return Promise.reject();
 		}
+	}
+
+
+	private validateCategory(json: JsonCategory): void {
+		try {
+			let description: CategoryDescription | undefined;
+			if (json.description !== undefined) {
+				description = new CategoryDescription(json.description);
+			}
+			let logo: CategoryLogo | undefined;
+			if (json.logoUrlStr !== undefined) {
+				logo = new CategoryLogo(json.logoUrlStr);
+			}
+			new Category( // tslint:disable-line:no-unused-expression
+				{
+					description,
+					logo,
+					name: new CategoryName(json.name)
+				},
+				CategoryController.categories.map((c) => new CategoryName(c.name))
+			);
+		} catch (err) {
+			throw err;
+		}
+		return;
 	}
 
 }

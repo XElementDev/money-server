@@ -1,6 +1,8 @@
 import * as bodyParser from "body-parser";
 import * as express from "express";
 import * as http from "http";
+import * as _ from "lodash";
+import { ValidateError } from "tsoa";
 import * as urljoin from "url-join";
 import {
 	CompanyInfo,
@@ -39,6 +41,7 @@ export class MoneyRestService {
 
 	private configureRoutesSync(): void {
 		registerRoutesSync(this.subApp);
+		MoneyRestService.registerErrorHandler(this.subApp);
 		CategoryController.categories = [];
 		RetailerController.retailers = [];
 
@@ -52,6 +55,23 @@ export class MoneyRestService {
 		);
 		this.app.use(path, this.subApp);
 
+		return;
+	}
+
+
+	// ↓ Based on https://github.com/lukeautry/tsoa/blob/master/tests/fixtures/express/server.ts
+	private static registerErrorHandler(app: express.Express): void {
+		app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
+			let responseBody = "";
+			if (err.name === "ValidateError") {
+				const validateError = err as ValidateError;
+				responseBody = _.values(validateError.fields).map((o) => o.message).join(",");
+			} else {
+				responseBody = err.name;
+			}
+			res.status(400);
+			res.send(responseBody);
+		});
 		return;
 	}
 

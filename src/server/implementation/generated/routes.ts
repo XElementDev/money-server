@@ -20,7 +20,7 @@ const models: TsoaRoute.Models = {
 		"additionalProperties": false,
 	},
 	// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-	"Category": {
+	"JsonCategory": {
 		"properties": {
 			"description": { "dataType": "string" },
 			"logoUrlStr": { "dataType": "string" },
@@ -79,7 +79,7 @@ export function RegisterRoutes(app: express.Express) {
 	app.post('/v0/categories',
 		function(request: any, response: any, next: any) {
 			const args = {
-				requestBody: { "in": "body", "name": "requestBody", "required": true, "ref": "Category" },
+				requestBody: { "in": "body", "name": "requestBody", "required": true, "ref": "JsonCategory" },
 			};
 
 			// WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
