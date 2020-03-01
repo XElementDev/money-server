@@ -5,7 +5,6 @@ export class CategoryLogoUrlInvalidError extends LogoUrlInvalidError {
 
 	public constructor() {
 		super("Category");
-		this.name = "CategoryLogoUrlInvalidError";
 		return;
 	}
 
