@@ -24,15 +24,27 @@ describe("Retailer", function() {
 		});
 
 		it("mustn't be empty.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new RetailerName("");
-			}).to.throw(RetailerNameTooShortError);
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(RetailerNameTooShortError);
+			expect(error!.name).to.equal("RetailerNameTooShortError");
 		});
 
 		it("mustn't be 1 character.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new RetailerName("A");
-			}).to.throw(RetailerNameTooShortError);
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(RetailerNameTooShortError);
+			expect(error!.name).to.equal("RetailerNameTooShortError");
 		});
 
 		it("needs to have, at minimum, 2 characters.", function() {
@@ -45,15 +57,27 @@ describe("Retailer", function() {
 		});
 
 		it("mustn't be whitespace only.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new RetailerName("  ");
-			}).to.throw(RetailerNameTooShortError);
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(RetailerNameTooShortError);
+			expect(error!.name).to.equal("RetailerNameTooShortError");
 		});
 
 		it("mustn't be 1 character strechted by whitespace.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new RetailerName("   B  ");
-			}).to.throw(RetailerNameTooShortError);
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(RetailerNameTooShortError);
+			expect(error!.name).to.equal("RetailerNameTooShortError");
 		});
 
 		it("trims leading and trailing whitespace.", function() {
@@ -79,12 +103,18 @@ describe("Retailer", function() {
 
 	it("doesn't allow a non-unique name.", function() {
 		const expectedName = "supermarket";
-		expect(() => {
+		let error: Error | undefined;
+		try {
 			new Retailer(
 				{ name: new RetailerName(expectedName) },
 				[ new RetailerName(expectedName) ]
 			);
-		}).to.throw(RetailerNameNotUniqueError);
+		} catch (err) {
+			error = err as Error;
+		}
+		expect(error).not.to.be.undefined;
+		expect(error).to.be.instanceOf(RetailerNameNotUniqueError);
+		expect(error!.name).to.equal("RetailerNameNotUniqueError");
 	});
 
 	it("needs a unique name.", function() {
@@ -110,15 +140,27 @@ describe("Retailer", function() {
 		});
 
 		it("mustn't be empty.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new RetailerLogo("");
-			}).to.throw(RetailerLogoUrlInvalidError);
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(RetailerLogoUrlInvalidError);
+			expect(error!.name).to.equal("RetailerLogoUrlInvalidError");
 		});
 
 		it("mustn't be FTP.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new RetailerLogo("ftp://ftp.example.com/retailer-logo");
-			}).to.throw(RetailerLogoUrlInvalidError);
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(RetailerLogoUrlInvalidError);
+			expect(error!.name).to.equal("RetailerLogoUrlInvalidError");
 		});
 
 		it("needs to be a valid URL.", function() {

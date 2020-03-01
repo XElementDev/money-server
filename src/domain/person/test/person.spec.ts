@@ -24,15 +24,27 @@ describe("Person", function() {
 		});
 
 		it("mustn't be empty.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new PersonName("");
-			}).to.throw(PersonNameTooShortError);
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(PersonNameTooShortError);
+			expect(error!.name).to.equal("PersonNameTooShortError");
 		});
 
 		it("mustn't be 1 character.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new PersonName("A");
-			}).to.throw(PersonNameTooShortError);
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(PersonNameTooShortError);
+			expect(error!.name).to.equal("PersonNameTooShortError");
 		});
 
 		it("needs to have, at minimum, 2 characters.", function() {
@@ -45,15 +57,27 @@ describe("Person", function() {
 		});
 
 		it("mustn't be whitespace only.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new PersonName("  ");
-			}).to.throw(PersonNameTooShortError);
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(PersonNameTooShortError);
+			expect(error!.name).to.equal("PersonNameTooShortError");
 		});
 
 		it("mustn't be 1 character strechted by whitespace.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new PersonName("   B  ");
-			}).to.throw(PersonNameTooShortError);
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(PersonNameTooShortError);
+			expect(error!.name).to.equal("PersonNameTooShortError");
 		});
 
 		it("trims whitespace.", function() {
@@ -79,12 +103,18 @@ describe("Person", function() {
 
 	it("doesn't allow a non-unique name.", function() {
 		const expectedName = "Max";
-		expect(() => {
+		let error: Error | undefined;
+		try {
 			new Person(
 				{ name: new PersonName(expectedName) },
 				[ new PersonName(expectedName) ]
 			);
-		}).to.throw(PersonNameNotUniqueError);
+		} catch (err) {
+			error = err as Error;
+		}
+		expect(error).not.to.be.undefined;
+		expect(error).to.be.instanceOf(PersonNameNotUniqueError);
+		expect(error!.name).to.equal("PersonNameNotUniqueError");
 	});
 
 	it("needs a unique name.", function() {
@@ -110,15 +140,27 @@ describe("Person", function() {
 		});
 
 		it("mustn't be empty.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new PersonAvatar("");
-			}).to.throw(PersonAvatarUrlInvalidError);
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(PersonAvatarUrlInvalidError);
+			expect(error!.name).to.equal("PersonAvatarUrlInvalidError");
 		});
 
 		it("mustn't be FTP.", function() {
-			expect(() => {
+			let error: Error | undefined;
+			try {
 				new PersonAvatar("ftp://ftp.example.com/person-avatar");
-			}).to.throw(PersonAvatarUrlInvalidError);
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(PersonAvatarUrlInvalidError);
+			expect(error!.name).to.equal("PersonAvatarUrlInvalidError");
 		});
 
 		it("needs to be a valid URL.", function() {
