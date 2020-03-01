@@ -1,7 +1,8 @@
 import {
 	PersonAvatar,
-	PersonName,
-	PersonNameNotUniqueError
+	PersonNameNotUniqueError,
+	PersonPrename,
+	PersonSurname
 	} from "../../../domain/person";
 
 
@@ -10,15 +11,19 @@ export class Person {
 	public constructor(
 		input: {
 			avatar?: PersonAvatar,
-			name: PersonName
+			prename: PersonPrename,
+			surname: PersonSurname
 		},
-		existingNames: Array<PersonName>
+		existingNames: Array<[PersonPrename, PersonSurname]>
 	) {
 		if (input.avatar !== undefined) { this.avatar = input.avatar.value; }
-		this.name = input.name.value;
-		if (existingNames.map((rn) => rn.value).includes(input.name.value)) {
-			throw new PersonNameNotUniqueError();
-		}
+		this.prename = input.prename.value;
+		this.surname = input.surname.value;
+
+		const inputName = `${this.prename} ${this.surname}`;
+		const names = existingNames.map(([pre, sur]) => `${pre.value} ${sur.value}`);
+		if (names.includes(inputName)) { throw new PersonNameNotUniqueError(); }
+
 		return;
 	}
 
@@ -26,6 +31,9 @@ export class Person {
 	public readonly avatar: string | undefined;
 
 
-	public readonly name: string;
+	public readonly prename: string;
+
+
+	public readonly surname: string;
 
 }

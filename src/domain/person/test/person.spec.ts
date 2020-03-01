@@ -3,112 +3,214 @@ import {
 	Person,
 	PersonAvatar,
 	PersonAvatarUrlInvalidError,
-	PersonName,
 	PersonNameNotUniqueError,
-	PersonNameTooShortError
+	PersonPrename,
+	PersonPrenameTooShortError,
+	PersonSurname,
+	PersonSurnameTooShortError
 	} from "../../../domain/person";
 
 
 describe("Person", function() {
 
-	describe("name", function() {
+	describe("prename", function() {
 
 		it("needs to be a string.", function() {
-			const expectedPersonName = "John";
+			const expectedPersonPrename = "John";
 
-			const personName = new PersonName(expectedPersonName);
-			const actualPersonName = personName.value;
+			const personPrename = new PersonPrename(expectedPersonPrename);
+			const actualPersonPrename = personPrename.value;
 
-			expect(actualPersonName).to.be.a("string");
-			expect(actualPersonName).to.equal(expectedPersonName);
+			expect(actualPersonPrename).to.be.a("string");
+			expect(actualPersonPrename).to.equal(expectedPersonPrename);
 		});
 
 		it("mustn't be empty.", function() {
 			let error: Error | undefined;
 			try {
-				new PersonName("");
+				new PersonPrename("");
 			} catch (err) {
 				error = err as Error;
 			}
 			expect(error).not.to.be.undefined;
-			expect(error).to.be.instanceOf(PersonNameTooShortError);
-			expect(error!.name).to.equal("PersonNameTooShortError");
+			expect(error).to.be.instanceOf(PersonPrenameTooShortError);
+			expect(error!.name).to.equal("PersonPrenameTooShortError");
 		});
 
 		it("mustn't be 1 character.", function() {
 			let error: Error | undefined;
 			try {
-				new PersonName("A");
+				new PersonPrename("P");
 			} catch (err) {
 				error = err as Error;
 			}
 			expect(error).not.to.be.undefined;
-			expect(error).to.be.instanceOf(PersonNameTooShortError);
-			expect(error!.name).to.equal("PersonNameTooShortError");
+			expect(error).to.be.instanceOf(PersonPrenameTooShortError);
+			expect(error!.name).to.equal("PersonPrenameTooShortError");
 		});
 
 		it("needs to have, at minimum, 2 characters.", function() {
-			const expectedPersonName = "Bo";
+			const expectedPersonPrename = "Bo";
 
-			const personName = new PersonName(expectedPersonName);
-			const actualPersonName = personName.value;
+			const personPrename = new PersonPrename(expectedPersonPrename);
+			const actualPersonPrename = personPrename.value;
 
-			expect(actualPersonName).to.equal(expectedPersonName);
+			expect(actualPersonPrename).to.equal(expectedPersonPrename);
 		});
 
 		it("mustn't be whitespace only.", function() {
 			let error: Error | undefined;
 			try {
-				new PersonName("  ");
+				new PersonPrename("  ");
 			} catch (err) {
 				error = err as Error;
 			}
 			expect(error).not.to.be.undefined;
-			expect(error).to.be.instanceOf(PersonNameTooShortError);
-			expect(error!.name).to.equal("PersonNameTooShortError");
+			expect(error).to.be.instanceOf(PersonPrenameTooShortError);
+			expect(error!.name).to.equal("PersonPrenameTooShortError");
 		});
 
 		it("mustn't be 1 character strechted by whitespace.", function() {
 			let error: Error | undefined;
 			try {
-				new PersonName("   B  ");
+				new PersonPrename("   P  ");
 			} catch (err) {
 				error = err as Error;
 			}
 			expect(error).not.to.be.undefined;
-			expect(error).to.be.instanceOf(PersonNameTooShortError);
-			expect(error!.name).to.equal("PersonNameTooShortError");
+			expect(error).to.be.instanceOf(PersonPrenameTooShortError);
+			expect(error!.name).to.equal("PersonPrenameTooShortError");
 		});
 
 		it("trims whitespace.", function() {
-			const expectedPersonName = "Jane";
-			const personNameWithWhitespaces = " " + expectedPersonName + "  ";
+			const expectedPersonPrename = "Jane";
+			const personPrenameWithWhitespaces = " " + expectedPersonPrename + "  ";
 
-			const personName = new PersonName(personNameWithWhitespaces);
-			const actualPersonName = personName.value;
+			const personPrename = new PersonPrename(personPrenameWithWhitespaces);
+			const actualPersonPrename = personPrename.value;
 
-			expect(actualPersonName).to.equal(expectedPersonName);
+			expect(actualPersonPrename).to.equal(expectedPersonPrename);
 		});
 
 	});
 
-	it("needs a name.", function() {
-		const expectedName = "Erika";
+	it("needs a prename.", function() {
+		const expectedPrename = "Erika";
 
-		const person = new Person({ name: new PersonName(expectedName) }, []);
-		const actualName = person.name;
+		const person = new Person(
+			{
+				prename: new PersonPrename(expectedPrename),
+				surname: new PersonSurname("irrelevant")
+			},
+			[]
+		);
+		const actualPrename = person.prename;
 
-		expect(actualName).to.equal(expectedName);
+		expect(actualPrename).to.equal(expectedPrename);
+	});
+
+	describe("surname", function() {
+
+		it("needs to be a string.", function() {
+			const expectedPersonSurname = "Doe";
+
+			const personSurname = new PersonSurname(expectedPersonSurname);
+			const actualPersonSurname = personSurname.value;
+
+			expect(actualPersonSurname).to.be.a("string");
+			expect(actualPersonSurname).to.equal(expectedPersonSurname);
+		});
+
+		it("mustn't be empty.", function() {
+			let error: Error | undefined;
+			try {
+				new PersonSurname("");
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(PersonSurnameTooShortError);
+			expect(error!.name).to.equal("PersonSurnameTooShortError");
+		});
+
+		it("mustn't be 1 character.", function() {
+			let error: Error | undefined;
+			try {
+				new PersonSurname("S");
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(PersonSurnameTooShortError);
+			expect(error!.name).to.equal("PersonSurnameTooShortError");
+		});
+
+		it("needs to have, at minimum, 2 characters.", function() {
+			const expectedPersonSurname = "Su";
+
+			const personSurname = new PersonSurname(expectedPersonSurname);
+			const actualPersonSurname = personSurname.value;
+
+			expect(actualPersonSurname).to.equal(expectedPersonSurname);
+		});
+
+		it("mustn't be whitespace only.", function() {
+			let error: Error | undefined;
+			try {
+				new PersonSurname("  ");
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(PersonSurnameTooShortError);
+			expect(error!.name).to.equal("PersonSurnameTooShortError");
+		});
+
+		it("mustn't be 1 character strechted by whitespace.", function() {
+			let error: Error | undefined;
+			try {
+				new PersonSurname("   S  ");
+			} catch (err) {
+				error = err as Error;
+			}
+			expect(error).not.to.be.undefined;
+			expect(error).to.be.instanceOf(PersonSurnameTooShortError);
+			expect(error!.name).to.equal("PersonSurnameTooShortError");
+		});
+
+		it("trims whitespace.", function() {
+			const expectedPersonSurname = "Doe";
+			const personSurnameWithWhitespaces = " " + expectedPersonSurname + "  ";
+
+			const personSurname = new PersonSurname(personSurnameWithWhitespaces);
+			const actualPersonSurname = personSurname.value;
+
+			expect(actualPersonSurname).to.equal(expectedPersonSurname);
+		});
+
+	});
+
+	it("needs a surname.", function() {
+		const expectedSurname = "Mustermann";
+
+		const person = new Person(
+			{
+				prename: new PersonPrename("irrelevant"),
+				surname: new PersonSurname(expectedSurname)
+			},
+			[]
+		);
+		const actualSurname = person.surname;
+
+		expect(actualSurname).to.equal(expectedSurname);
 	});
 
 	it("doesn't allow a non-unique name.", function() {
-		const expectedName = "Max";
+		const prename = new PersonPrename("Max");
+		const surname = new PersonSurname("Mustermann");
 		let error: Error | undefined;
 		try {
-			new Person(
-				{ name: new PersonName(expectedName) },
-				[ new PersonName(expectedName) ]
-			);
+			new Person({ prename, surname }, [ [prename, surname] ]);
 		} catch (err) {
 			error = err as Error;
 		}
@@ -118,13 +220,17 @@ describe("Person", function() {
 	});
 
 	it("needs a unique name.", function() {
-		const expectedName = "John Doe";
-		const personName = new PersonName(expectedName);
+		const expectedPrename = "John";
+		const expectedSurname = "Doe";
+		const prename = new PersonPrename(expectedPrename);
+		const surname = new PersonSurname(expectedSurname);
 
-		const person = new Person({ name: personName }, []);
-		const actualName = person.name;
+		const person = new Person({ prename, surname }, []);
+		const actualPrename = person.prename;
+		const actualSurname = person.surname;
 
-		expect(actualName).to.equal(expectedName);
+		expect(actualPrename).to.equal(expectedPrename);
+		expect(actualSurname).to.equal(expectedSurname);
 	});
 
 	describe("avatar", function() {
@@ -180,7 +286,8 @@ describe("Person", function() {
 		const person = new Person(
 			{
 				avatar: new PersonAvatar(expectedAvatarUrl),
-				name: new PersonName("Erika Mustermann")
+				prename: new PersonSurname("Erika"),
+				surname: new PersonSurname("Mustermann")
 			},
 			[]
 		);
@@ -190,7 +297,7 @@ describe("Person", function() {
 	});
 
 	it("doesn't need an avatar.", function() {
-		const person = new Person({ name: new PersonName("Jane Doe") }, []);
+		const person = new Person({ prename: new PersonPrename("Jane"), surname: new PersonSurname("Doe") }, []);
 		const actualAvatarUrl = person.avatar;
 		expect(actualAvatarUrl).to.be.undefined;
 	});
