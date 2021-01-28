@@ -1,12 +1,12 @@
-import * as gulp from "gulp";
+import gulp from "gulp";
 import {
 	default as gulpTslint,
 	PluginOptions,
 	ReportOptions
 	} from "gulp-tslint";
-import * as path from "path";
+import path from "path";
 import * as tslint from "tslint";
-import * as Undertaker from "undertaker";
+import Undertaker from "undertaker";
 import { SrcOptions } from "vinyl-fs";
 import { GulpModel } from "./GulpModel";
 

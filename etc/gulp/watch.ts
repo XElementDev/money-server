@@ -1,5 +1,5 @@
-import * as gulp from "gulp";
-import * as Undertaker from "undertaker";
+import gulp from "gulp";
+import Undertaker from "undertaker";
 import { GulpModel } from "./GulpModel";
 import { testTaskFunction } from "./test";
 

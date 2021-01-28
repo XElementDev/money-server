@@ -1,7 +1,7 @@
-import * as gulp from "gulp";
-import * as gulpTs from "gulp-typescript";
-import * as path from "path";
-import * as ts from "typescript";
+import gulp from "gulp";
+import gulpTs from "gulp-typescript";
+import path from "path";
+import ts from "typescript";
 import { SrcOptions } from "vinyl-fs";
 import { GulpModel } from "./GulpModel";
 

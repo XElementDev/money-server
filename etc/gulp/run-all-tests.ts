@@ -1,6 +1,6 @@
-import * as gulp from "gulp";
-import * as gulpMocha from "gulp-mocha";
-import * as path from "path";
+import gulp from "gulp";
+import gulpMocha from "gulp-mocha";
+import path from "path";
 import { SrcOptions } from "vinyl-fs";
 import { GulpModel } from "./GulpModel";
 
@@ -12,7 +12,7 @@ const runAllTestsTaskFunction: () => NodeJS.ReadWriteStream = () => {
 		read: false,
 		since: undefined // always re-run tests from all files
 	};
-	const mochaSetupOptions: MochaSetupOptions = {
+	const mochaSetupOptions: Mocha.MochaOptions = {
 		reporter: "spec"
 	};
 	const globs: Array<string> = [

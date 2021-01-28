@@ -1,5 +1,5 @@
-import * as del from "del";
-import * as gulp from "gulp";
+import del from "del";
+import gulp from "gulp";
 import { GulpModel } from "./GulpModel";
 
 

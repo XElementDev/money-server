@@ -1,5 +1,5 @@
-import * as gulp from "gulp";
-import * as Undertaker from "undertaker";
+import gulp from "gulp";
+import Undertaker from "undertaker";
 import { typescriptTaskName } from "./ts";
 import { tslintTaskName } from "./tslint";
 import { tsoaTaskName } from "./tsoa";
