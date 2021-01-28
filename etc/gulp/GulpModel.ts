@@ -1,6 +1,6 @@
 import * as colors from "ansi-colors";
-import * as path from "path";
-import * as through from "through2";
+import path from "path";
+import through from "through2";
 
 
 export class GulpModel {

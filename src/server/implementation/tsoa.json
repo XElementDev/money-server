@@ -1,15 +1,14 @@
 {
+	"entryFile": "./Service.ts",
+	"noImplicitAdditionalProperties": "silently-remove-extras",
 	"routes": {
 		"basePath": "v0",
-		"entryFile": "./Service.ts",
 		"middleware": "express",
 		"routesDir": "./generated"
 	},
-	"swagger": {
+	"spec": {
 		"basePath": "v0",
-		"entryFile": "./Service.ts",
 		"host": "localhost:8080",
-		"noImplicitAdditionalProperties": "silently-remove-extras",
 		"outputDirectory": "../interface/generated/",
 		"specVersion": 3,
 		"yaml": true

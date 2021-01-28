@@ -1,8 +1,8 @@
-import * as cpp from "child-process-promise";
-import * as gulp from "gulp";
-import * as ListStream from "list-stream";
-import * as path from "path";
-import * as File from "vinyl";
+import cpp from "child-process-promise";
+import gulp from "gulp";
+import ListStream from "list-stream";
+import path from "path";
+import File from "vinyl";
 import { SrcOptions } from "vinyl-fs";
 import { GulpModel } from "./GulpModel";
 
@@ -38,7 +38,7 @@ const tsoaTaskFunction: () => Promise<void> = async () => {
 	console.log(`Going to run \`tsoa\` on ${folderPaths.length} folder(s).`);
 	const tsoaCmdPath = path.join(GulpModel.absoluteCommandFolderPath, "tsoa");
 	for (const folderPath of folderPaths) {
-		await exec(`${tsoaCmdPath} swagger`, { cwd: folderPath });
+		await exec(`${tsoaCmdPath} spec`, { cwd: folderPath });
 		await exec(`${tsoaCmdPath} routes`, { cwd: folderPath });
 	}
 	return;

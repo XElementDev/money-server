@@ -1,6 +1,6 @@
 import { expect } from "chai";
-import * as rpn from "request-promise-native";
-import * as urljoin from "url-join";
+import rpn from "request-promise-native";
+import urljoin from "url-join";
 import { MediaTypeName } from "../../framework/internet/interface";
 import {
 	Identifiable,

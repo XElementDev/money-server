@@ -17,10 +17,8 @@ components:
             properties:
                 description:
                     type: string
-                    nullable: true
                 logoUrlStr:
                     type: string
-                    nullable: true
                 name:
                     type: string
             required:
@@ -31,10 +29,8 @@ components:
             properties:
                 description:
                     type: string
-                    nullable: true
                 logoUrlStr:
                     type: string
-                    nullable: true
                 name:
                     type: string
                 id:
@@ -50,7 +46,6 @@ components:
                     type: string
                 avatarUrlStr:
                     type: string
-                    nullable: true
                 prename:
                     type: string
                 surname:
@@ -65,7 +60,6 @@ components:
             properties:
                 logoUrlStr:
                     type: string
-                    nullable: true
                 name:
                     type: string
             required:
@@ -78,7 +72,6 @@ components:
                     type: string
                 logoUrlStr:
                     type: string
-                    nullable: true
                 name:
                     type: string
             required:
@@ -93,6 +86,8 @@ info:
     description: 'Build swagger-compliant REST APIs using TypeScript and Node'
     license:
         name: MIT
+    contact:
+        name: unknown
 openapi: 3.0.0
 paths:
     /categories:
@@ -100,18 +95,17 @@ paths:
             operationId: CreateCategory
             responses:
                 '201':
+                    description: Created
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Identifiable'
-                    description: Created
                 '400':
-                    content:
-                        application/json: {}
                     description: 'Bad Request'
             security: []
             parameters: []
             requestBody:
+                required: true
                 content:
                     application/json:
                         schema:
@@ -120,13 +114,13 @@ paths:
             operationId: ReadCategories
             responses:
                 '200':
+                    description: OK
                     content:
                         application/json:
                             schema:
                                 items:
                                     $ref: '#/components/schemas/Identifiable'
                                 type: array
-                    description: OK
             security: []
             parameters: []
     '/categories/{id}':
@@ -134,14 +128,12 @@ paths:
             operationId: ReadCategory
             responses:
                 '200':
+                    description: OK
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/IdentifiableCategory'
-                    description: OK
                 '404':
-                    content:
-                        application/json: {}
                     description: 'Not Found'
             security: []
             parameters:
@@ -156,13 +148,13 @@ paths:
             operationId: GetPersonsSync
             responses:
                 '200':
+                    description: Ok
                     content:
                         application/json:
                             schema:
                                 items:
                                     $ref: '#/components/schemas/IdentifiablePerson'
                                 type: array
-                    description: Ok
             security: []
             parameters: []
     '/persons/{id}':
@@ -170,11 +162,11 @@ paths:
             operationId: GetPersonSync
             responses:
                 '200':
+                    description: Ok
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/IdentifiablePerson'
-                    description: Ok
             security: []
             parameters:
                 -
@@ -188,18 +180,17 @@ paths:
             operationId: CreateRetailer
             responses:
                 '201':
+                    description: Created
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/Identifiable'
-                    description: Created
                 '400':
-                    content:
-                        application/json: {}
                     description: 'Bad Request'
             security: []
             parameters: []
             requestBody:
+                required: true
                 content:
                     application/json:
                         schema:
@@ -208,13 +199,13 @@ paths:
             operationId: ReadRetailers
             responses:
                 '200':
+                    description: OK
                     content:
                         application/json:
                             schema:
                                 items:
                                     $ref: '#/components/schemas/Identifiable'
                                 type: array
-                    description: OK
             security: []
             parameters: []
     '/retailers/{id}':
@@ -222,14 +213,12 @@ paths:
             operationId: ReadRetailer
             responses:
                 '200':
+                    description: OK
                     content:
                         application/json:
                             schema:
                                 $ref: '#/components/schemas/IdentifiableRetailer'
-                    description: OK
                 '404':
-                    content:
-                        application/json: {}
                     description: 'Not Found'
             security: []
             parameters:

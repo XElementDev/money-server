@@ -1,7 +1,7 @@
-import * as bodyParser from "body-parser";
-import * as express from "express";
+import bodyParser from "body-parser";
+import express from "express";
 import * as http from "http";
-import * as urljoin from "url-join";
+import urljoin from "url-join";
 import {
 	CompanyInfo,
 	ProductInfo
